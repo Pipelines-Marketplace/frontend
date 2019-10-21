@@ -1,0 +1,55 @@
+
+* {
+    box-sizing: border-box;
+    height:100%;
+}
+
+.main{
+     margin-top: 100px;
+    margin-bottom: 100px;
+    display: grid;
+    grid-template-areas:
+        "taskinfo taskinfo"
+        "taskdescription rating";
+
+    grid-template-columns: 3fr 1fr;
+     grid-template-rows: 1fr 3fr;
+
+    gap: 1em;
+
+}
+.taskinfo{
+    grid-area: taskinfo;
+    padding:1em;
+
+
+}
+.taskdescription{
+    grid-area:taskdescription;
+    padding:1em;
+
+}
+.rating{
+    grid-area:rating;
+    padding:1em;
+}
+
+.main > div{
+    padding:1em;
+    background-color:grey;
+}
+
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .main {
+        display: grid;
+        grid-template-areas:
+            "taskinfo"
+            "taskdescription"
+            "rating";
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 3fr 1fr;
+        gap: 1em;
+    }
+}
