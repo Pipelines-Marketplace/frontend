@@ -1,0 +1,32 @@
+.card {
+    margin: 0.5em;
+}
+
+.exampleBorder {
+    margin: 1em;
+}
+
+.downloads {
+    margin-right: 1em;
+}
+
+.task-heading {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.task-data {
+    margin: 1em;
+}
+
+.task-numbers {
+    margin-right: 1em;
+}
+
+.flex-numbers{
+    margin-right: 1em;
+}
+
+.version{
+    margin-right: 1em;
+}
