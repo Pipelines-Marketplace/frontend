@@ -4,20 +4,14 @@ import Task from "../task/Task";
 const TaskContainer: React.FC = () => {
     return (
         <div>
-            <div className="task-card">
-                <Task />
-            </div>
-            <div className="task-card">
-                <Task />
-            </div>
-            <div className="task-card">
-                <Task />
-            </div>
-            <div className="task-card">
-                <Task />
-            </div>
+            <Task />
+            <Task />
+            <Task />
+            <Task />
         </div>
     );
 }
 
 export default TaskContainer;
+
+
