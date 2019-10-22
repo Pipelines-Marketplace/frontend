@@ -1,12 +1,11 @@
 import React from 'react';
 import "./index.css";
-import Navbar from "../navbar/Navbar";
-import Filter from "../filter/Filter";
 import SearchBar from "../search-bar/SearchBar";
 import TaskContainer from "../task-container/TaskContainer";
-import Footer from "../footer/Footer";
 import '@patternfly/react-core/dist/styles/base.css';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import { Page, PageHeader, PageSidebar, PageSection } from '@patternfly/react-core';
+import Detail from '../detail/Detail';
 
 interface mainProps {
 
@@ -39,16 +38,19 @@ const App: React.FC<mainProps> = (props) => {
   );
   const Sidebar = <PageSidebar nav="Navigation" isNavOpen={isNavOpen} theme="dark" />;
   return (
+    <Router>
     <React.Fragment>
       <Page header={Header} sidebar={Sidebar}>
         <PageSection>
-          <SearchBar />
+          <Route exact path='/' component={SearchBar} />
         </PageSection>
         <PageSection>
-          <TaskContainer />
+          <Route exact path='/' component={TaskContainer} />
+          <Route path='/detail' component={Detail} />
         </PageSection>
       </Page>
     </React.Fragment>
+    </Router>
   );
 }
 
