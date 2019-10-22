@@ -7,6 +7,7 @@ import {
     Flex,
     FlexItem,
     Badge,
+    PageSection,
 } from '@patternfly/react-core';
 import { OkIcon, DownloadIcon } from '@patternfly/react-icons';
 
