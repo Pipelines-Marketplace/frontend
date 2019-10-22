@@ -1,21 +1,27 @@
 import React from "react"
 import '@patternfly/react-core/dist/styles/base.css';
 import "./index.css";
+import TaskDetail from '../task-details-page2/TaskDetail';
+// import {Router,Route } from "react-router";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
     Card,
     Flex,
     FlexItem,
     Badge,
+    PageSection,
 } from '@patternfly/react-core';
-import { TimesIcon, PlusCircleIcon } from '@patternfly/react-icons';
 
 const Task: React.FC = () => {
+
+
+
     return (
         <Card className="card">
             <Flex breakpointMods={[{ modifier: "column", breakpoint: "lg" }, { modifier: "row", breakpoint: "lg" }]}>
                 <Flex breakpointMods={[{ modifier: "flex-1", breakpoint: "lg" }]}>
                     <div className="task-data">
-                        <FlexItem><span className="task-heading">Golang-build-task</span></FlexItem>
+                        <FlexItem><a href="#" onClick={()=> console.log('hello')}><span className="task-heading">Golang-build-task</span></a></FlexItem>
                         <FlexItem>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est animi modi temporibus, alias qui obcaecati ullam dolor nam, nulla magni.</FlexItem>
                         <FlexItem>
                             <React.Fragment>

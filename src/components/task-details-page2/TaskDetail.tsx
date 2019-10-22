@@ -3,30 +3,17 @@ import "./taskdetail.css";
 import TaskInfo from "../task-info/TaskInfo";
 import TaskRating from "../task-rating/TaskRating";
 import TaskDescription from "../task-description/TaskDescription";
+import { PageSection } from "@patternfly/react-core";
 
 
 /* here code is for description of each task (page 2)       */
 const TaskDetail: React.FC = () => {
     return (
     
-        <div className="main">
+        <PageSection>
+         <div> Hello </div>
 
-            <div className="taskinfo">
-                <TaskInfo />
-
-            </div>
-            <div className="taskdescription">
-
-                <TaskDescription />
-            </div>
-            <div className="rating">
-
-                <TaskRating />
-            </div>
-
-
-            
-        </div>
+        </PageSection>
     );
 }
 
