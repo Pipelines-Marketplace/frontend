@@ -1,10 +1,7 @@
 import React from 'react';
 import "./index.css";
-import Navbar from "../navbar/Navbar";
-import Filter from "../filter/Filter";
 import SearchBar from "../search-bar/SearchBar";
 import TaskContainer from "../task-container/TaskContainer";
-import Footer from "../footer/Footer";
 import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/logo.png'
 import imgAvatar from '../assets/logo/imgAvatar.png';
@@ -22,6 +19,7 @@ import {
   ToolbarItem, Page, Nav, NavItem, NavList, NavVariants, Brand, PageHeader, PageSidebar,
   PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar
 } from '@patternfly/react-core';
+import Detail from '../detail/Detail';
 
 interface mainProps {
 
@@ -104,16 +102,19 @@ const App: React.FC<mainProps> = (props) => {
 
   const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
   return (
-  <Router>
+    <Router>
     <React.Fragment>
       <Page header={Header} sidebar={Sidebar}>
         <PageSection>
-          <Route path='/' component={App} />
-          <TaskContainer />
+          <Route exact path='/' component={SearchBar} />
+        </PageSection>
+        <PageSection>
+          <Route exact path='/' component={TaskContainer} />
+          <Route path='/detail' component={Detail} />
         </PageSection>
       </Page>
     </React.Fragment>
-  </Router>
+    </Router>
   );
 }
 

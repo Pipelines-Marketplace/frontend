@@ -20,16 +20,13 @@
 }
 
 .task-numbers {
+    margin-left: 1em;
+}
+
+.flex-numbers {
     margin-right: 1em;
 }
 
-.flex-numbers{
+.version {
     margin-right: 1em;
 }
-
-.version{
-    margin-right: 1em;
-}
-/* span:hover{
-    color:blue;
-} */
