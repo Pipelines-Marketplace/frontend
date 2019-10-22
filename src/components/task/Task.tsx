@@ -2,9 +2,6 @@ import React from "react"
 import '@patternfly/react-core/dist/styles/base.css';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import "./index.css";
-import TaskDetail from '../task-details-page2/TaskDetail';
-// import {Router,Route } from "react-router";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
     Card,
     Flex,
@@ -15,9 +12,6 @@ import {
 import { OkIcon, DownloadIcon } from '@patternfly/react-icons';
 
 const Task: React.FC = () => {
-
-
-
     return (
         <Card className="card">
             <Flex breakpointMods={[{ modifier: "column", breakpoint: "lg" }, { modifier: "row", breakpoint: "lg" }]}>

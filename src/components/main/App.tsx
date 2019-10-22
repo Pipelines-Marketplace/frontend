@@ -5,11 +5,12 @@ import TaskContainer from "../task-container/TaskContainer";
 import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/logo.png'
 import imgAvatar from '../assets/logo/imgAvatar.png';
-import {Link,BrowserRouter as Router,Route} from 'react-router-dom';
+import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon } from '@patternfly/react-icons';
 import spacingStyles from '@patternfly/react-styles/css/utilities/Spacing/spacing';
-
+import Community from "../community/Community";
+import SearchPage from "../searchPage/SearchPage";
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 
 import { css } from '@patternfly/react-styles';
@@ -45,7 +46,7 @@ const App: React.FC<mainProps> = (props) => {
     target: '_blank'
   };
 
-  function onNavSelect(result:any) {
+  function onNavSelect(result: any) {
     setActiveItem(result.itemId);
 
   }
@@ -68,9 +69,6 @@ const App: React.FC<mainProps> = (props) => {
 
   );
 
-
-
-
   const Header = (
     <PageHeader
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
@@ -86,15 +84,15 @@ const App: React.FC<mainProps> = (props) => {
   const PageNav = (
     <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
       <NavList variant={NavVariants.simple}>
-        <NavItem itemId={0} isActive={activeItem === 0}>
+        <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
           <HomeIcon />{' '}Home
-        </NavItem>
-        <NavItem itemId={1} isActive={activeItem === 1}>
+        </Link></NavItem>
+        <NavItem itemId={1} isActive={activeItem === 1}><Link to="/search">
           <SearchIcon /> {' '}Search
-        </NavItem>
-        <NavItem itemId={2} isActive={activeItem === 2} >
+          </Link></NavItem>
+        <NavItem itemId={2} isActive={activeItem === 2} ><Link to="/community">
           <UsersIcon />{' '}Community
-        </NavItem>
+          </Link></NavItem>
       </NavList>
     </Nav>
   );
@@ -103,17 +101,19 @@ const App: React.FC<mainProps> = (props) => {
   const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
   return (
     <Router>
-    <React.Fragment>
-      <Page header={Header} sidebar={Sidebar}>
-        <PageSection>
-          <Route exact path='/' component={SearchBar} />
-        </PageSection>
-        <PageSection>
-          <Route exact path='/' component={TaskContainer} />
-          <Route path='/detail' component={Detail} />
-        </PageSection>
-      </Page>
-    </React.Fragment>
+      <React.Fragment>
+        <Page header={Header} sidebar={Sidebar}>
+          <PageSection>
+            <Route exact path='/' component={SearchBar} />
+          </PageSection>
+          <PageSection>
+            <Route exact path='/' component={TaskContainer} />
+            <Route path='/detail' component={Detail} />
+            <Route path='/search' component={SearchPage} />
+            <Route path='/community' component={Community} />
+          </PageSection>
+        </Page>
+      </React.Fragment>
     </Router>
   );
 }
