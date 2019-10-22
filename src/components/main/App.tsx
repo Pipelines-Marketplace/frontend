@@ -6,7 +6,7 @@ import SearchBar from "../search-bar/SearchBar";
 import TaskContainer from "../task-container/TaskContainer";
 import Footer from "../footer/Footer";
 import '@patternfly/react-core/dist/styles/base.css';
-import { Page, PageHeader, PageSidebar, PageSection, PageSectionVariants } from '@patternfly/react-core';
+import { Page, PageHeader, PageSidebar, PageSection } from '@patternfly/react-core';
 
 interface mainProps {
 
@@ -41,6 +41,9 @@ const App: React.FC<mainProps> = (props) => {
   return (
     <React.Fragment>
       <Page header={Header} sidebar={Sidebar}>
+        <PageSection>
+          <SearchBar />
+        </PageSection>
         <PageSection>
           <TaskContainer />
         </PageSection>

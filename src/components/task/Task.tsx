@@ -7,7 +7,7 @@ import {
     FlexItem,
     Badge,
 } from '@patternfly/react-core';
-import { TimesIcon, PlusCircleIcon } from '@patternfly/react-icons';
+import { TimesIcon, PlusCircleIcon,OkIcon,DownloadIcon } from '@patternfly/react-icons';
 
 const Task: React.FC = () => {
     return (
@@ -31,11 +31,9 @@ const Task: React.FC = () => {
                     </div>
                 </Flex>
                 <Flex>
-                    {/* <div className="flex-numbers"> */}
-                    <FlexItem><span className="task-numbers">Downloads</span></FlexItem>
-                    <FlexItem>Rating</FlexItem>
-                    <FlexItem><span className="version">Version</span></FlexItem>
-                    {/* </div> */}
+                    <FlexItem><span className="task-numbers"><DownloadIcon/>{' '}5M</span></FlexItem>
+                    <FlexItem><span className="version"><OkIcon color='green'/>{' '}4.5</span></FlexItem>
+                    {/* <FlexItem><span className="version">Version</span></FlexItem> */}
                 </Flex>
             </Flex>
         </Card>
