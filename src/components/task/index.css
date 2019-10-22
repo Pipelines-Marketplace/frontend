@@ -20,13 +20,13 @@
 }
 
 .task-numbers {
+    margin-left: 1em;
+}
+
+.flex-numbers {
     margin-right: 1em;
 }
 
-.flex-numbers{
-    margin-right: 1em;
-}
-
-.version{
+.version {
     margin-right: 1em;
 }
