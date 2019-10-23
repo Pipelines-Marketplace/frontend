@@ -5,13 +5,15 @@ import {
     Flex,
     FlexItem,
 } from '@patternfly/react-core';
+import { useParams } from "react-router";
 
 const Detail: React.FC = () => {
+    let { taskId } = useParams();
     return (
         <div>
-            <Flex breakpointMods={[{ modifier: "row", breakpoint: "lg" },{modifier: "nowrap",breakpoint:"lg"},{modifier: "column",breakpoint:"sm"}]}>
+            <Flex breakpointMods={[{ modifier: "row", breakpoint: "lg" }, { modifier: "nowrap", breakpoint: "lg" }, { modifier: "column", breakpoint: "sm" }]}>
                 <FlexItem>
-                    <Description />
+                    <Description id={taskId} />
                 </FlexItem>
                 <FlexItem>
                     <Rating />

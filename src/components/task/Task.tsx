@@ -10,24 +10,36 @@ import {
     PageSection,
 } from '@patternfly/react-core';
 import { OkIcon, DownloadIcon } from '@patternfly/react-icons';
+export interface TaskPropObject {
+    id: number
+    name: string;
+    tags: string[];
+    description: string;
+    downloads: number;
+    rating: number;
+}
 
-const Task: React.FC = () => {
+export interface TaskProp {
+    task: TaskPropObject
+}
+const Task: React.FC<TaskProp> = (props) => {
     return (
         <Card className="card">
             <Flex breakpointMods={[{ modifier: "column", breakpoint: "lg" }, { modifier: "row", breakpoint: "lg" }]}>
                 <Flex breakpointMods={[{ modifier: "flex-1", breakpoint: "lg" }]}>
                     <div className="task-data">
-                        <FlexItem><Link to="/detail"><span className="task-heading">Golang-build-task</span></Link></FlexItem>
-                        <FlexItem>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est animi modi temporibus, alias qui obcaecati ullam dolor nam, nulla magni.</FlexItem>
+                        <FlexItem><Link to={`/detail/${props.task.id}`}><span className="task-heading">{props.task.name}</span></Link></FlexItem>
+                        <FlexItem>{props.task.description}</FlexItem>
                         <FlexItem>
                             <React.Fragment>
-                                <Badge>Go</Badge>
-                                {' '}
-                                <Badge>task</Badge>
-                                {' '}
-                                <Badge>build</Badge>
-                                {' '}
-                                <Badge>git</Badge>
+                                {
+                                    props.task.tags.map(tag =>
+                                        <span>
+                                            <Badge>{tag}</Badge>
+                                            {' '}
+                                        </span>
+                                    )
+                                }
                             </React.Fragment>
                         </FlexItem>
                     </div>

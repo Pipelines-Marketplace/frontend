@@ -108,8 +108,8 @@ const App: React.FC<mainProps> = (props) => {
           </PageSection>
           <PageSection>
             <Route exact path='/' component={TaskContainer} />
-            <Route path='/detail' component={Detail} />
-            <Route path='/search' component={SearchPage} />
+            <Route exact path='/detail/:taskId' component={Detail} />
+            <Route path='/search' component={TaskContainer} />
             <Route path='/community' component={Community} />
           </PageSection>
         </Page>
