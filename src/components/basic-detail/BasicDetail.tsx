@@ -24,7 +24,6 @@ import { isModifier } from '@patternfly/react-styles';
 
 
 const BasicDetail = () => {
-
     return (
         <Card style={{ minHeight: "10em" }}>
 

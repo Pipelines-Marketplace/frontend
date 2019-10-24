@@ -106,6 +106,7 @@ const App: React.FC<mainProps> = (props) => {
         <Page header={Header} sidebar={Sidebar}>
           <PageSection>
             <Route exact path='/' component={SearchBar} />
+            <Route exact path='/detail/:taskId' component={BasicDetail} />
             <Route exact path='/search' component={SearchBar} />
           </PageSection>
           <PageSection style={{ minHeight: "100vh" }}>
