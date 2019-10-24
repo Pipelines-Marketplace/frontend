@@ -1,0 +1,78 @@
+  .task-data{
+      margin: 1em;
+  }
+
+  .task-heading {
+    font-size: 1.5em;
+    margin: 0;
+    text-align: justified;
+    
+}
+  
+
+.basic-data{
+  margin-top: 1em;
+  margin-bottom: 2em;
+  margin-left: 1em;
+}
+
+.img{
+
+    float: left;
+    margin-left: 2em;
+    margin-top: 2em;
+    
+}
+
+.dwnld{
+  float: right;
+  margin-right: 2em;
+}
+
+.avatar{
+  margin-top: 1em;
+  margin-left:1em;
+}
+
+.a{
+  /* margin-left:1em; 
+  margin-top: 2em; */
+}
+
+
+.downloadIcon{
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.downloadNumber{
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+.download{
+  border-left: 0.2em solid blue;
+  height: 7em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+.heading{
+  font-size: 2em;
+}
+.data{
+  /* margin-bottom: 3em; */
+  margin-left: 2em;
+  /* border-right: 0.2em solid blue; */
+}
+
+.button{
+  width:auto;
+}
+
+/* @media screen and (min-width: 500px){
+  .border{
+    transform: rotate(90deg);
+  }
+} */
