@@ -6,6 +6,7 @@ import {
     FlexItem,
 } from '@patternfly/react-core';
 import { useParams } from "react-router";
+import BasicDetail from "../basic-detail/BasicDetail";
 
 const Detail: React.FC = () => {
     let { taskId } = useParams();
