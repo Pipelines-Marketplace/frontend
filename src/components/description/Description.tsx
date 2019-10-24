@@ -16,7 +16,7 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
         setActiveTabKey(tabIndex);
     }
     return (
-        <Card>
+        <Card >
             <CardHead>
                 <div className="ok-icon"><InfoCircleIcon color='blue' size='sm' /></div>
                 <div className="rating-heading">Description</div>

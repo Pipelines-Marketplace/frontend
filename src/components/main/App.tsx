@@ -6,14 +6,14 @@ import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/logo.png'
 import imgAvatar from '../assets/logo/imgAvatar.png';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
+import { css } from '@patternfly/react-styles';
 
-import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon } from '@patternfly/react-icons';
+import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, BlueprintIcon } from '@patternfly/react-icons';
 import spacingStyles from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import Community from "../community/Community";
 import SearchPage from "../searchPage/SearchPage";
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 
-import { css } from '@patternfly/react-styles';
 
 import {
   Button, ButtonVariant,
@@ -21,6 +21,7 @@ import {
   PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
+import { deflateSync } from 'zlib';
 
 interface mainProps {
 
@@ -48,7 +49,6 @@ const App: React.FC<mainProps> = (props) => {
 
   function onNavSelect(result: any) {
     setActiveItem(result.itemId);
-
   }
   // code for header contents
   const PageToolbar = (
@@ -78,35 +78,38 @@ const App: React.FC<mainProps> = (props) => {
       showNavToggle
       isNavOpen={isNavOpen}
       onNavToggle={onNavToggle}
+
     />
   );
   //  code for navigation page
   const PageNav = (
+
     <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
-      <NavList variant={NavVariants.simple}>
+      <NavList>
         <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
-          <HomeIcon />{' '}Home
-        </Link></NavItem>
+          <HomeIcon />{'  '}Home
+        </Link>
+        </NavItem>
         <NavItem itemId={1} isActive={activeItem === 1}><Link to="/search">
-          <SearchIcon /> {' '}Search
-          </Link></NavItem>
+          <SearchIcon />{'  '}Search
+          </Link>
+        </NavItem>
         <NavItem itemId={2} isActive={activeItem === 2} ><Link to="/community">
-          <UsersIcon />{' '}Community
-          </Link></NavItem>
+          <UsersIcon />{'   '}Community
+          </Link>
+        </NavItem>
       </NavList>
     </Nav>
   );
-
-
   const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
   return (
     <Router>
       <React.Fragment>
         <Page header={Header} sidebar={Sidebar}>
-          <PageSection>
+          <PageSection >
             <Route exact path='/' component={SearchBar} />
           </PageSection>
-          <PageSection>
+          <PageSection >
             <Route exact path='/' component={TaskContainer} />
             <Route exact path='/detail/:taskId' component={Detail} />
             <Route path='/search' component={TaskContainer} />

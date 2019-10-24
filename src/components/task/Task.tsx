@@ -24,7 +24,7 @@ export interface TaskProp {
 }
 const Task: React.FC<TaskProp> = (props) => {
     return (
-        <Card className="card">
+        <Card className="card" style={{borderLeft :'0.2em solid blue'}}>
             <Flex breakpointMods={[{ modifier: "column", breakpoint: "lg" }, { modifier: "row", breakpoint: "lg" }]}>
                 <Flex breakpointMods={[{ modifier: "flex-1", breakpoint: "lg" }]}>
                     <div className="task-data">
