@@ -9,7 +9,7 @@ import { OkIcon } from '@patternfly/react-icons';
 
 const Rating: React.FC = () => {
     return (
-        <Card>
+        <Card style={{minHeight:'40em',maxWidth:'30em'}}>
             <CardHead>
                 <div className="ok-icon"><OkIcon color='green' size='sm' /></div>
                 <div className="rating-heading">Rating</div>
