@@ -83,15 +83,15 @@ const App: React.FC<mainProps> = (props) => {
   //  code for navigation page
   const PageNav = (
     <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
-      <NavList variant={NavVariants.simple}>
+      <NavList variant={NavVariants.default}>
         <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
-          <HomeIcon />{' '}Home
+          <HomeIcon />{' '}<span className="navLink">Home</span>
         </Link></NavItem>
         <NavItem itemId={1} isActive={activeItem === 1}><Link to="/search">
-          <SearchIcon /> {' '}Search
+          <SearchIcon /> {' '}<span className="navLink">Search</span>
           </Link></NavItem>
         <NavItem itemId={2} isActive={activeItem === 2} ><Link to="/community">
-          <UsersIcon />{' '}Community
+          <UsersIcon />{' '}<span className="navLink">Community</span>
           </Link></NavItem>
       </NavList>
     </Nav>
@@ -105,8 +105,9 @@ const App: React.FC<mainProps> = (props) => {
         <Page header={Header} sidebar={Sidebar}>
           <PageSection>
             <Route exact path='/' component={SearchBar} />
+            <Route exact path='/search' component={SearchBar} />
           </PageSection>
-          <PageSection>
+          <PageSection style={{ minHeight: "100vh" }}>
             <Route exact path='/' component={TaskContainer} />
             <Route exact path='/detail/:taskId' component={Detail} />
             <Route path='/search' component={TaskContainer} />
