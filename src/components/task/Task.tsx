@@ -29,7 +29,7 @@ const Task: React.FC<TaskProp> = (props) => {
                 <Flex breakpointMods={[{ modifier: "flex-1", breakpoint: "lg" }]}>
                     <div className="task-data">
                         <FlexItem><Link to={`/detail/${props.task.id}`}><span className="task-heading">{props.task.name}</span></Link></FlexItem>
-                        <FlexItem>{props.task.description}</FlexItem>
+                        <FlexItem>{props.task.description.split(".")[0]}</FlexItem>
                         <FlexItem>
                             <React.Fragment>
                                 {
