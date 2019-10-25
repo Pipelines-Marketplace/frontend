@@ -3,25 +3,26 @@ import "./index.css";
 import SearchBar from "../search-bar/SearchBar";
 import TaskContainer from "../task-container/TaskContainer";
 import '@patternfly/react-core/dist/styles/base.css';
-import logo from '../assets/logo/logo.png'
+import logo from '../assets/logo/main.png'
 import imgAvatar from '../assets/logo/imgAvatar.png';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
+import { css } from '@patternfly/react-styles';
 
-import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon } from '@patternfly/react-icons';
+import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, UploadIcon, FileImageIcon } from '@patternfly/react-icons';
 import spacingStyles from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import Community from "../community/Community";
 import SearchPage from "../searchPage/SearchPage";
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
+import PageHeading from "../page-heading/PageHeading";
 
-import { css } from '@patternfly/react-styles';
 
 import {
-  Button, ButtonVariant,
+  Button, Flex,ButtonVariant,
   ToolbarItem, Page, Nav, NavItem, NavList, NavVariants, Brand, PageHeader, PageSidebar,
-  PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar
+  PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar, Text, TextContent
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
-import BasicDetail from '../basic-detail/BasicDetail';
+import BasicDetailParent from '../basic-detail/BasicDetailParent';
 
 interface mainProps {
 
@@ -42,17 +43,18 @@ const App: React.FC<mainProps> = (props) => {
 
 
   const logoProps = {
-    href: '',
+    href: '/',
     onClick: () => console.log('clicked logo'),
-    target: '_blank'
+    target: ''
+
   };
 
   function onNavSelect(result: any) {
     setActiveItem(result.itemId);
-
   }
   // code for header contents
   const PageToolbar = (
+    <div>
     <Toolbar>
       <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
         <ToolbarItem>
@@ -67,6 +69,7 @@ const App: React.FC<mainProps> = (props) => {
         </ToolbarItem>
       </ToolbarGroup>
     </Toolbar>
+    </div>
 
   );
 
@@ -79,10 +82,12 @@ const App: React.FC<mainProps> = (props) => {
       showNavToggle
       isNavOpen={isNavOpen}
       onNavToggle={onNavToggle}
+
     />
   );
   //  code for navigation page
   const PageNav = (
+
     <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
       <NavList variant={NavVariants.default}>
         <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
@@ -90,23 +95,29 @@ const App: React.FC<mainProps> = (props) => {
         </Link></NavItem>
         <NavItem itemId={1} isActive={activeItem === 1}><Link to="/search">
           <SearchIcon /> {' '}<span className="navLink">Search</span>
-          </Link></NavItem>
+        </Link></NavItem>
         <NavItem itemId={2} isActive={activeItem === 2} ><Link to="/community">
           <UsersIcon />{' '}<span className="navLink">Community</span>
-          </Link></NavItem>
+        </Link></NavItem>
+        <NavItem itemId={3} isActive={activeItem === 3} ><Link to="/community">
+          <FileImageIcon />{' '}<span className="navLink">My Content</span>
+        </Link></NavItem>
       </NavList>
     </Nav>
   );
-
-
   const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
+  const DefaultSidebar = <PageSidebar nav={PageNav} theme="dark" />;
   return (
     <Router>
       <React.Fragment>
         <Page header={Header} sidebar={Sidebar}>
+          {/* <PageSection variant={PageSectionVariants.light}> */}
+          <Route exact path='/' component={PageHeading} />
+          <Route exact path='/search' component={PageHeading} />
+          {/* </PageSection> */}
           <PageSection>
             <Route exact path='/' component={SearchBar} />
-            <Route exact path='/detail/:taskId' component={BasicDetail} />
+            <Route exact path='/detail/:taskId' component={BasicDetailParent} />
             <Route exact path='/search' component={SearchBar} />
           </PageSection>
           <PageSection style={{ minHeight: "100vh" }}>

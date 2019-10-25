@@ -48,6 +48,9 @@
     grid-area: footer;
 }
 
+.navLink{
+    margin-left: 0.5em;   
+}
 
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */

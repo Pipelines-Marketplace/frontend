@@ -11,22 +11,21 @@ import {
 
 } from '@patternfly/react-core';
 
-import { DownloadIcon, BorderStyleIcon } from '@patternfly/react-icons';
+import { DownloadIcon, BorderStyleIcon, StarIcon, GithubIcon } from '@patternfly/react-icons';
 import './index.css'
 import '@patternfly/react-core/dist/styles/base.css';
-import go from './go.jpeg'
-import { Split, SplitItem } from '@patternfly/react-core';
-
 import { Avatar } from '@patternfly/react-core';
 import avatarImg from './download.png';
-import { Gallery, GalleryItem } from '@patternfly/react-core';
-import { isModifier } from '@patternfly/react-styles';
+import { mockData } from '../../services/mockdata';
 
+export interface BasicDetailProp {
+    id: any
+}
 
-const BasicDetail = () => {
+const BasicDetail: React.FC<BasicDetailProp> = (taskId) => {
+    const task = mockData.filter((task) => task.id == taskId.id)[0];
     return (
-        <Card style={{ minHeight: "10em" }}>
-
+        <Card>
             <Flex breakpointMods={[{ modifier: "align-items-center", breakpoint: "lg" }]}>
                 <div className="avatar">
                     <Flex breakpointMods={[{ modifier: "align-self-flex-center", breakpoint: "lg" }]}>
@@ -38,16 +37,19 @@ const BasicDetail = () => {
                         <div className="data">
                             <Flex breakpointMods={[{ modifier: "column", breakpoint: "lg" }]}>
 
-                                <FlexItem><span className="heading">Golang-build-task</span>
-                                    <p>These tasks are Golang task to build, test and validate Go projects</p>
+                                <FlexItem><span className="heading">{task.Name}</span>
+                                    <p>{task.Description.split(".")[0] + "."}</p>
                                 </FlexItem>
-
                                 <FlexItem>
                                     <React.Fragment>
-                                        <Badge>Go</Badge>{' '}
-                                        <Badge>Build</Badge>{' '}
-                                        <Badge>Task</Badge>{' '}
-                                        <Badge>Git</Badge>{' '}
+                                        {
+                                            task.Tags.map(tag =>
+                                                <span>
+                                                    <Badge>{tag}</Badge>
+                                                    {' '}
+                                                </span>
+                                            )
+                                        }
                                     </React.Fragment>
                                 </FlexItem>
                             </Flex>
@@ -60,7 +62,8 @@ const BasicDetail = () => {
                     <Flex breakpointMods={[{ modifier: "align-right", breakpoint: "lg" }, { modifier: "column", breakpoint: "lg" }]}>
                         <FlexItem><span className="downloadNumber"><DownloadIcon />
                             {'  '}5M+</span></FlexItem>
-                        <FlexItem><span className="downloadIcon"><Button className="button">
+                        <FlexItem><span className="star"><StarIcon color="gold" size="md" /></span></FlexItem>
+                        <FlexItem><span className="downloadIcon"><Button className="button" style={{ width: "9em" }}>
                             Download
                         </Button></span></FlexItem>
                     </Flex>
