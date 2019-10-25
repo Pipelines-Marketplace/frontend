@@ -1,8 +1,9 @@
 import React from "react"
 import '@patternfly/react-core/dist/styles/base.css';
-import { Tabs, Tab, Card, CardHead } from '@patternfly/react-core';
+import { Tabs, Tab, Card, CardHead, Text, TextContent, TextVariants, List, ListItem } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons';
 import { mockData } from "../../services/mockdata";
+
 
 interface DescriptionProp {
     id: any
@@ -22,7 +23,56 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
             </CardHead>
             <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
                 <Tab eventKey={0} title="Description">
-                    {task.Description}
+                <TextContent>
+                    <Text component={TextVariants.h1}>Golang Tasks</Text>
+                    <Text component={TextVariants.h5}>These Tasks are Golang task to build, test and validate Go projects.</Text>
+
+                    <Text component={TextVariants.h1}>Install the tasks</Text>
+                    
+                    <List>
+                        <ListItem>kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/golang/lint.yaml</ListItem>
+                        <ListItem>kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/golang/build.yaml</ListItem>
+                        <ListItem>kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/golang/tests.yaml</ListItem>
+                    </List>
+                    
+                    <Text component={TextVariants.h1}>golangci-lint</Text>
+
+                    <Text component={TextVariants.h1}>Inputs</Text>
+
+                    <Text component={TextVariants.h2}>Parameters</Text>
+
+                    <List>
+                        <ListItem>package: base package under test</ListItem>
+                        <ListItem>packages: packages to test (default: ./...)</ListItem>
+                        <ListItem>version: golang version to use for tests (default: 1.12)</ListItem>
+                        <ListItem>flags: flags to use for go test command (default: -v)</ListItem>
+                        <ListItem>GOOS: operating system target (default: linux)</ListItem>
+                        <ListItem>GOARCH: architecture target (default: amd64)</ListItem>
+                        <ListItem>GO111MODULE: value of module support (default: auto)</ListItem>
+                    </List>
+
+                    <Text component={TextVariants.h1}>Resources</Text>
+                    <List>
+                        <ListItem>
+                            source: A git-type PipelineResource specifying the location of the source to build.
+                        </ListItem>
+                    </List>
+
+                    <Text component={TextVariants.h1}>golang-test</Text>
+                    <Text component={TextVariants.h1}>Inputs</Text>
+                    <Text component={TextVariants.h2}>Parameters</Text>
+
+                    <List>
+                        <ListItem>package: base package to build in</ListItem>
+                        <ListItem>packages: packages to test (default: ./cmd/...)</ListItem>
+                        <ListItem>version: golang version to use for builds (default: 1.12)</ListItem>
+                        <ListItem>flags: flags to use for go test command (default: -race -cover -v)</ListItem>
+                        <ListItem>GOOS: operating system target (default: linux)</ListItem>
+                        <ListItem>GOARCH: architecture target (default: amd64)</ListItem>
+                        <ListItem>GO111MODULE: value of module support (default: auto)</ListItem>
+                    </List>
+
+                </TextContent>
                 </Tab>
                 <Tab eventKey={1} title="YAML">
 <pre className="prettyprint lang-yaml">
