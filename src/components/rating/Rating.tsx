@@ -5,17 +5,17 @@ import {
     Card,
     CardHead,
 } from '@patternfly/react-core';
-import { OkIcon, StarIcon} from '@patternfly/react-icons';
+import { OkIcon, StarIcon } from '@patternfly/react-icons';
 import { ChartDonut } from '@patternfly/react-charts';
 
 const Rating: React.FC = () => {
     return (
         <Card style={{ minHeight: '40em', maxWidth: '30em', minWidth: '27em' }}>
             <div className="card-head">
-            <CardHead>
-                <div className="ok-icon"><OkIcon color='green' size='sm' /></div>
-                <div className="rating-heading">Rating</div>
-            </CardHead>
+                <CardHead>
+                    <div className="ok-icon"><OkIcon color='green' size='sm' /></div>
+                    <div className="rating-heading">Rating</div>
+                </CardHead>
             </div>
             <div className="rating-icon">
                 <span>
@@ -36,9 +36,6 @@ const Rating: React.FC = () => {
                         constrainToVisibleArea={true}
                         data={[{ x: '5 Star', y: 35 }, { x: '3 Star', y: 55 }, { x: '2 Star', y: 10 }]}
                         labels={({ datum }) => `${datum.x}: ${datum.y}%`}
-                        // legendData={[{ name: '5 Star: 35' }, { name: '3 Star: 55' }, { name: '2 Star: 10' }]}
-                        // legendOrientation="vertical"
-                        // legendPosition="right"
                         padding={{
                             bottom: 20,
                             left: 75,
