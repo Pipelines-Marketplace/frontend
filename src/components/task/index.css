@@ -1,5 +1,6 @@
 .card {
     margin: 0.5em;
+    border-left:0.1em solid rgb(30,102,204);
 }
 
 .exampleBorder {
