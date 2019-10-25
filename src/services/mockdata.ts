@@ -95,8 +95,10 @@ export const mockData = [
       "Example": "",
       "Tags": [
          "build",
-         "task"
-      ]
+         "task",
+         "go"
+      ],
+      "Github": "https://github.com/tektoncd/catalog/tree/master/golang"
    },
    {
       "id": 2,
@@ -203,9 +205,12 @@ export const mockData = [
       },
       "Example": "",
       "Tags": [
-         "Dockerfile",
-         "builder_image"
-      ]
+         "dockerfile",
+         "builder_image",
+         "buildah"
+      ],
+      "Github": "https://github.com/tektoncd/catalog/tree/master/buildah"
+
    },
    {
       "id": 3,
@@ -272,8 +277,10 @@ export const mockData = [
       },
       "Example": "",
       "Tags": [
-         "Dockerfile"
+         "dockerfile",
+         "kaniko"
       ]
+      , "Github": "https://github.com/tektoncd/catalog/tree/master/kaniko"
    },
    {
       "id": 4,
@@ -406,8 +413,10 @@ export const mockData = [
       "Example": "",
       "Tags": [
          "ocp",
-         "openshift"
-      ]
+         "openshift",
+         "s2i"
+      ],
+      "Github": "https://github.com/tektoncd/catalog/tree/master/s2i"
    },
    {
       "id": 5,
@@ -487,8 +496,12 @@ export const mockData = [
       },
       "Example": "",
       "Tags": [
-         "Maven"
-      ]
+         "maven",
+         "java",
+         "scala",
+         "kotlin"
+      ],
+      "Github": "https://github.com/tektoncd/catalog/tree/master/jib-maven"
    },
    {
       "id": 6,
@@ -537,8 +550,11 @@ export const mockData = [
       },
       "Example": "",
       "Tags": [
-         "gcloud-image"
-      ]
+         "gcloud-image",
+         "google",
+         "deploy"
+      ],
+      "Github": "https://github.com/tektoncd/catalog/tree/master/gcloud"
    },
    {
       "id": 7,
@@ -595,6 +611,7 @@ export const mockData = [
       "Tags": [
          "knative"
       ]
+      , "Github": "https://github.com/tektoncd/catalog/tree/master/kn"
    },
    {
       "id": 8,
@@ -637,6 +654,7 @@ export const mockData = [
       "Tags": [
          "openshift-client"
       ]
+      , "Github": "https://github.com/tektoncd/catalog/tree/master/openshift-client"
    },
    {
       "id": 9,
@@ -696,7 +714,8 @@ export const mockData = [
       "Tags": [
          "Kubeval",
          "Kubernetes"
-      ]
+      ],
+      "Github": "https://github.com/tektoncd/catalog/tree/master/openshift-client"
    },
    {
       "id": 10,
@@ -820,8 +839,9 @@ export const mockData = [
       },
       "Example": "",
       "Tags": [
-         "Dockerfile",
+         "dockerfile",
          "Tekton-Pipeline"
-      ]
+      ],
+      "Github": "https://github.com/tektoncd/catalog/tree/master/openshift-client"
    }
 ]
