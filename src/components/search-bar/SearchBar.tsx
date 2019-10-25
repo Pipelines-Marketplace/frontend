@@ -12,7 +12,7 @@ import {
 const SearchBar: React.FC = (props) => {
     return (
         <React.Fragment>
-            <InputGroup>
+            <InputGroup style={{width:"70%"}}>
                 <TextInput name="textInput11" id="textInput11" type="search" aria-label="search input example" />
                 <Button variant={ButtonVariant.control} aria-label="search button for search input">
                     <SearchIcon />

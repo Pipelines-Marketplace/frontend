@@ -16,12 +16,12 @@ import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibili
 
 
 import {
-  Button, ButtonVariant,
+  Button, Flex,ButtonVariant,
   ToolbarItem, Page, Nav, NavItem, NavList, NavVariants, Brand, PageHeader, PageSidebar,
   PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
-import { deflateSync } from 'zlib';
+import BasicDetail from '../basic-detail/BasicDetail';
 
 interface mainProps {
 
@@ -42,9 +42,10 @@ const App: React.FC<mainProps> = (props) => {
 
 
   const logoProps = {
-    href: '',
+    href: '/',
     onClick: () => console.log('clicked logo'),
-    target: '_blank'
+    target: ''
+
   };
 
   function onNavSelect(result: any) {
@@ -52,6 +53,7 @@ const App: React.FC<mainProps> = (props) => {
   }
   // code for header contents
   const PageToolbar = (
+    <div>
     <Toolbar>
       <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
         <ToolbarItem>
@@ -66,6 +68,7 @@ const App: React.FC<mainProps> = (props) => {
         </ToolbarItem>
       </ToolbarGroup>
     </Toolbar>
+    </div>
 
   );
 
@@ -85,19 +88,16 @@ const App: React.FC<mainProps> = (props) => {
   const PageNav = (
 
     <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
-      <NavList>
+      <NavList variant={NavVariants.default}>
         <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
-          <HomeIcon />{'  '}Home
-        </Link>
-        </NavItem>
+          <HomeIcon />{' '}<span className="navLink">Home</span>
+        </Link></NavItem>
         <NavItem itemId={1} isActive={activeItem === 1}><Link to="/search">
-          <SearchIcon />{'  '}Search
-          </Link>
-        </NavItem>
+          <SearchIcon /> {' '}<span className="navLink">Search</span>
+          </Link></NavItem>
         <NavItem itemId={2} isActive={activeItem === 2} ><Link to="/community">
-          <UsersIcon />{'   '}Community
-          </Link>
-        </NavItem>
+          <UsersIcon />{' '}<span className="navLink">Community</span>
+          </Link></NavItem>
       </NavList>
     </Nav>
   );
@@ -108,8 +108,10 @@ const App: React.FC<mainProps> = (props) => {
         <Page header={Header} sidebar={Sidebar}>
           <PageSection >
             <Route exact path='/' component={SearchBar} />
+            <Route exact path='/detail/:taskId' component={BasicDetail} />
+            <Route exact path='/search' component={SearchBar} />
           </PageSection>
-          <PageSection >
+          <PageSection style={{ minHeight: "100vh" }}>
             <Route exact path='/' component={TaskContainer} />
             <Route exact path='/detail/:taskId' component={Detail} />
             <Route path='/search' component={TaskContainer} />
