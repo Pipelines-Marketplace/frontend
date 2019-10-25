@@ -11,10 +11,12 @@ import { ChartDonut } from '@patternfly/react-charts';
 const Rating: React.FC = () => {
     return (
         <Card style={{ minHeight: '40em', maxWidth: '30em', minWidth: '27em' }}>
+            <div className="card-head">
             <CardHead>
                 <div className="ok-icon"><OkIcon color='green' size='sm' /></div>
                 <div className="rating-heading">Rating</div>
             </CardHead>
+            </div>
             <div className="rating-icon">
                 <span>
                     <StarIcon color="gold" size="lg" />
@@ -41,11 +43,11 @@ const Rating: React.FC = () => {
                             bottom: 20,
                             left: 75,
                             right: 75, // Adjusted to accommodate legend
-                            top: 20
+                            top: 10
                         }}
                         subTitle="Rating"
                         title="4.5"
-                        width={350}
+                        width={300}
                     />
                 </div>
             </div>

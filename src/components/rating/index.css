@@ -5,10 +5,15 @@
 .rating-heading {
     font-size: 1.3em;
 }
+
+.description-heading {
+    font-size: 1.3em;
+}
+
 .rating-icon {
 
-/* margin-left: 1.5em; */
-text-align: center;
-margin-bottom: 2em;
+    /* margin-left: 1.5em; */
+    text-align: center;
+    /* margin-bottom: 2em; */
 
 }

@@ -18,7 +18,7 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
         <Card style={{ minHeight: '40em', minWidth: '70em', maxWidth: '70em' }}>
             <CardHead>
                 <div className="ok-icon"><InfoCircleIcon color='blue' size='sm' /></div>
-                <div className="rating-heading">Description {' '} <a href={task.Github} style={{textDecoration:"none"}}><GithubIcon color="black" size="md"/></a></div>
+                <div className="description-heading">Description {' '} <a href={task.Github} style={{textDecoration:"none"}}><GithubIcon color="black" size="md"/></a></div>
             </CardHead>
             <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
                 <Tab eventKey={0} title="Description">
