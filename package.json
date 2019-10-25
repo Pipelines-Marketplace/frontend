@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@patternfly/react-charts": "^5.0.13",
     "@patternfly/react-core": "^3.112.3",
     "@patternfly/react-styles": "^3.5.27",
     "@patternfly/react-topology": "^2.8.65",

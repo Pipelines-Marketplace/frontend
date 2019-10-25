@@ -6,6 +6,7 @@ import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/main.png'
 import imgAvatar from '../assets/logo/imgAvatar.png';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
+import { css } from '@patternfly/react-styles';
 
 import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, UploadIcon, FileImageIcon } from '@patternfly/react-icons';
 import spacingStyles from '@patternfly/react-styles/css/utilities/Spacing/spacing';
@@ -14,10 +15,9 @@ import SearchPage from "../searchPage/SearchPage";
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import PageHeading from "../page-heading/PageHeading";
 
-import { css } from '@patternfly/react-styles';
 
 import {
-  Button, ButtonVariant,
+  Button, Flex,ButtonVariant,
   ToolbarItem, Page, Nav, NavItem, NavList, NavVariants, Brand, PageHeader, PageSidebar,
   PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar, Text, TextContent
 } from '@patternfly/react-core';
@@ -43,17 +43,18 @@ const App: React.FC<mainProps> = (props) => {
 
 
   const logoProps = {
-    href: '',
+    href: '/',
     onClick: () => console.log('clicked logo'),
-    target: '_blank'
+    target: ''
+
   };
 
   function onNavSelect(result: any) {
     setActiveItem(result.itemId);
-
   }
   // code for header contents
   const PageToolbar = (
+    <div>
     <Toolbar>
       <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
         <ToolbarItem>
@@ -68,6 +69,7 @@ const App: React.FC<mainProps> = (props) => {
         </ToolbarItem>
       </ToolbarGroup>
     </Toolbar>
+    </div>
 
   );
 
@@ -80,10 +82,12 @@ const App: React.FC<mainProps> = (props) => {
       showNavToggle
       isNavOpen={isNavOpen}
       onNavToggle={onNavToggle}
+
     />
   );
   //  code for navigation page
   const PageNav = (
+
     <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
       <NavList variant={NavVariants.default}>
         <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
@@ -101,8 +105,6 @@ const App: React.FC<mainProps> = (props) => {
       </NavList>
     </Nav>
   );
-
-
   const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
   const DefaultSidebar = <PageSidebar nav={PageNav} theme="dark" />;
   return (
