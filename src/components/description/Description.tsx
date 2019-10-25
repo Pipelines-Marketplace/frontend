@@ -24,8 +24,8 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
                 <Tab eventKey={0} title="Description">
                     <div className="tabContent">
                     <TextContent>
-                        <Text component={TextVariants.h1}>Golang Tasks</Text>
-                        <Text component={TextVariants.h5}>These Tasks are Golang task to build, test and validate Go projects.</Text>
+                        <Text component={TextVariants.h1}>{task.Name}</Text>
+                        <Text component={TextVariants.h5}>{task.Description}</Text>
 
                         <Text component={TextVariants.h1}>Install the tasks</Text>
 
