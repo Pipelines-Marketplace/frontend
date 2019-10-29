@@ -1,25 +1,36 @@
+/* eslint-disable max-len */
 import React from 'react';
-import "./index.css";
-import SearchBar from "../search-bar/SearchBar";
-import TaskContainer from "../task-container/TaskContainer";
+import './index.css';
+import SearchBar from '../search-bar/SearchBar';
+import TaskContainer from '../task-container/TaskContainer';
 import '@patternfly/react-core/dist/styles/base.css';
-import logo from '../assets/logo/main.png'
+import logo from '../assets/logo/main.png';
 import imgAvatar from '../assets/logo/imgAvatar.png';
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
-import { css } from '@patternfly/react-styles';
+import {Link, BrowserRouter as Router, Route} from 'react-router-dom';
+import {css} from '@patternfly/react-styles';
 
-import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, UploadIcon, FileImageIcon } from '@patternfly/react-icons';
-import spacingStyles from '@patternfly/react-styles/css/utilities/Spacing/spacing';
-import Community from "../community/Community";
-import SearchPage from "../searchPage/SearchPage";
+import {HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, FileImageIcon} from '@patternfly/react-icons';
+import Community from '../community/Community';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
-import PageHeading from "../page-heading/PageHeading";
+import PageHeading from '../page-heading/PageHeading';
 
 
 import {
-  Button, Flex,ButtonVariant,
-  ToolbarItem, Page, Nav, NavItem, NavList, NavVariants, Brand, PageHeader, PageSidebar,
-  PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar, Text, TextContent
+  Button,
+  ButtonVariant,
+  ToolbarItem,
+  Page,
+  Nav,
+  NavItem,
+  NavList,
+  NavVariants,
+  Brand,
+  PageHeader,
+  PageSidebar,
+  PageSection,
+  Toolbar,
+  ToolbarGroup,
+  Avatar,
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
@@ -32,43 +43,42 @@ interface mainState {
 }
 
 const App: React.FC<mainProps> = (props) => {
-
   const [isNavOpen, setNavToggle] = React.useState(true);
 
   const [activeItem, setActiveItem] = React.useState(0);
 
   const onNavToggle = () => {
     setNavToggle(!isNavOpen);
-  }
+  };
 
 
   const logoProps = {
     href: '/',
     onClick: () => console.log('clicked logo'),
-    target: ''
+    target: '',
 
   };
 
-  function onNavSelect(result: any) {
+  const onNavSelect=(result: any) =>{
     setActiveItem(result.itemId);
-  }
+  };
   // code for header contents
   const PageToolbar = (
     <div>
-    <Toolbar>
-      <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
-        <ToolbarItem>
-          <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
-            <BellIcon />
-          </Button>
-        </ToolbarItem>
-        <ToolbarItem>
-          <Button id="default-example-uid-02" aria-label="Settings actions" variant={ButtonVariant.plain}>
-            <CogIcon />
-          </Button>
-        </ToolbarItem>
-      </ToolbarGroup>
-    </Toolbar>
+      <Toolbar>
+        <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
+          <ToolbarItem>
+            <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
+              <BellIcon />
+            </Button>
+          </ToolbarItem>
+          <ToolbarItem>
+            <Button id="default-example-uid-02" aria-label="Settings actions" variant={ButtonVariant.plain}>
+              <CogIcon />
+            </Button>
+          </ToolbarItem>
+        </ToolbarGroup>
+      </Toolbar>
     </div>
 
   );
@@ -106,7 +116,6 @@ const App: React.FC<mainProps> = (props) => {
     </Nav>
   );
   const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
-  const DefaultSidebar = <PageSidebar nav={PageNav} theme="dark" />;
   return (
     <Router>
       <React.Fragment>
@@ -120,7 +129,7 @@ const App: React.FC<mainProps> = (props) => {
             <Route exact path='/detail/:taskId' component={BasicDetailParent} />
             <Route exact path='/search' component={SearchBar} />
           </PageSection>
-          <PageSection style={{ minHeight: "100vh" }}>
+          <PageSection style={{minHeight: '100vh'}}>
             <Route exact path='/' component={TaskContainer} />
             <Route exact path='/detail/:taskId' component={Detail} />
             <Route path='/search' component={TaskContainer} />
@@ -130,6 +139,6 @@ const App: React.FC<mainProps> = (props) => {
       </React.Fragment>
     </Router>
   );
-}
+};
 
 export default App;
