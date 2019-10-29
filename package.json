@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://chetan-rns.github.io/pipelines-frontend/",
+  "homepage": "https://Pipelines-Marketplace.github.io/frontend",
   "dependencies": {
     "@patternfly/react-charts": "^5.0.13",
     "@patternfly/react-core": "^3.112.3",
@@ -25,7 +25,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.tsx"
+    "lint": "eslint src/**/*.tsx",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,6 +58,7 @@
     "eslint-plugin-markdown": "^1.0.1",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
+    "gh-pages": "^2.1.1",
     "prettier": "^1.18.2"
   }
 }

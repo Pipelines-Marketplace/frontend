@@ -20,7 +20,7 @@ interface DescriptionProp {
 }
 
 const Description: React.FC<DescriptionProp> = (taskId) => {
-  const task = mockData.filter((task) => task.id == taskId.id)[0];
+  const task = mockData.filter((task) => task.id === taskId.id)[0];
   const [activeTabKey, setActiveTabKey] = React.useState(0);
   const handleTabClick = (event: any, tabIndex: any) => {
     setActiveTabKey(tabIndex);

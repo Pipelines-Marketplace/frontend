@@ -21,7 +21,7 @@ export interface BasicDetailProp {
 }
 
 const BasicDetail: React.FC<BasicDetailProp> = (taskId) => {
-  const task = mockData.filter((task) => task.id == taskId.id)[0];
+  const task = mockData.filter((task) => task.id === taskId.id)[0];
   return (
     <Card>
       <Flex breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}>
