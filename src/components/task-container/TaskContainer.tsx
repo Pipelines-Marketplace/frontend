@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import {TaskPropObject} from '../task/Task';
 import Task from '../task/Task';
 import {mockData} from '../../services/mockdata';

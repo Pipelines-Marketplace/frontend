@@ -1,11 +1,22 @@
+/* eslint-disable max-len */
 import React from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
-import {Tabs, Tab, Card, CardHead, Text, TextContent, TextVariants, List, ListItem} from '@patternfly/react-core';
+import {
+  Tabs,
+  Tab,
+  Card,
+  CardHead,
+  Text,
+  TextContent,
+  TextVariants,
+  List,
+  ListItem,
+} from '@patternfly/react-core';
 import {InfoCircleIcon, GithubIcon} from '@patternfly/react-icons';
 import {mockData} from '../../services/mockdata';
 import './index.css';
 interface DescriptionProp {
-    id: any
+  id: any
 }
 
 const Description: React.FC<DescriptionProp> = (taskId) => {
@@ -18,7 +29,12 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
     <Card style={{minHeight: '40em', minWidth: '70em', maxWidth: '70em'}}>
       <CardHead>
         <div className="ok-icon"><InfoCircleIcon color='blue' size='sm' /></div>
-        <div className="description-heading">Description {' '} <a href={task.Github} style={{textDecoration: 'none'}}><GithubIcon color="black" size="md" /></a></div>
+        <div className="description-heading">
+          Description {' '}
+          <a href={task.Github} style={{textDecoration: 'none'}}>
+            <GithubIcon color="black" size="md" />
+          </a>
+        </div>
       </CardHead>
       <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
         <Tab eventKey={0} title="Description">
@@ -42,19 +58,33 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
               <Text component={TextVariants.h2}>Parameters</Text>
 
               <List>
-                <ListItem>package: base package under test</ListItem>
-                <ListItem>packages: packages to test (default: ./...)</ListItem>
-                <ListItem>version: golang version to use for tests (default: 1.12)</ListItem>
-                <ListItem>flags: flags to use for go test command (default: -v)</ListItem>
-                <ListItem>GOOS: operating system target (default: linux)</ListItem>
-                <ListItem>GOARCH: architecture target (default: amd64)</ListItem>
-                <ListItem>GO111MODULE: value of module support (default: auto)</ListItem>
+                <ListItem>
+                  package: base package under test
+                </ListItem>
+                <ListItem>
+                  packages: packages to test (default: ./...)
+                </ListItem>
+                <ListItem>
+                  version: golang version to use for tests (default: 1.12)
+                </ListItem>
+                <ListItem>
+                  flags: flags to use for go test command (default: -v)
+                </ListItem>
+                <ListItem>
+                  GOOS: operating system target (default: linux)
+                </ListItem>
+                <ListItem>
+                  GOARCH: architecture target (default: amd64)
+                </ListItem>
+                <ListItem>
+                  GO111MODULE: value of module support (default: auto)
+                </ListItem>
               </List>
 
               <Text component={TextVariants.h1}>Resources</Text>
               <List>
                 <ListItem>
-                                    source: A git-type PipelineResource specifying the location of the source to build.
+                  source: A git-type PipelineResource specifying the location of the source to build.
                 </ListItem>
               </List>
 
@@ -63,13 +93,27 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
               <Text component={TextVariants.h2}>Parameters</Text>
 
               <List>
-                <ListItem>package: base package to build in</ListItem>
-                <ListItem>packages: packages to test (default: ./cmd/...)</ListItem>
-                <ListItem>version: golang version to use for builds (default: 1.12)</ListItem>
-                <ListItem>flags: flags to use for go test command (default: -race -cover -v)</ListItem>
-                <ListItem>GOOS: operating system target (default: linux)</ListItem>
-                <ListItem>GOARCH: architecture target (default: amd64)</ListItem>
-                <ListItem>GO111MODULE: value of module support (default: auto)</ListItem>
+                <ListItem>
+                  package: base package to build in
+                </ListItem>
+                <ListItem>
+                  packages: packages to test (default: ./cmd/...)
+                </ListItem>
+                <ListItem>
+                  version: golang version to use for builds (default: 1.12)
+                </ListItem>
+                <ListItem>
+                  flags: flags to use for go test command (default: -race -cover -v)
+                </ListItem>
+                <ListItem>
+                  GOOS: operating system target (default: linux)
+                </ListItem>
+                <ListItem>
+                  GOARCH: architecture target (default: amd64)
+                </ListItem>
+                <ListItem>
+                  GO111MODULE: value of module support (default: auto)
+                </ListItem>
               </List>
 
             </TextContent>
@@ -77,15 +121,15 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
         </Tab>
         <Tab eventKey={1} title="YAML">
           <pre className="yml prettyprint lang-yaml">
-                        apiVersion: tekton.dev/v1alpha1
+            apiVersion: tekton.dev/v1alpha1
             <br />
-                        kind: Task
+            kind: Task
             <br />
-                        metadata:
+            metadata:
             <br />
             {'  '}name: kaniko
             <br />
-                        spec:
+            spec:
             <br />
             {'  '}inputs:
             <br />
@@ -105,7 +149,7 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
             <br />
             {'  '}- name: EXTRA_ARGS
             <br />
-            {'   '}default: ""
+            {'   '}default: `&apos`
             <br />
             {'  '}resources:
             <br />
@@ -136,13 +180,13 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
             {'      '}# https://github.com/tektoncd/pipeline/pull/706
           </pre>
         </Tab>
-        <Tab eventKey={2} title="Example">
+        <Tab eventKey={2} title="Resources">
           <div className="example">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptate consequuntur autem harum quasi, natus sequi temporibus perferendis eos! Assumenda id nulla ratione quidem libero officiis asperiores aut veritatis odio.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi omnis, sint est quaerat architecto, amet ducimus, aliquid suscipit fuga itaque enim nostrum. Voluptatem, maxime magnam. Molestiae fugit facere nam expedita.
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem deleniti facere iure inventore ex odio, necessitatibus omnis veritatis accusantium cumque odit voluptatum voluptate corrupti saepe quis rem consequuntur, ullam autem.
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga sapiente vitae ipsa? Rem nobis, quae eligendi consequatur eos impedit. Incidunt, in aliquam. Repellendus minima aliquam voluptate culpa quis in voluptatem.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A inventore architecto voluptate atque voluptatibus ad cupiditate placeat exercitationem tempora dolor corrupti iure reprehenderit totam necessitatibus, ab, repellendus aut nisi eaque.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptate consequuntur autem harum quasi, natus sequi temporibus perferendis eos! Assumenda id nulla ratione quidem libero officiis asperiores aut veritatis odio.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi omnis, sint est quaerat architecto, amet ducimus, aliquid suscipit fuga itaque enim nostrum. Voluptatem, maxime magnam. Molestiae fugit facere nam expedita.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem deleniti facere iure inventore ex odio, necessitatibus omnis veritatis accusantium cumque odit voluptatum voluptate corrupti saepe quis rem consequuntur, ullam autem.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga sapiente vitae ipsa? Rem nobis, quae eligendi consequatur eos impedit. Incidunt, in aliquam. Repellendus minima aliquam voluptate culpa quis in voluptatem.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A inventore architecto voluptate atque voluptatibus ad cupiditate placeat exercitationem tempora dolor corrupti iure reprehenderit totam necessitatibus, ab, repellendus aut nisi eaque.
           </div>
         </Tab>
         {/* <Tab eventKey={0} title="Description">

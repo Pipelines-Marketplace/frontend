@@ -1,26 +1,29 @@
+/* eslint-disable max-len */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
-import {Route, Link, BrowserRouter as Router} from 'react-router-dom';
+import {
+  Link,
+} from 'react-router-dom';
 import './index.css';
 import {
   Card,
   Flex,
   FlexItem,
   Badge,
-  PageSection,
 } from '@patternfly/react-core';
 import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
 export interface TaskPropObject {
-    id: number
-    name: string;
-    tags: string[];
-    description: string;
-    downloads: number;
-    rating: number;
+  id: number
+  name: string;
+  tags: string[];
+  description: string;
+  downloads: number;
+  rating: number;
 }
 
 export interface TaskProp {
-    task: TaskPropObject
+  task: TaskPropObject
 }
 const Task: React.FC<TaskProp> = (props) => {
   return (

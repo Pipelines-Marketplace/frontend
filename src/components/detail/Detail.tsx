@@ -11,7 +11,9 @@ const Detail: React.FC = () => {
   const {taskId} = useParams();
   return (
     <div>
-      <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}, {modifier: 'nowrap', breakpoint: 'lg'}, {modifier: 'column', breakpoint: 'sm'}]}>
+      <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'},
+        {modifier: 'nowrap', breakpoint: 'lg'},
+        {modifier: 'column', breakpoint: 'sm'}]}>
         <FlexItem>
           <Description id={taskId} />
         </FlexItem>
