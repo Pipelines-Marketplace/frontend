@@ -136,7 +136,7 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
                     {'      '}# https://github.com/tektoncd/pipeline/pull/706
 </pre>
             </Tab>
-            <Tab eventKey={2} title="Example">
+            <Tab eventKey={2} title="Resources">
                 <div className="example">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptate consequuntur autem harum quasi, natus sequi temporibus perferendis eos! Assumenda id nulla ratione quidem libero officiis asperiores aut veritatis odio.
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi omnis, sint est quaerat architecto, amet ducimus, aliquid suscipit fuga itaque enim nostrum. Voluptatem, maxime magnam. Molestiae fugit facere nam expedita.
