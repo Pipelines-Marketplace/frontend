@@ -12,7 +12,9 @@ import {
   FlexItem,
   Badge,
 } from '@patternfly/react-core';
-import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
+import { OkIcon, DownloadIcon } from '@patternfly/react-icons';
+import SearchBar from '../search-bar/SearchBar'
+
 export interface TaskPropObject {
   id: number
   name: string;

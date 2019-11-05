@@ -95,6 +95,7 @@ const App: React.FC<mainProps> = (props) => {
 
     />
   );
+
   //  code for navigation page
   const PageNav = (
 
