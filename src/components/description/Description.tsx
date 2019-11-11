@@ -15,18 +15,22 @@ import {
 import {InfoCircleIcon, GithubIcon} from '@patternfly/react-icons';
 import {mockData} from '../../services/mockdata';
 import './index.css';
-interface DescriptionProp {
-  id: any
+
+
+export interface DescriptionProp {
+  // id: any
+  Description: string,
+  Yaml : string
 }
 
-const Description: React.FC<DescriptionProp> = () => {
-// const Description: React.FC<DescriptionProp> = (taskId) => {
 
-  // const task = mockData.filter((task) => task.id == taskId.id)[0];
-  // const [activeTabKey, setActiveTabKey] = React.useState(0);
-  // const handleTabClick = (event: any, tabIndex: any) => {
-  //   setActiveTabKey(tabIndex);
-  // };
+const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
+
+  const [activeTabKey, setActiveTabKey] = React.useState(0);
+  const handleTabClick = (event: any, tabIndex: any) => {
+    setActiveTabKey(tabIndex);
+  };
+  console.log(props.Yaml)
   return (
     <Card style={{minHeight: '40em', minWidth: '70em', maxWidth: '70em'}}>
       <CardHead>
@@ -38,16 +42,16 @@ const Description: React.FC<DescriptionProp> = () => {
           </a> */}
         </div>
       </CardHead>
-      {/* <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}> */}
-        <Tabs>
+      <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
+        {/* <Tabs> */}
         <Tab eventKey={0} title="Description">
           <div className="tabContent">
             <TextContent>
-
+              {props.Description}
               {/* <Text component={TextVariants.h1}>{task.Name}</Text>
               <Text component={TextVariants.h5}>{task.Description}</Text> */}
 
-              <Text component={TextVariants.h1}>Install the tasks</Text>
+              {/* <Text component={TextVariants.h1}>Install the tasks</Text>
 
               <List>
                 <ListItem>kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/golang/lint.yaml</ListItem>
@@ -118,13 +122,14 @@ const Description: React.FC<DescriptionProp> = () => {
                 <ListItem>
                   GO111MODULE: value of module support (default: auto)
                 </ListItem>
-              </List>
+              </List> */}
 
             </TextContent>
           </div>
         </Tab>
         <Tab eventKey={1} title="YAML">
-          <pre className="yml prettyprint lang-yaml">
+          {props.Yaml}
+          {/* <pre className="yml prettyprint lang-yaml">
             apiVersion: tekton.dev/v1alpha1
             <br />
             kind: Task
@@ -182,7 +187,7 @@ const Description: React.FC<DescriptionProp> = () => {
             {'      '}# specifying DOCKER_CONFIG is required to allow kaniko to detect docker credential
             <br />
             {'      '}# https://github.com/tektoncd/pipeline/pull/706
-          </pre>
+          </pre> */}
         </Tab>
         <Tab eventKey={2} title="Resources">
           <div className="example">

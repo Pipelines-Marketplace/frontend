@@ -1,11 +1,6 @@
 import {FETCH_TASK_NAME} from '../Actions/TaskActionType'
 import { dispatch } from 'd3';
-import {useParams} from 'react-router'
-// const fetchTaskSuccess = (TasksData: any) => {
-    // return{
-    //     type: FETCH_TASK_SUCCESS,
-    //     payload : TasksData
-    // }
+
 export function fetchTaskName (name: any) {
     // const {name} = useParams();
     // console.log(name)

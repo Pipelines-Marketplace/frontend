@@ -22,19 +22,6 @@ const Detail: React.FC = (props: any) => {
   }, [])
   
   var tempArr : any = []
-  // if(props.TaskName != null){
-    
-  //   tempArr = props.TaskName.map((task: any) =>{
-  //     const taskData: MockData = {
-  //           Name: task['Name'],
-  //           Description: task['Description'],
-  //           Rating: 0,
-  //           Downloads: 0,
-  //           YAML: task['YAML']
-  //          };
-  //          return taskData
-  //   })
-  // }
 
 if(props.TaskName != null){
   Object.keys(props.TaskName).map(function(key){
@@ -69,7 +56,7 @@ if(props.TaskData != null){
     </div>
   );
 };
-{/* <BasicDetail  task={props.TaskName.Name} /> */}
+
 const mapStateToProps = (state: any) => {
   return{
     TaskName : state.TaskName.TaskName

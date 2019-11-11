@@ -14,7 +14,6 @@ import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
 import {Avatar} from '@patternfly/react-core';
 import avatarImg from './download.png';
-import {mockData} from '../../services/mockdata';
 
 export interface BasicDetailPropObject {
     // id: any
@@ -30,11 +29,7 @@ export interface BasicDetailProp {
 }
 
 const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
-  // const task = mockData.filter((task) => task.id == taskId.id)[0];
-  // console.log(typeof(props.task))
-  // const taskName = props.task.filter((task :any) => task.Name == task)[0];
-  // console.log(props.task)
-  console.log(props.task.Description)
+  
   return (
     <Card>
       <Flex breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}>
