@@ -16,12 +16,25 @@ import {Avatar} from '@patternfly/react-core';
 import avatarImg from './download.png';
 import {mockData} from '../../services/mockdata';
 
-export interface BasicDetailProp {
-    id: any
+export interface BasicDetailPropObject {
+    // id: any
+    Name : string;
+    Description : string;
+    Downloads : number;
+    Rating : number;
+    YAML : string
 }
 
-const BasicDetail: React.FC<BasicDetailProp> = (taskId) => {
-  const task = mockData.filter((task) => task.id === taskId.id)[0];
+export interface BasicDetailProp {
+  task: BasicDetailPropObject
+}
+
+const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
+  // const task = mockData.filter((task) => task.id == taskId.id)[0];
+  // console.log(typeof(props.task))
+  // const taskName = props.task.filter((task :any) => task.Name == task)[0];
+  // console.log(props.task)
+  console.log(props.task.Description)
   return (
     <Card>
       <Flex breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}>
@@ -35,19 +48,19 @@ const BasicDetail: React.FC<BasicDetailProp> = (taskId) => {
             <div className="data">
               <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
 
-                <FlexItem><span className="heading">{task.Name}</span>
-                  <p>{task.Description.split('.')[0] + '.'}</p>
+                <FlexItem><span className="heading">{props.task.Name}</span>
+                  {/* <p>{task.Description.split('.')[0] + '.'}</p> */}
                 </FlexItem>
                 <FlexItem>
                   <React.Fragment>
-                    {
+                    {/* {
                       task.Tags.map((tag) =>
                         <span key={tag}>
                           <Badge>{tag}</Badge>
                           {' '}
                         </span>,
                       )
-                    }
+                    } */}
                   </React.Fragment>
                 </FlexItem>
               </Flex>
@@ -55,11 +68,10 @@ const BasicDetail: React.FC<BasicDetailProp> = (taskId) => {
           </FlexItem>
         </Flex>
 
-
         <div className="download">
           <Flex breakpointMods={[{modifier: 'align-right', breakpoint: 'lg'}, {modifier: 'column', breakpoint: 'lg'}]}>
             <FlexItem><span className="downloadNumber"><DownloadIcon />
-              {'  '}5M+</span></FlexItem>
+              {'  '}{props.task.Downloads}</span></FlexItem>
             <FlexItem><span className="star"><StarIcon color="gold" size="md" /></span></FlexItem>
             <FlexItem><span className="downloadIcon"><Button className="button" style={{width: '9em'}}>
                             Download

@@ -19,29 +19,33 @@ interface DescriptionProp {
   id: any
 }
 
-const Description: React.FC<DescriptionProp> = (taskId) => {
-  const task = mockData.filter((task) => task.id === taskId.id)[0];
-  const [activeTabKey, setActiveTabKey] = React.useState(0);
-  const handleTabClick = (event: any, tabIndex: any) => {
-    setActiveTabKey(tabIndex);
-  };
+const Description: React.FC<DescriptionProp> = () => {
+// const Description: React.FC<DescriptionProp> = (taskId) => {
+
+  // const task = mockData.filter((task) => task.id == taskId.id)[0];
+  // const [activeTabKey, setActiveTabKey] = React.useState(0);
+  // const handleTabClick = (event: any, tabIndex: any) => {
+  //   setActiveTabKey(tabIndex);
+  // };
   return (
     <Card style={{minHeight: '40em', minWidth: '70em', maxWidth: '70em'}}>
       <CardHead>
         <div className="ok-icon"><InfoCircleIcon color='blue' size='sm' /></div>
         <div className="description-heading">
           Description {' '}
-          <a href={task.Github} style={{textDecoration: 'none'}}>
+          {/* <a href={task.Github} style={{textDecoration: 'none'}}>
             <GithubIcon color="black" size="md" />
-          </a>
+          </a> */}
         </div>
       </CardHead>
-      <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
+      {/* <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}> */}
+        <Tabs>
         <Tab eventKey={0} title="Description">
           <div className="tabContent">
             <TextContent>
-              <Text component={TextVariants.h1}>{task.Name}</Text>
-              <Text component={TextVariants.h5}>{task.Description}</Text>
+
+              {/* <Text component={TextVariants.h1}>{task.Name}</Text>
+              <Text component={TextVariants.h5}>{task.Description}</Text> */}
 
               <Text component={TextVariants.h1}>Install the tasks</Text>
 

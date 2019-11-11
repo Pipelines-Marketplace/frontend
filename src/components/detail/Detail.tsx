@@ -1,6 +1,8 @@
 import React from 'react';
 import Description from '../description/Description';
 import Rating from '../rating/Rating';
+import {connect} from 'react-redux'
+import {fetchTaskSuccess} from '../redux/Actions/TaskAction'
 import {
   Flex,
   FlexItem,
@@ -25,4 +27,6 @@ const Detail: React.FC = () => {
   );
 };
 
-export default Detail;
+export default connect(null, {fetchTaskSuccess})(Detail)
+
+// export default Detail;
