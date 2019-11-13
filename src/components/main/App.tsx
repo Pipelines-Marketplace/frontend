@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react';
-import {Provider} from 'react-redux'
-import store from '../redux/store'
+import {Provider} from 'react-redux';
+import store from '../redux/store';
 import './index.css';
 import SearchBar from '../search-bar/SearchBar';
 import TaskContainer from '../task-container/TaskContainer';
@@ -129,13 +129,13 @@ const App: React.FC<mainProps> = (props) => {
           {/* </PageSection> */}
           <PageSection>
             <Provider store = {store}>
-            <Route exact path='/' component={SearchBar} />
-            <Route exact path='/detail/:name' component={BasicDetailParent} />
-            <Route exact path='/search' component={SearchBar} />
+              <Route exact path='/' component={SearchBar} />
+              <Route exact path='/detail/:name' component={BasicDetailParent} />
+              <Route exact path='/search' component={SearchBar} />
             </Provider>
           </PageSection>
           <PageSection style={{minHeight: '100vh'}}>
-          {/* <Provider store = {store}> */}
+            {/* <Provider store = {store}> */}
             <Route exact path='/' component={TaskContainer} />
             <Route exact path='/detail/:name' component={Detail} />
             <Route path='/search' component={TaskContainer} />

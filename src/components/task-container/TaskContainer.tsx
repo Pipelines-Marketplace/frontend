@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import {connect} from 'react-redux'
+import React from 'react';
+import {connect} from 'react-redux';
 import Task from '../task/Task';
-import {fetchTaskSuccess} from '../redux/Actions/TaskAction'
+import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
 
 export interface MockData{
   Name : string,
@@ -12,26 +12,22 @@ export interface MockData{
 }
 
 const TaskContainer: React.FC = (props: any) => {
-
-  const [Taskdata, setTaskData] = useState([])
-  
-  var tempArr : any = []
+  let tempArr : any = [];
   React.useEffect(() => {
-    props.fetchTaskSuccess()
-  }, [])
-    
-  if(props.TaskData != null){
-    
+    props.fetchTaskSuccess();
+  });
+
+  if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) =>{
       const taskData: MockData = {
-            Name: task['Name'],
-            Description: task['Description'],
-            Rating: 0,
-            Downloads: 0,
-            YAML: task['YAML']
-           };
-           return taskData
-    })
+        Name: task['Name'],
+        Description: task['Description'],
+        Rating: 0,
+        Downloads: 0,
+        YAML: task['YAML'],
+      };
+      return taskData;
+    });
   }
 
   return (
@@ -43,23 +39,21 @@ const TaskContainer: React.FC = (props: any) => {
             Description: task['Description'],
             Rating: 0,
             Downloads: 0,
-            YAML: task['YAML']
-           };
+            YAML: task['YAML'],
+          };
           return <Task key={task['Name']} task={taskData} />;
         })
-      }     
+      }
     </div>
   );
 };
 
 const mapStateToProps = (state: any) => {
-  return{
-      TaskData : state.TaskData.TaskData   
-  }
-}
+  return {
+    TaskData: state.TaskData.TaskData,
+  };
+};
 
-export default connect(mapStateToProps, {fetchTaskSuccess})(TaskContainer)
-
-
+export default connect(mapStateToProps, {fetchTaskSuccess})(TaskContainer);
 
 

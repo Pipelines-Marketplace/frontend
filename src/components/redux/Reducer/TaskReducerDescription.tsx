@@ -1,6 +1,5 @@
-import {FETCH_TASK_DESCRIPTION, FETCH_TASK_YAML} from '../Actions/TaskActionType'
-
-import { string } from 'prop-types'
+import {FETCH_TASK_DESCRIPTION} from '../Actions/TaskActionType';
+import {FETCH_TASK_YAML} from '../Actions/TaskActionType';
 
 export interface ResData{
     Name : string,
@@ -11,23 +10,23 @@ export interface ResData{
   }
 // type obj = ResData[]
 const initialState = {
-    data : new Array()
-}
+  data: [],
+};
 
 const reducer = (state = initialState, action : any) => {
-    switch(action.type){
-       case FETCH_TASK_DESCRIPTION:
-           return{
-                ...state,
-                TaskDescription : action.payload
-           }
-       case FETCH_TASK_YAML:
-            return{
-             ...state,
-             TaskYaml : action.payload
-        } 
-        default : return state
-    }
-}
+  switch (action.type) {
+    case FETCH_TASK_DESCRIPTION:
+      return {
+        ...state,
+        TaskDescription: action.payload,
+      };
+    case FETCH_TASK_YAML:
+      return {
+        ...state,
+        TaskYaml: action.payload,
+      };
+    default: return state;
+  }
+};
 
-export default reducer
+export default reducer;

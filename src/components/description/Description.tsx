@@ -12,10 +12,8 @@ import {
   List,
   ListItem,
 } from '@patternfly/react-core';
-import {InfoCircleIcon, GithubIcon} from '@patternfly/react-icons';
-import {mockData} from '../../services/mockdata';
+import {InfoCircleIcon} from '@patternfly/react-icons';
 import './index.css';
-
 
 export interface DescriptionProp {
   // id: any
@@ -23,14 +21,11 @@ export interface DescriptionProp {
   Yaml : string
 }
 
-
 const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
-
   const [activeTabKey, setActiveTabKey] = React.useState(0);
   const handleTabClick = (event: any, tabIndex: any) => {
     setActiveTabKey(tabIndex);
   };
-  console.log(props.Yaml)
   return (
     <Card style={{minHeight: '40em', minWidth: '70em', maxWidth: '70em'}}>
       <CardHead>

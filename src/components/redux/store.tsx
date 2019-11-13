@@ -1,5 +1,5 @@
-import {createStore, applyMiddleware} from 'redux'
-import RootReducer from '../redux/Reducer/RootReducer'
+import {createStore, applyMiddleware} from 'redux';
+import RootReducer from '../redux/Reducer/RootReducer';
 import thunk from 'redux-thunk';
 
 export interface ResData{
@@ -9,11 +9,11 @@ export interface ResData{
     Downloads : number,
     YAML : string
   }
-  export type obj = [ResData]
+export type obj = [ResData]
 
-const store = createStore(RootReducer, applyMiddleware(thunk))
+const store = createStore(RootReducer, applyMiddleware(thunk));
 
 // console.log(store.getState())
 // store.subscribe(() => {console.log(store.getState())})
 // store.dispatch(fetchUsers())
-export default store
+export default store;
