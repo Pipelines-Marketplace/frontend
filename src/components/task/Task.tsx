@@ -10,10 +10,8 @@ import {
   Card,
   Flex,
   FlexItem,
-  Badge,
 } from '@patternfly/react-core';
-import { OkIcon, DownloadIcon } from '@patternfly/react-icons';
-import SearchBar from '../search-bar/SearchBar'
+import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
 
 export interface TaskPropObject {
   // id: number
@@ -43,14 +41,22 @@ const Task: React.FC<TaskProp> = (props) => {
             {/* <FlexItem>{props.task.description.split('.')[0]}</FlexItem> */}
             <FlexItem>
               <React.Fragment>
-                {/* {
-                  props.task.tags.map((tag) =>
-                    <span key={tag}>
-                      <Badge>{tag}</Badge>
-                      {' '}
-                    </span>,
-                  )
-                } */}
+            Ansible Tower (formerly ‘AWX’) is a web-based solution that makes Ansible even more easy to use for IT teams of all kinds,
+              </React.Fragment>
+              <React.Fragment>
+                {
+                  // props.task.tags.map((tag) =>
+                  // <span key={tag}>
+                  // <span>
+                  //   <Badge>Build</Badge>
+                  //   {' '}
+                  //   <Badge>Task</Badge>
+                  //   {' '}
+                  //   <Badge>Deploy</Badge>
+                  //   {' '}
+                  // </span>
+                  // )
+                }
               </React.Fragment>
             </FlexItem>
           </div>

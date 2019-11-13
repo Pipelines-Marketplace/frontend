@@ -1,22 +1,19 @@
 import React from 'react';
 import Description from '../description/Description';
 import Rating from '../rating/Rating';
-import {connect} from 'react-redux'
-import {fetchTaskSuccess} from '../redux/Actions/TaskAction'
+import {connect} from 'react-redux';
 import {
   Flex,
   FlexItem,
 } from '@patternfly/react-core';
 import {useParams} from 'react-router';
-import {fetchTaskDescription} from '../redux/Actions/TaskActionDescription'
+import {fetchTaskDescription} from '../redux/Actions/TaskActionDescription';
 
 const Detail: React.FC = (props: any) => {
   const {name} = useParams();
-
-  
   React.useEffect(() => {
-    props.fetchTaskDescription(name)
-  }, [])
+    props.fetchTaskDescription(name);
+  });
 
   // console.log(fetchdata)
   // console.log(props.TaskDescription)
@@ -26,7 +23,9 @@ const Detail: React.FC = (props: any) => {
         {modifier: 'nowrap', breakpoint: 'lg'},
         {modifier: 'column', breakpoint: 'sm'}]}>
         <FlexItem>
-          <Description Description = {props.TaskDescription} Yaml = {props.TaskYaml} />
+          <Description
+            Description = {props.TaskDescription}
+            Yaml = {props.TaskYaml} />
         </FlexItem>
         <FlexItem>
           <Rating />
@@ -37,11 +36,11 @@ const Detail: React.FC = (props: any) => {
 };
 
 const mapStateToProps = (state: any) => {
-  return{
-    TaskDescription : state.TaskDescription.TaskDescription,
-    TaskYaml : state.TaskYaml.TaskYaml
-  }
-}
-export default connect(mapStateToProps, {fetchTaskDescription})(Detail)
+  return {
+    TaskDescription: state.TaskDescription.TaskDescription,
+    TaskYaml: state.TaskYaml.TaskYaml,
+  };
+};
+export default connect(mapStateToProps, {fetchTaskDescription})(Detail);
 
 // export default Detail;

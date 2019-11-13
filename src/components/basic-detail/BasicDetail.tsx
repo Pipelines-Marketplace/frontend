@@ -4,11 +4,10 @@ import {
 
   Card,
   Flex,
-  Badge,
+  // Badge,
   FlexItem,
   Button,
 } from '@patternfly/react-core';
-
 import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
 import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
@@ -29,7 +28,6 @@ export interface BasicDetailProp {
 }
 
 const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
-  
   return (
     <Card>
       <Flex breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}>

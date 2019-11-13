@@ -1,5 +1,4 @@
-import {FETCH_TASK_NAME} from '../Actions/TaskActionType'
-import { string } from 'prop-types'
+import {FETCH_TASK_NAME} from '../Actions/TaskActionType';
 
 export interface ResData{
     Name : string,
@@ -10,19 +9,19 @@ export interface ResData{
   }
 // type obj = ResData[]
 const initialState = {
-    data : new Array()
-}
+  data: [],
+};
 
 const reducer = (state = initialState, action : any) => {
-    switch(action.type){
-       case FETCH_TASK_NAME:
+  switch (action.type) {
+    case FETCH_TASK_NAME:
 
-           return{
-                ...state,
-                TaskName : action.payload
-           }
-        default : return state
-    }
-}
+      return {
+        ...state,
+        TaskName: action.payload,
+      };
+    default: return state;
+  }
+};
 
-export default reducer
+export default reducer;
