@@ -41,7 +41,7 @@ const Detail: React.FC = (props: any) => {
     });
   };
 
-  if (props.TaskName!=null) {
+  if (props.TaskName==null) {
     return (
       <BasicDetail task={props.TaskName} />
     );

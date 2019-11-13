@@ -41,7 +41,8 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
             <div className="data">
               <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
 
-                <FlexItem><span className="heading">{props.task.Name}</span>
+                {/* <FlexItem><span className="heading">{props.task.Name}</span> */}
+                <FlexItem><span className="heading">Task Name</span>
                   {/* <p>{task.Description.split('.')[0] + '.'}</p> */}
                 </FlexItem>
                 <FlexItem>
@@ -64,7 +65,8 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
         <div className="download">
           <Flex breakpointMods={[{modifier: 'align-right', breakpoint: 'lg'}, {modifier: 'column', breakpoint: 'lg'}]}>
             <FlexItem><span className="downloadNumber"><DownloadIcon />
-              {'  '}{props.task.Downloads}</span></FlexItem>
+              {/* {'  '}{props.task.Downloads}</span></FlexItem> */}
+              {'  '}10M</span></FlexItem>
             <FlexItem><span className="star"><StarIcon color="gold" size="md" /></span></FlexItem>
             <FlexItem><span className="downloadIcon"><Button className="button" style={{width: '9em'}}>
                             Download
