@@ -13,7 +13,7 @@ import {HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, FileImageIcon} from 
 import Community from '../community/Community';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import PageHeading from '../page-heading/PageHeading';
-
+import Filter from '../filter/Filter';
 
 import {
   Button,
@@ -115,7 +115,7 @@ const App: React.FC<mainProps> = (props) => {
       </NavList>
     </Nav>
   );
-  const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
+  const Sidebar = <Filter />;
   return (
     <Router>
       <React.Fragment>

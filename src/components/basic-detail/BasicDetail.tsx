@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+//  eslint-enable max-len 
 import React from 'react';
 import {
 
@@ -8,14 +8,12 @@ import {
   FlexItem,
   Button,
 } from '@patternfly/react-core';
-
 import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
 import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
 import {Avatar} from '@patternfly/react-core';
 import avatarImg from './download.png';
 import {mockData} from '../../services/mockdata';
-
 export interface BasicDetailProp {
     id: any
 }
