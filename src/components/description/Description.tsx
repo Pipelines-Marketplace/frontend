@@ -12,15 +12,16 @@ import {
   List,
   ListItem,
 } from '@patternfly/react-core';
-import {InfoCircleIcon, GithubIcon} from '@patternfly/react-icons';
-import {mockData} from '../../services/mockdata';
+import {InfoCircleIcon} from '@patternfly/react-icons';
 import './index.css';
-interface DescriptionProp {
-  id: any
+
+export interface DescriptionProp {
+  // id: any
+  Description: string,
+  Yaml : string
 }
 
-const Description: React.FC<DescriptionProp> = (taskId) => {
-  const task = mockData.filter((task) => task.id === taskId.id)[0];
+const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
   const [activeTabKey, setActiveTabKey] = React.useState(0);
   const handleTabClick = (event: any, tabIndex: any) => {
     setActiveTabKey(tabIndex);
@@ -31,17 +32,19 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
         <div className="ok-icon"><InfoCircleIcon color='blue' size='sm' /></div>
         <div className="description-heading">
           Description {' '}
-          <a href={task.Github} style={{textDecoration: 'none'}}>
+          {/* <a href={task.Github} style={{textDecoration: 'none'}}>
             <GithubIcon color="black" size="md" />
-          </a>
+          </a> */}
         </div>
       </CardHead>
       <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
+        {/* <Tabs> */}
         <Tab eventKey={0} title="Description">
           <div className="tabContent">
             <TextContent>
-              <Text component={TextVariants.h1}>{task.Name}</Text>
-              <Text component={TextVariants.h5}>{task.Description}</Text>
+              {/* {props.Description} */}
+              {/* <Text component={TextVariants.h1}>{task.Name}</Text>
+              <Text component={TextVariants.h5}>{task.Description}</Text> */}
 
               <Text component={TextVariants.h1}>Install the tasks</Text>
 
@@ -120,6 +123,7 @@ const Description: React.FC<DescriptionProp> = (taskId) => {
           </div>
         </Tab>
         <Tab eventKey={1} title="YAML">
+          {/* {props.Yaml} */}
           <pre className="yml prettyprint lang-yaml">
             apiVersion: tekton.dev/v1alpha1
             <br />

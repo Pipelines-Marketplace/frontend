@@ -1,25 +1,59 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import {TaskPropObject} from '../task/Task'
+import {connect} from 'react-redux';
 import Task from '../task/Task';
-import {mockData} from '../../services/mockdata';
-const TaskContainer: React.FC = (props) => {
+import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+
+export interface MockData{
+  Name : string,
+  Description : string,
+  Rating : number,
+  Downloads : number,
+  YAML : string
+}
+
+const TaskContainer: React.FC = (props: any) => {
+  let tempArr : any = [];
+  React.useEffect(() => {
+    props.fetchTaskSuccess();
+  });
+
+  if (props.TaskData != null) {
+    tempArr = props.TaskData.map((task: any) =>{
+      const taskData: MockData = {
+        Name: task['Name'],
+        Description: task['Description'],
+        Rating: 0,
+        Downloads: 0,
+        YAML: task['YAML'],
+      };
+      return taskData;
+    });
+  }
+
   return (
     <div>
       {
-        mockData.map((task: any) => {
-          const taskData: TaskPropObject = {
-            id: task['id'],
-            name: task['Name'],
-            tags: task['Tags'],
-            description: task['Description'],
-            downloads: 0,
-            rating: 0,
+        tempArr.map((task: any) => {
+          const taskData: MockData = {
+            Name: task['Name'],
+            Description: task['Description'],
+            Rating: 0,
+            Downloads: 0,
+            YAML: task['YAML'],
           };
-          return <Task key={task['id']} task={taskData} />;
-        })}
+          return <Task key={task['Name']} task={taskData} />;
+        })
+      }
     </div>
   );
 };
 
-export default TaskContainer;
+const mapStateToProps = (state: any) => {
+  return {
+    TaskData: state.TaskData.TaskData,
+  };
+};
+
+export default connect(mapStateToProps, {fetchTaskSuccess})(TaskContainer);
+
+

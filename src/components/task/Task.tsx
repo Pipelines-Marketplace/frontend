@@ -10,16 +10,22 @@ import {
   Card,
   Flex,
   FlexItem,
-  Badge,
 } from '@patternfly/react-core';
 import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
+
 export interface TaskPropObject {
-  id: number
-  name: string;
-  tags: string[];
-  description: string;
-  downloads: number;
-  rating: number;
+  // id: number
+  // name: string;
+  // tags: string[];
+  // description: string;
+  // downloads: number;
+  // rating: number;
+
+  Name : string;
+  Description : string;
+  Rating : number;
+  Downloads : number;
+  YAML : string
 }
 
 export interface TaskProp {
@@ -31,17 +37,25 @@ const Task: React.FC<TaskProp> = (props) => {
       <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}, {modifier: 'row', breakpoint: 'lg'}]}>
         <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
           <div className="task-data">
-            <FlexItem><Link to={`/detail/${props.task.id}`}><span className="task-heading">{props.task.name}</span></Link></FlexItem>
-            <FlexItem>{props.task.description.split('.')[0]}</FlexItem>
+            <FlexItem><Link to={`/detail/${props.task.Name}`}><span className="task-heading">{props.task.Name}</span></Link></FlexItem>
+            {/* <FlexItem>{props.task.description.split('.')[0]}</FlexItem> */}
             <FlexItem>
               <React.Fragment>
+            Ansible Tower (formerly ‘AWX’) is a web-based solution that makes Ansible even more easy to use for IT teams of all kinds,
+              </React.Fragment>
+              <React.Fragment>
                 {
-                  props.task.tags.map((tag) =>
-                    <span key={tag}>
-                      <Badge>{tag}</Badge>
-                      {' '}
-                    </span>,
-                  )
+                  // props.task.tags.map((tag) =>
+                  // <span key={tag}>
+                  // <span>
+                  //   <Badge>Build</Badge>
+                  //   {' '}
+                  //   <Badge>Task</Badge>
+                  //   {' '}
+                  //   <Badge>Deploy</Badge>
+                  //   {' '}
+                  // </span>
+                  // )
                 }
               </React.Fragment>
             </FlexItem>
