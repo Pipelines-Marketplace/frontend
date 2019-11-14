@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Task from '../task/Task';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+import Demo from '../task/Demo';
 
 export interface MockData{
   Name : string,
@@ -44,6 +45,7 @@ const TaskContainer: React.FC = (props: any) => {
           return <Task key={task['Name']} task={taskData} />;
         })
       }
+      <Demo />
     </div>
   );
 };
