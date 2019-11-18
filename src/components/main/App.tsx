@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import {Provider} from 'react-redux';
-import store from '../redux/store';
+import SignIn from '../user-authentication/SignIn'
 import './index.css';
 import SearchBar from '../search-bar/SearchBar';
 import TaskContainer from '../task-container/TaskContainer';
@@ -44,6 +43,7 @@ interface mainState {
   value: string;
 }
 
+
 const App: React.FC<mainProps> = (props) => {
   const [isNavOpen, setNavToggle] = React.useState(true);
 
@@ -52,7 +52,10 @@ const App: React.FC<mainProps> = (props) => {
   const onNavToggle = () => {
     setNavToggle(!isNavOpen);
   };
-
+ function signin() {
+   console.log('signin');
+    return  <SignIn />
+ }
 
   const logoProps = {
     href: '/',
@@ -70,14 +73,18 @@ const App: React.FC<mainProps> = (props) => {
       <Toolbar>
         <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
           <ToolbarItem>
+          <Link to='/uploadtask' ><span> Upload_Task{' '}</span> </Link> 
             <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
               <BellIcon />
             </Button>
           </ToolbarItem>
           <ToolbarItem>
-            <Button id="default-example-uid-02" aria-label="Settings actions" variant={ButtonVariant.plain}>
-              <CogIcon />
-            </Button>
+           
+            <Link to='/signin' ><span> Signin </span> </Link> 
+            {/* <Button id="default-example-uid-02" onClick={SignIn} aria-label="Settings actions" variant={ButtonVariant.plain}>
+              SignIn
+            </Button> */}
+        
           </ToolbarItem>
         </ToolbarGroup>
       </Toolbar>
@@ -97,7 +104,6 @@ const App: React.FC<mainProps> = (props) => {
 
     />
   );
-
   //  code for navigation page
   const PageNav = (
 
@@ -126,21 +132,20 @@ const App: React.FC<mainProps> = (props) => {
           {/* <PageSection variant={PageSectionVariants.light}> */}
           <Route exact path='/' component={PageHeading} />
           <Route exact path='/search' component={PageHeading} />
+         
           {/* </PageSection> */}
           <PageSection>
-            <Provider store = {store}>
-              <Route exact path='/' component={SearchBar} />
-              <Route exact path='/detail/:name' component={BasicDetailParent} />
-              <Route exact path='/search' component={SearchBar} />
-            </Provider>
+            <Route exact path='/' component={SearchBar} />
+            <Route exact path='/signin' component={SignIn}/>
+            <Route exact path='/uploadtask' component={SignIn}/>
+            <Route exact path='/detail/:taskId' component={BasicDetailParent} />
+            <Route exact path='/search' component={SearchBar} />
           </PageSection>
           <PageSection style={{minHeight: '100vh'}}>
-            {/* <Provider store = {store}> */}
             <Route exact path='/' component={TaskContainer} />
-            <Route exact path='/detail/:name' component={Detail} />
+            <Route exact path='/detail/:taskId' component={Detail} />
             <Route path='/search' component={TaskContainer} />
             <Route path='/community' component={Community} />
-            {/* </Provider> */}
           </PageSection>
         </Page>
       </React.Fragment>

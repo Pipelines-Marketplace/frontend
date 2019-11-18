@@ -41,6 +41,8 @@ const Task: React.FC<TaskProp> = (props) => {
             {/* <FlexItem>{props.task.description.split('.')[0]}</FlexItem> */}
             <FlexItem>
               <React.Fragment>
+           {props.task.Name}
+              
             Ansible Tower (formerly ‘AWX’) is a web-based solution that makes Ansible even more easy to use for IT teams of all kinds,
               </React.Fragment>
               <React.Fragment>
