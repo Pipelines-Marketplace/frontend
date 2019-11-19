@@ -1,6 +1,6 @@
 .card {
     margin: 0.5em;
-    border-left:0.1em solid rgb(30,102,204);
+    /* border-left:0.1em solid rgb(30,102,204); */
 }
 
 .exampleBorder {
@@ -30,4 +30,29 @@
 
 .version {
     margin-right: 1em;
+}
+
+.badge{
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+.download{
+    /* padding-left: 1em; */
+    /* margin-right: em; */
+    margin-bottom: 0.1em;
+}
+
+.rating{
+    /* margin-right: 0.3em; */
+    margin-bottom: 0.1em;
+}
+
+.text{
+    margin-bottom: -0.3em;
+    margin-right: 0.5em;
+}
+
+.cardActions{
+    margin-bottom: 0.3em;
 }
