@@ -1,16 +1,24 @@
-/* eslint-disable max-len */
+/* eslint-disable import/order */
+/* eslint-disable import/no-unresolved */
 import React from 'react';
-import SignIn from '../user-authentication/SignIn'
 import './index.css';
+import {
+  Link,
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
 import SearchBar from '../search-bar/SearchBar';
 import TaskContainer from '../task-container/TaskContainer';
+import UploadTask from '../upload-task/UploadTask';
 import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/main.png';
 import imgAvatar from '../assets/logo/imgAvatar.png';
-import {Link, BrowserRouter as Router, Route} from 'react-router-dom';
-import {css} from '@patternfly/react-styles';
-
-import {HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, FileImageIcon} from '@patternfly/react-icons';
+// eslint-disable-next-line import/order
+import { css } from '@patternfly/react-styles';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  BellIcon,
+} from '@patternfly/react-icons';
 import Community from '../community/Community';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
 import PageHeading from '../page-heading/PageHeading';
@@ -21,13 +29,8 @@ import {
   ButtonVariant,
   ToolbarItem,
   Page,
-  Nav,
-  NavItem,
-  NavList,
-  NavVariants,
   Brand,
   PageHeader,
-  PageSidebar,
   PageSection,
   Toolbar,
   ToolbarGroup,
@@ -44,47 +47,46 @@ interface mainState {
 }
 
 
-const App: React.FC<mainProps> = (props) => {
+const App: React.FC<mainProps> = () => {
   const [isNavOpen, setNavToggle] = React.useState(true);
-
-  const [activeItem, setActiveItem] = React.useState(0);
-
+  // const [activeItem, setActiveItem] = React.useState(0);
   const onNavToggle = () => {
     setNavToggle(!isNavOpen);
   };
- function signin() {
-   console.log('signin');
-    return  <SignIn />
- }
-
   const logoProps = {
     href: '/',
+    // eslint-disable-next-line no-console
     onClick: () => console.log('clicked logo'),
     target: '',
 
   };
-
-  const onNavSelect=(result: any) =>{
-    setActiveItem(result.itemId);
-  };
+  // const onNavSelect = (result: any) => {
+  //   setActiveItem(result.itemId);
+  // };
   // code for header contents
   const PageToolbar = (
+    // eslint-disable-next-line react/jsx-filename-extension
     <div>
       <Toolbar>
         <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
           <ToolbarItem>
-          <Link to='/uploadtask' ><span> Upload_Task{' '}</span> </Link> 
+            <Link to="/uploadtask">
+              <span>
+                {' '}
+Upload_Task
+                {' '}
+              </span>
+              {' '}
+            </Link>
             <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
               <BellIcon />
             </Button>
           </ToolbarItem>
           <ToolbarItem>
-           
-            <Link to='/signin' ><span> Signin </span> </Link> 
-            {/* <Button id="default-example-uid-02" onClick={SignIn} aria-label="Settings actions" variant={ButtonVariant.plain}>
-              SignIn
-            </Button> */}
-        
+            <Link to="/signin">
+              <span> Signin </span>
+              {' '}
+            </Link>
           </ToolbarItem>
         </ToolbarGroup>
       </Toolbar>
@@ -104,51 +106,31 @@ const App: React.FC<mainProps> = (props) => {
 
     />
   );
-  //  code for navigation page
-  const PageNav = (
-
-    <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
-      <NavList variant={NavVariants.default}>
-        <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
-          <HomeIcon />{' '}<span className="navLink">Home</span>
-        </Link></NavItem>
-        <NavItem itemId={1} isActive={activeItem === 1}><Link to="/search">
-          <SearchIcon /> {' '}<span className="navLink">Search</span>
-        </Link></NavItem>
-        <NavItem itemId={2} isActive={activeItem === 2} ><Link to="/community">
-          <UsersIcon />{' '}<span className="navLink">Community</span>
-        </Link></NavItem>
-        <NavItem itemId={3} isActive={activeItem === 3} ><Link to="/community">
-          <FileImageIcon />{' '}<span className="navLink">My Content</span>
-        </Link></NavItem>
-      </NavList>
-    </Nav>
-  );
   const Sidebar = <Filter />;
   return (
     <Router>
-      <React.Fragment>
+      <>
         <Page header={Header} sidebar={Sidebar}>
           {/* <PageSection variant={PageSectionVariants.light}> */}
-          <Route exact path='/' component={PageHeading} />
-          <Route exact path='/search' component={PageHeading} />
-         
+          <Route exact path="/" component={PageHeading} />
+          <Route exact path="/search" component={PageHeading} />
+
           {/* </PageSection> */}
           <PageSection>
-            <Route exact path='/' component={SearchBar} />
-            <Route exact path='/signin' component={SignIn}/>
-            <Route exact path='/uploadtask' component={SignIn}/>
-            <Route exact path='/detail/:taskId' component={BasicDetailParent} />
-            <Route exact path='/search' component={SearchBar} />
+            <Route exact path="/" component={SearchBar} />
+            <Route exact path="/signin" component={UploadTask} />
+            <Route exact path="/uploadtask" component={UploadTask} />
+            <Route exact path="/detail/:taskId" component={BasicDetailParent} />
+            <Route exact path="/search" component={SearchBar} />
           </PageSection>
-          <PageSection style={{minHeight: '100vh'}}>
-            <Route exact path='/' component={TaskContainer} />
-            <Route exact path='/detail/:taskId' component={Detail} />
-            <Route path='/search' component={TaskContainer} />
-            <Route path='/community' component={Community} />
+          <PageSection style={{ minHeight: '100vh' }}>
+            <Route exact path="/" component={TaskContainer} />
+            <Route exact path="/detail/:taskId" component={Detail} />
+            <Route path="/search" component={TaskContainer} />
+            <Route path="/community" component={Community} />
           </PageSection>
         </Page>
-      </React.Fragment>
+      </>
     </Router>
   );
 };
