@@ -2,13 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Task from '../task/Task';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+import {Gallery} from '@patternfly/react-core';
+import './index.css';
 
-export interface MockData{
+export interface TaskPropData{
   Name : string,
   Description : string,
   Rating : number,
   Downloads : number,
-  YAML : string
+  Yaml : string,
+  Tags : [],
 }
 
 const TaskContainer: React.FC = (props: any) => {
@@ -19,34 +22,31 @@ const TaskContainer: React.FC = (props: any) => {
 
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) =>{
-      const taskData: MockData = {
-        Name: task['Name'],
-        Description: task['Description'],
+      const taskData: TaskPropData = {
+        Name: task['name'],
+        Description: task['description'],
         Rating: 0,
         Downloads: 0,
-        YAML: task['YAML'],
+        Yaml: task['yaml'],
+        Tags: task['tags'],
       };
       return taskData;
     });
   }
 
   return (
-    <div>
-      {
-        tempArr.map((task: any) => {
-          const taskData: MockData = {
-            Name: task['Name'],
-            Description: task['Description'],
-            Rating: 0,
-            Downloads: 0,
-            YAML: task['YAML'],
-          };
-          return <Task key={task['Name']} task={taskData} />;
-        })
-      }
+    <div className="block">
+      <Gallery gutter = "lg">
+        {
+          tempArr.map((task: any) => {
+            return <Task key={task['name']} task = {task} />;
+          })
+        }
+      </Gallery>
     </div>
   );
 };
+
 
 const mapStateToProps = (state: any) => {
   return {
