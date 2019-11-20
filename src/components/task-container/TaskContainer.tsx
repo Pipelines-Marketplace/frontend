@@ -5,13 +5,13 @@ import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
 import {Gallery} from '@patternfly/react-core';
 import './index.css';
 
-export interface MockData{
+export interface TaskPropData{
   Name : string,
   Description : string,
   Rating : number,
   Downloads : number,
-  YAML : string,
-  TAGS : [],
+  Yaml : string,
+  Tags : [],
 }
 
 const TaskContainer: React.FC = (props: any) => {
@@ -22,13 +22,13 @@ const TaskContainer: React.FC = (props: any) => {
 
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) =>{
-      const taskData: MockData = {
+      const taskData: TaskPropData = {
         Name: task['name'],
         Description: task['description'],
         Rating: 0,
         Downloads: 0,
-        YAML: task['yaml'],
-        TAGS: task['tags'],
+        Yaml: task['yaml'],
+        Tags: task['tags'],
       };
       return taskData;
     });

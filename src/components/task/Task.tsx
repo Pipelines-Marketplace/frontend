@@ -13,15 +13,19 @@ import {
   TextContent,
 } from '@patternfly/react-core';
 import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
-import {CardHead, CardHeader, CardFooter, CardBody, CardActions} from '@patternfly/react-core';
+import {CardHead,
+  CardHeader,
+  CardFooter,
+  CardBody,
+  CardActions} from '@patternfly/react-core';
 import imgAvatar from '../assets/logo/imgAvatar.png';
 export interface TaskPropObject {
   Name : string;
   Description : string;
   Rating : number;
   Downloads : number;
-  YAML : string;
-  TAGS : [];
+  Yaml : string;
+  Tags : [];
 }
 
 export interface TaskProp {
@@ -30,7 +34,6 @@ export interface TaskProp {
 
 // eslint-disable-next-line
 const Task: React.FC<TaskProp> = (props) => {
-  console.log(props.task.TAGS.values);
   return (
     <GalleryItem>
       <Card className="card" isHoverable>
@@ -57,7 +60,7 @@ const Task: React.FC<TaskProp> = (props) => {
         </CardBody>
         <CardFooter className="catalog-tile-pf-footer">
           {
-            props.task.TAGS.map((tag: any) =>{
+            props.task.Tags.map((tag: any) =>{
               return (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>);
             })
           }
