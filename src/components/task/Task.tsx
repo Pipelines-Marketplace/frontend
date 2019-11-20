@@ -20,14 +20,17 @@ export interface TaskPropObject {
   Description : string;
   Rating : number;
   Downloads : number;
-  YAML : string
+  YAML : string;
+  TAGS : [];
 }
 
 export interface TaskProp {
   task: TaskPropObject
 }
+
 // eslint-disable-next-line
 const Task: React.FC<TaskProp> = (props) => {
+  console.log(props.task.TAGS.values);
   return (
     <GalleryItem>
       <Card className="card" isHoverable>
@@ -38,8 +41,8 @@ const Task: React.FC<TaskProp> = (props) => {
           <CardActions className="cardActions">
             <DownloadIcon className="download"/>
             <TextContent className="text">10M</TextContent>
-            <OkIcon className="rating"/>
-            <TextContent>4.5</TextContent>
+            <OkIcon style={{color: 'green'}}/>
+            <TextContent className="text">4.5</TextContent>
           </CardActions>
         </CardHead>
         <CardHeader className="catalog-tile-pf-header">
@@ -48,19 +51,16 @@ const Task: React.FC<TaskProp> = (props) => {
         <CardBody className="catalog-tile-pf-body">
           <div className="catalog-tile-pf-description">
             <span>
-              Ansible Tower (formerly ‘AWX’) is a web-based solution that makes Ansible even more easy to use for IT teams of all kinds,
-              {/* <ReactMarkDown source={props.task.Description.substring(0, 100)} /> */}
+              {props.task.Description.substring(0, 100) + '   ...'}
             </span>
           </div>
         </CardBody>
         <CardFooter className="catalog-tile-pf-footer">
-          <Badge className="badge">Build</Badge>
-          {' '}
-          <Badge className="badge">Task</Badge>
-          {' '}
-          <Badge className="badge">Deploy</Badge>
-          {' '}
-
+          {
+            props.task.TAGS.map((tag: any) =>{
+              return (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>);
+            })
+          }
         </CardFooter>
       </Card>
     </GalleryItem>

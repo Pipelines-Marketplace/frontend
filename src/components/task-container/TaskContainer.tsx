@@ -10,7 +10,8 @@ export interface MockData{
   Description : string,
   Rating : number,
   Downloads : number,
-  YAML : string
+  YAML : string,
+  TAGS : [],
 }
 
 const TaskContainer: React.FC = (props: any) => {
@@ -27,6 +28,7 @@ const TaskContainer: React.FC = (props: any) => {
         Rating: 0,
         Downloads: 0,
         YAML: task['yaml'],
+        TAGS: task['tags'],
       };
       return taskData;
     });
@@ -43,35 +45,6 @@ const TaskContainer: React.FC = (props: any) => {
       </Gallery>
     </div>
   );
-
-  // return (
-  //   <div>
-  //     {/* {
-  //       tempArr.map((task: any) => {
-  //         const taskData: MockData = {
-  //           Name: task['Name'],
-  //           Description: task['Description'],
-  //           Rating: 0,
-  //           Downloads: 0,
-  //           YAML: task['YAML'],
-  //         };
-  //         // return <Task key={task['Name']} task={taskData} />;
-  //       })
-  //     } */}
-  //     {
-  //       tempArr.map((task: any) => {
-  //         const taskData: MockData = {
-  //           Name: task['Name'],
-  //           Description: task['Description'],
-  //           Rating: 0,
-  //           Downloads: 0,
-  //           YAML: task['YAML'],
-  //         };
-  //         return (<Gallery gutter = "md" key={task['Name']}><Task task = {taskData}/></Gallery>);
-  //       })
-  //     }
-  //   </div>
-  // );
 };
 
 

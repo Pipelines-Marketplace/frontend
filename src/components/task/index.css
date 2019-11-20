@@ -35,16 +35,14 @@
 .badge{
     padding-top: 0.2em;
     padding-bottom: 0.2em;
+    /* width: 4em */
+    padding-right: 0.5em;
+    
 }
 
 .download{
     /* padding-left: 1em; */
     /* margin-right: em; */
-    margin-bottom: 0.1em;
-}
-
-.rating{
-    /* margin-right: 0.3em; */
     margin-bottom: 0.1em;
 }
 
@@ -55,4 +53,9 @@
 
 .cardActions{
     margin-bottom: 0.3em;
+}
+
+.card{
+    height: 22em;
+    width: 18.5em;
 }
