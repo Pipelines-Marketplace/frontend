@@ -1,7 +1,0 @@
-.pf-c-card__body:not(.pf-m-no-fill) {
-    /* flex: 1 1 auto; */
-    min-height: 120px;
-}
-.demo{
-    min-width: 150px;
-}

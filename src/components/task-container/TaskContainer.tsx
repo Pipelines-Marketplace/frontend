@@ -18,7 +18,7 @@ const TaskContainer: React.FC = (props: any) => {
   let tempArr : any = [];
   React.useEffect(() => {
     props.fetchTaskSuccess();
-  }, []);
+  });
 
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) =>{
