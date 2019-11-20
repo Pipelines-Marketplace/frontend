@@ -8,55 +8,65 @@ import {
 import './index.css';
 import {
   Card,
-  Flex,
-  FlexItem,
   Badge,
+  GalleryItem,
+  TextContent,
 } from '@patternfly/react-core';
 import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
+import {CardHead,
+  CardHeader,
+  CardFooter,
+  CardBody,
+  CardActions} from '@patternfly/react-core';
+import imgAvatar from '../assets/logo/imgAvatar.png';
 export interface TaskPropObject {
-  id: number
-  name: string;
-  tags: string[];
-  description: string;
-  downloads: number;
-  rating: number;
+  Name : string;
+  Description : string;
+  Rating : number;
+  Downloads : number;
+  Yaml : string;
+  Tags : [];
 }
 
 export interface TaskProp {
   task: TaskPropObject
 }
+
+// eslint-disable-next-line
 const Task: React.FC<TaskProp> = (props) => {
   return (
-    <Card style={{maxWidth: '70%'}} className="card">
-      <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}, {modifier: 'row', breakpoint: 'lg'}]}>
-        <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
-          <div className="task-data">
-            <FlexItem><Link to={`/detail/${props.task.id}`}><span className="task-heading">{props.task.name}</span></Link></FlexItem>
-            <FlexItem>{props.task.description.split('.')[0]}</FlexItem>
-            <FlexItem>
-              <React.Fragment>
-                {
-                  props.task.tags.map((tag) =>
-                    <span key={tag}>
-                      <Badge>{tag}</Badge>
-                      {' '}
-                    </span>,
-                  )
-                }
-              </React.Fragment>
-            </FlexItem>
+    <GalleryItem>
+      <Card className="card" isHoverable>
+        <CardHead>
+          <div>
+            <img src = {imgAvatar} alt="Task" style={{height: '50px'}}/>
           </div>
-        </Flex>
-        <Flex>
-          <FlexItem><span className="task-numbers"><DownloadIcon />{' '}5M</span></FlexItem>
-          <FlexItem><span className="version"><OkIcon color='green' />{' '}4.5</span></FlexItem>
-          {/* <FlexItem><span className="version">Version</span></FlexItem> */}
-        </Flex>
-      </Flex>
-    </Card>
+          <CardActions className="cardActions">
+            <DownloadIcon className="download"/>
+            <TextContent className="text">10M</TextContent>
+            <OkIcon style={{color: 'green'}}/>
+            <TextContent className="text">4.5</TextContent>
+          </CardActions>
+        </CardHead>
+        <CardHeader className="catalog-tile-pf-header">
+          <Link to={`/detail/${props.task.Name}`}><span className="task-heading">{props.task.Name}</span></Link>
+        </CardHeader>
+        <CardBody className="catalog-tile-pf-body">
+          <div className="catalog-tile-pf-description">
+            <span>
+              {props.task.Description.substring(0, 100) + '   ...'}
+            </span>
+          </div>
+        </CardBody>
+        <CardFooter className="catalog-tile-pf-footer">
+          {
+            props.task.Tags.map((tag: any) =>{
+              return (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>);
+            })
+          }
+        </CardFooter>
+      </Card>
+    </GalleryItem>
   );
 };
-
 export default Task;
-
-

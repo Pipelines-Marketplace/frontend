@@ -1,25 +1,59 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import {TaskPropObject} from '../task/Task';
+import {connect} from 'react-redux';
 import Task from '../task/Task';
-import {mockData} from '../../services/mockdata';
-const TaskContainer: React.FC = (props) => {
+import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+import {Gallery} from '@patternfly/react-core';
+import './index.css';
+
+export interface TaskPropData{
+  Name : string,
+  Description : string,
+  Rating : number,
+  Downloads : number,
+  Yaml : string,
+  Tags : [],
+}
+
+const TaskContainer: React.FC = (props: any) => {
+  let tempArr : any = [];
+  React.useEffect(() => {
+    props.fetchTaskSuccess();
+  });
+
+  if (props.TaskData != null) {
+    tempArr = props.TaskData.map((task: any) =>{
+      const taskData: TaskPropData = {
+        Name: task['name'],
+        Description: task['description'],
+        Rating: 0,
+        Downloads: 0,
+        Yaml: task['yaml'],
+        Tags: task['tags'],
+      };
+      return taskData;
+    });
+  }
+
   return (
-    <div>
-      {
-        mockData.map((task: any) => {
-          const taskData: TaskPropObject = {
-            id: task['id'],
-            name: task['Name'],
-            tags: task['Tags'],
-            description: task['Description'],
-            downloads: 0,
-            rating: 0,
-          };
-          return <Task key={task['id']} task={taskData} />;
-        })}
+    <div className="block">
+      <Gallery gutter = "lg">
+        {
+          tempArr.map((task: any) => {
+            return <Task key={task['name']} task = {task} />;
+          })
+        }
+      </Gallery>
     </div>
   );
 };
 
-export default TaskContainer;
+
+const mapStateToProps = (state: any) => {
+  return {
+    TaskData: state.TaskData.TaskData,
+  };
+};
+
+export default connect(mapStateToProps, {fetchTaskSuccess})(TaskContainer);
+
+
