@@ -11,7 +11,8 @@ export interface TagsData {
   status: boolean
 }
 const Filter: React.FC = (props: any) => {
-  const tags_set = new Set();
+  const tagsSet = new Set();
+  const categorySet = new Set();
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
@@ -23,11 +24,11 @@ const Filter: React.FC = (props: any) => {
 
   const displaytask = () => {
     let str:string = '';
-    if(tags_set.has('task')=== true){
-      tags_set.delete('task');
+    if (tagsSet.has('task') === true) {
+      tagsSet.delete('task');
     }
-    const tagArray = Array.from(tags_set);
-    const len = tagArray.length;
+    //console.log(tagsSet);
+    const tagArray = Array.from(tagsSet);
 
     for (let i = 0; i < tagArray.length; i++) {
       if (i == 0 && tagArray[i] != 'task') {
@@ -35,48 +36,107 @@ const Filter: React.FC = (props: any) => {
       }
       str = `${str + tagArray[i]}|`;
     }
-    console.log(str);
     fetch(`http://localhost:5000/tasks${str}`)
       .then((res) => res.json())
-      .then((data) => store.dispatch({ type: 'FETCH_TASK_SUCCESS', payload: data }));
+      .then((data) => {
+        store.dispatch({ type: 'FETCH_TASK_SUCCESS', payload: data });
+      });
   };
-  const add_tag = (e: any) => {
-    if (tags_set.has(e.target.value) === false) {
-      tags_set.add(e.target.value);
+  const addTag = (e: any) => {
+    if (tagsSet.has(e.target.value) === false) {
+      tagsSet.add(e.target.value);
     } else {
-      tags_set.delete(e.target.value);
+      tagsSet.delete(e.target.value);
     }
 
     displaytask();
   };
+
+  const addCategory = (e:any) => {
+    if (categorySet.has(e.target.value) === false) {
+      categorySet.add(e.target.value);
+    } else {
+      categorySet.delete(e.target.value);
+    }
+
+  //  console.log(categorySet);
+  }
   return (
+
     <div className="filter-size">
+      <h2 style={{ textAlign: 'center', marginBottom: '1em' }}>
+        {' '}
+        <b>Types</b>
+      </h2>
+      <div style={{ marginBottom: '0.4em' }}>
+        <Checkbox
+          style={{ width: '1em', height: '1em' }}
+          label="Task"
+          id="Task"
+          value="task"
+          onClick={addTag}
+          aria-label="uncontrolled checkbox example"
+        />
+      </div>
+      <div>
+        <Checkbox
+          style={{ width: '1em', height: '1em' }}
+          label="Pipelines"
+          id=" "
+          value="pipelines"
+          onClick={addTag}
+          aria-label="uncontrolled checkbox example"
+        />
+      </div>
+      <h2 style={{ textAlign: 'center', marginBottom: '1em' }}><b> Tags </b></h2>
+      {
+         tags.map((it:any) => (
+           <div style={{ marginBottom: '0.4em' }}>
+             <Checkbox
+               style={{ width: '1em', height: '1em' }}
+               label={it.name}
+               value={it.name}
+               id={it.id}
+               onClick={addTag}
+               aria-label="uncontrolled checkbox example"
+             />
+           </div>
 
-
-      <h2 style={{ textAlign: 'center', marginBottom: '1em' }}>Categories</h2>
-      <>
-
-        <Checkbox label="Task" id="Task" value="task" onClick={add_tag} aria-label="uncontrolled checkbox example" />
-        <Checkbox label="Pipelines" id=" " value="pipelines" onClick={add_tag} aria-label="uncontrolled checkbox example" />
-      </>
-
-      <h2 style={{ textAlign: 'center', marginBottom: '1em' }}> Tags </h2>
-
-      <>
-        {
-         tags.map((it:any) => <Checkbox label={it.name} value={it.name} id={it.id} onClick={add_tag} aria-label="uncontrolled checkbox example" />,)
+         ))
         }
-
-      </>
-
-
-      <h2 style={{ textAlign: 'center', marginBottom: '1em' }}> Types </h2>
-
-      <>
-        <Checkbox label="Build" value="build" onClick={add_tag} aria-label="uncontrolled checkbox example" id="Build" />
-        <Checkbox label="Test" value="test" onClick={add_tag} aria-label="uncontrolled checkbox example" id="Test" />
-        <Checkbox label="Deploy" value="deploy" onClick={add_tag} aria-label="uncontrolled checkbox example" id="Deploy" />
-      </>
+      <h2 style={{ textAlign: 'center', marginBottom: '1em' }}>
+        {' '}
+        <b>Categories</b>
+        {' '}
+      </h2>
+      <div style={{ marginBottom: '0.4em' }}>
+        <Checkbox
+          style={{ width: '1em', height: '1em' }}
+          label="Build"
+          value="build"
+          onClick={addCategory}
+          aria-label="uncontrolled checkbox example"
+          id="Build"
+        />
+      </div>
+      <div style={{ marginBottom: '0.4em' }}>
+        <Checkbox
+          style={{ width: '1em', height: '1em' }}
+          label="Test"
+          value="test"
+          onClick={addCategory}
+          aria-label="uncontrolled checkbox example"
+          id="Test"
+        />
+      </div>
+      <Checkbox
+        style={{ width: '1em', height: '1em' }}
+        label="Deploy"
+        value="deploy"
+        onClick={addCategory}
+        aria-label="uncontrolled checkbox example"
+        id="Deploy"
+      />
     </div>
   );
 };

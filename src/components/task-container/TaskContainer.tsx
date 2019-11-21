@@ -56,7 +56,6 @@ const mapStateToProps = (state: any) => {
 
   };
 };
-
 export default connect(mapStateToProps, {fetchTaskSuccess})(TaskContainer);
 
 
