@@ -34,6 +34,13 @@ export interface TaskProp {
 
 // eslint-disable-next-line
 const Task: React.FC<TaskProp> = (props) => {
+  const tempArr : any = [];
+  if (props.task.Tags != null) {
+    tempArr.push(props.task.Tags);
+  } else {
+    tempArr.push([]);
+  }
+  console.log(tempArr[0]);
   return (
     <GalleryItem>
       <Card className="card" isHoverable>
@@ -60,7 +67,7 @@ const Task: React.FC<TaskProp> = (props) => {
         </CardBody>
         <CardFooter className="catalog-tile-pf-footer">
           {
-            props.task.Tags.map((tag: any) =>{
+            tempArr[0].map((tag: any) =>{
               return (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>);
             })
           }
