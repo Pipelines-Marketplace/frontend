@@ -6,40 +6,29 @@ import {Gallery} from '@patternfly/react-core';
 import './index.css';
 
 export interface TaskPropData{
-  Name : string,
-  Description : string,
-  Rating : number,
-  Downloads : number,
-  Yaml : string,
-  Tags : [],
+  name : string,
+  description : string,
+  rating : number,
+  downloads : number,
+  yaml : string,
+  tags : [],
 }
 
 const TaskContainer: React.FC = (props: any) => {
   let tempArr : any = [];
   React.useEffect(() => {
     props.fetchTaskSuccess();
-  }, []);
+  });
 
   if (props.TaskData != null) {
-    tempArr = props.TaskData.map((task: any) =>{
-      const taskData: TaskPropData = {
-        Name: task['name'],
-        Description: task['description'],
-        Rating: 0,
-        Downloads: 0,
-        Yaml: task['yaml'],
-        Tags: task['tags'],
-      };
-      return taskData;
-    });
+    tempArr = props.TaskData;
   }
-
   return (
     <div className="block">
       <Gallery gutter = "lg">
         {
           tempArr.map((task: any) => {
-            return <Task key={task['name']} task = {task} />;
+            return <Task key={task['id']} task = {task} />;
           })
         }
       </Gallery>
