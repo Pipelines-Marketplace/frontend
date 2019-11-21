@@ -20,12 +20,12 @@ import {CardHead,
   CardActions} from '@patternfly/react-core';
 import imgAvatar from '../assets/logo/imgAvatar.png';
 export interface TaskPropObject {
-  Name : string;
-  Description : string;
-  Rating : number;
-  Downloads : number;
-  Yaml : string;
-  Tags : [];
+  name : string;
+  description : string;
+  rating : number;
+  downloads : number;
+  yaml : string;
+  tags : [];
 }
 
 export interface TaskProp {
@@ -33,7 +33,15 @@ export interface TaskProp {
 }
 
 // eslint-disable-next-line
-const Task: React.FC<TaskProp> = (props) => {
+const Task: React.FC<TaskProp> = (props:any) => {
+  const tempArr : any = [];
+
+  if (props.task.tags != null) {
+    tempArr.push(props.task.tags);
+  } else {
+    tempArr.push([]);
+  }
+
   return (
     <GalleryItem>
       <Card className="card" isHoverable>
@@ -49,18 +57,18 @@ const Task: React.FC<TaskProp> = (props) => {
           </CardActions>
         </CardHead>
         <CardHeader className="catalog-tile-pf-header">
-          <Link to={`/detail/${props.task.Name}`}><span className="task-heading">{props.task.Name}</span></Link>
+          <Link to={`/detail/${props.task.name}`}><span className="task-heading">{props.task.name}</span></Link>
         </CardHeader>
         <CardBody className="catalog-tile-pf-body">
           <div className="catalog-tile-pf-description">
             <span>
-              {props.task.Description.substring(0, 100) + '   ...'}
+              {props.task.description.substring(0, 100) + '   ...'}
             </span>
           </div>
         </CardBody>
         <CardFooter className="catalog-tile-pf-footer">
           {
-            props.task.Tags.map((tag: any) =>{
+            tempArr[0].map((tag: any) =>{
               return (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>);
             })
           }
