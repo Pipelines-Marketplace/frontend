@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {SearchIcon, FilterIcon} from '@patternfly/react-icons';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { SearchIcon, FilterIcon } from '@patternfly/react-icons';
 import '@patternfly/react-core/dist/styles/base.css';
 import './index.css';
 import {
@@ -13,7 +13,7 @@ import {
   DropdownItem,
   Flex,
 } from '@patternfly/react-core';
-import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+import { fetchTaskSuccess } from '../redux/Actions/TaskAction';
 import SearchTask from './SearchTask';
 import store from '../redux/store';
 
@@ -31,16 +31,16 @@ const SearchBar: React.FC = (props:any) => {
   const tempTask : any = [];
   React.useEffect(() => {
     props.fetchTaskSuccess();
-  });
+  }, []);
   if (props.TaskData != null) {
-    tempArr = props.TaskData.map((task: any) =>{
+    tempArr = props.TaskData.map((task: any) => {
       const taskData: TaskPropData = {
-        name: task['name'],
-        description: task['description'],
+        name: task.name,
+        description: task.description,
         rating: 0,
         downloads: 0,
-        yaml: task['yaml'],
-        tags: task['tags'],
+        yaml: task.yaml,
+        tags: task.tags,
       };
       return taskData;
     });
@@ -79,14 +79,14 @@ const SearchBar: React.FC = (props:any) => {
       }
     }
 
-    store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
+    store.dispatch({ type: 'FETCH_TASK_SUCCESS', payload: tempTask });
   };
 
   return (
 
-    <div>
-      <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
-        <React.Fragment>
+    <div className="search">
+      <Flex breakpointMods={[{ modifier: 'flex-1', breakpoint: 'lg' }]}>
+        <>
           <InputGroup style={{width: '70%'}}>
             {/* <TextInput name="textInput11" id="textInput11" type="search" aria-label="search input example"> */}
             <SearchTask onSearchTask={searchTask}/>
@@ -108,18 +108,16 @@ const SearchBar: React.FC = (props:any) => {
             />
           </div>
 
-        </React.Fragment>
+        </>
       </Flex>
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
+const mapStateToProps = (state: any) => ({
     TaskData: state.TaskData.TaskData,
-  };
-};
+  });
 
-export default connect(mapStateToProps, {fetchTaskSuccess})(SearchBar);
+export default connect(mapStateToProps, { fetchTaskSuccess })(SearchBar);
 
 // export default SearchBar;
