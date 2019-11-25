@@ -31,7 +31,8 @@ const SearchBar: React.FC = (props:any) => {
   const tempTask : any = [];
   React.useEffect(() => {
     props.fetchTaskSuccess();
-  });
+    // eslint-disable-next-line
+  }, []);
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) =>{
       const taskData: TaskPropData = {
@@ -79,12 +80,14 @@ const SearchBar: React.FC = (props:any) => {
       }
     }
 
-    store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
+    if (tempTask.length > 0) {
+      store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
+    }
   };
 
   return (
 
-    <div>
+    <div className="search">
       <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
         <React.Fragment>
           <InputGroup style={{width: '70%'}}>

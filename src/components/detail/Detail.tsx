@@ -10,13 +10,13 @@ import {useParams} from 'react-router';
 import {fetchTaskDescription} from '../redux/Actions/TaskActionDescription';
 
 const Detail: React.FC = (props: any) => {
-  const {name} = useParams();
+  const {id} = useParams();
   React.useEffect(() => {
-    props.fetchTaskDescription(name);
+    props.fetchTaskDescription(id);
   });
 
-  // console.log(fetchdata)
-  // console.log(props.TaskDescription)
+
+  const yamlData = '```'+props.TaskYaml+'```';
   return (
     <div>
       <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'},
@@ -25,7 +25,7 @@ const Detail: React.FC = (props: any) => {
         <FlexItem>
           <Description
             Description = {props.TaskDescription}
-            Yaml = {props.TaskYaml} />
+            Yaml = {yamlData} />
         </FlexItem>
         <FlexItem>
           <Rating />

@@ -6,42 +6,14 @@ import BasicDetail from './BasicDetail';
 import {connect} from 'react-redux';
 import {fetchTaskName} from '../redux/Actions/TaskActionName';
 
-export interface MockData{
-  Name : string,
-  Description : string,
-  Downloads : number,
-  Rating : number,
-  YAML : string
-}
-
 const Detail: React.FC = (props: any) => {
-  const {name} = useParams();
+  const {id} = useParams();
   React.useEffect(() => {
-    props.fetchTaskName(name);
-  });
-  let tempArr : any = [];
+    props.fetchTaskName(id);
+    // eslint-disable-next-line
+  }, []);
 
-  if (props.TaskName != null) {
-    Object.keys(props.TaskName).map(function(key) {
-      tempArr.push({[key]: props.TaskName[key]});
-      return tempArr;
-    });
-  }
-
-  if (props.TaskData != null) {
-    tempArr = props.TaskData.map((task: any) =>{
-      const taskData: MockData = {
-        Name: task['Name'],
-        Description: task['Description'],
-        Rating: 0,
-        Downloads: 0,
-        YAML: task['YAML'],
-      };
-      return taskData;
-    });
-  };
-
-  if (props.TaskName==null) {
+  if (props.TaskName!=null) {
     return (
       <BasicDetail task={props.TaskName} />
     );

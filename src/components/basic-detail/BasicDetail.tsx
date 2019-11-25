@@ -9,25 +9,38 @@ import {
   Button,
 } from '@patternfly/react-core';
 import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
+import {
+  Badge,
+} from '@patternfly/react-core';
 import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
 import {Avatar} from '@patternfly/react-core';
 import avatarImg from './download.png';
+import './index.css';
 
 export interface BasicDetailPropObject {
     // id: any
-    Name : string;
-    Description : string;
-    Downloads : number;
-    Rating : number;
-    YAML : string
+    name : string;
+    description : string;
+    downloads : number;
+    rating : number;
+    yaml : string;
+    tags : []
 }
 
 export interface BasicDetailProp {
   task: BasicDetailPropObject
 }
 
-const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
+const BasicDetail: React.FC<BasicDetailProp> = (props: any) => {
+  const tempArr : any = [];
+
+  if (props.task.tags != null) {
+    tempArr.push(props.task.tags);
+  } else {
+    tempArr.push([]);
+  }
+
   return (
     <Card>
       <Flex breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}>
@@ -40,23 +53,14 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
           <FlexItem>
             <div className="data">
               <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
-
-                {/* <FlexItem><span className="heading">{props.task.Name}</span> */}
-                <FlexItem><span className="heading">Task Name</span>
-                  {/* <p>{task.Description.split('.')[0] + '.'}</p> */}
-                </FlexItem>
-                <FlexItem>
-                  <React.Fragment>
-                    {/* {
-                      task.Tags.map((tag) =>
-                        <span key={tag}>
-                          <Badge>{tag}</Badge>
-                          {' '}
-                        </span>,
-                      )
-                    } */}
-                  </React.Fragment>
-                </FlexItem>
+                <FlexItem><span className="heading">{props.task.name}</span></FlexItem>
+                <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
+                  {
+                    tempArr[0].map((tag: any) =>{
+                      return (<Badge style={{paddingRight: '1em'}} key={tag.Name} className="badge">{tag}</Badge>);
+                    })
+                  }
+                </Flex>
               </Flex>
             </div>
           </FlexItem>
@@ -65,12 +69,12 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
         <div className="download">
           <Flex breakpointMods={[{modifier: 'align-right', breakpoint: 'lg'}, {modifier: 'column', breakpoint: 'lg'}]}>
             <FlexItem><span className="downloadNumber"><DownloadIcon />
-              {/* {'  '}{props.task.Downloads}</span></FlexItem> */}
-              {'  '}10M</span></FlexItem>
+              {'  '}{props.task.downloads}</span></FlexItem>
             <FlexItem><span className="star"><StarIcon color="gold" size="md" /></span></FlexItem>
-            <FlexItem><span className="downloadIcon"><Button className="button" style={{width: '9em'}}>
-                            Download
-            </Button></span></FlexItem>
+            <FlexItem><span className="downloadIcon">
+              <Button className="button" style={{width: '9em'}}>
+                 Download
+              </Button></span></FlexItem>
           </Flex>
         </div>
 

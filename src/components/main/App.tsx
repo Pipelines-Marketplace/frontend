@@ -130,14 +130,14 @@ const App: React.FC<mainProps> = (props) => {
           <PageSection>
             <Provider store = {store}>
               <Route exact path='/' component={SearchBar} />
-              <Route exact path='/detail/:name' component={BasicDetailParent} />
+              <Route exact path='/detail/:id' component={BasicDetailParent} />
               <Route exact path='/search' component={SearchBar} />
             </Provider>
           </PageSection>
           <PageSection style={{minHeight: '100vh'}}>
             {/* <Provider store = {store}> */}
             <Route exact path='/' component={TaskContainer} />
-            <Route exact path='/detail/:name' component={Detail} />
+            <Route exact path='/detail/:id' component={Detail} />
             <Route path='/search' component={TaskContainer} />
             <Route path='/community' component={Community} />
             {/* </Provider> */}
