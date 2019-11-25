@@ -52,7 +52,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
           </div>
           <CardActions className="cardActions">
             <DownloadIcon className="download" />
-            <TextContent className="text">10M</TextContent>
+            <TextContent className="text"></TextContent>
             <OkIcon style={{ color: 'green' }} />
             <TextContent className="text">4.5</TextContent>
           </CardActions>

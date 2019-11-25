@@ -1,7 +1,8 @@
 
 .form-size{
     margin-top: 3em;
-    margin-left: 2em;
+	margin-left: 2em;
+	width: 90em;
 }
 .tags-input {
 	display: flex;
@@ -45,7 +46,7 @@
 	list-style: none;
 	border-radius: 6px;
 	margin: 0 4px 4px 0;
-	background: #4ead17;
+	background: blue;
 	.tag-title {
 		margin-top: 3px;
     }

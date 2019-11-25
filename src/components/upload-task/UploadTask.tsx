@@ -8,27 +8,36 @@ import {
   TextArea,
   ActionGroup,
   Button,
+  Alert,
 } from '@patternfly/react-core';
 import {
   Link,
 } from 'react-router-dom';
 
 const UploadTask: React.FC = () => {
-  const [file, setFile] = useState('');
+  const [status, setStatus] = useState('');
   const [, setFilename] = useState('choose file');
 
   const intags : string[] = [];
   const [tags, setTags] = useState(intags);
   //  for onchange file uploading ...
   const onchange = (event: any) => {
-    setFile(event.target.files[0]);
-    setFilename(event.target.files[0].name);
-    const filename = event.target.files[0];
-    fetch(`http://localhost:5001/lint/${filename.name}`, {
-      method: 'POST',
-      body: file,
-    // eslint-disable-next-line no-console
-    }).then((resp) => console.log(resp));
+    // setFile(event.target.files[0]);
+    // setFilename(event.target.files[0].name);
+    // const filename = event.target.files[0];
+    const input = (document.querySelector('input[type="file"]')as HTMLInputElement);
+    const data = new FormData();
+    if (input.files != null) {
+      data.append('file', input.files[0]);
+      data.append('user', 'hubot');
+      data.append(input.files[0].name, input.files[0]);
+      console.log(input.files[0]);
+      fetch(`http://localhost:5001/lint/${input.files[0].name}`, {
+        method: 'POST',
+        body: data,
+        // eslint-disable-next-line no-console
+      }).then((res) => res.json()).then((d) => setStatus(d));
+    }
   };
 
 
@@ -45,7 +54,7 @@ const UploadTask: React.FC = () => {
       description: data.get('description'),
 
     };
-    taskinfo.append('file', file);
+    // taskinfo.append('file', file);
     taskinfo.append('data', JSON.stringify(formdata));
 
     //   for (var value of taskinfo.values()) {
@@ -73,11 +82,34 @@ const UploadTask: React.FC = () => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
   // eslint-disable-next-line no-console
-  console.log(tags);
+  const alertVariant = 'default';
+  let s;
+
+  if (status !== '') {
+    console.log('Success');
+    console.log(status);
+
+    console.log(status === 'Success');
+    console.log(typeof (status));
+    console.log(typeof ('Success'));
+
+
+    if (status.length === 7) {
+      const alertTitle = 'Validation Success';
+      s = <Alert variant="success" isInline title={alertTitle} />;
+    } else {
+      console.log('bdjabdja');
+      const alertTitle = status;
+      s = <Alert variant="danger" isInline title={alertTitle} />;
+    }
+  } else {
+    console.log('adsad');
+    s = null;
+  }
   return (
     <Form isHorizontal onSubmit={submitdata} className="form-size">
       <FormGroup
-        label="Task-Name"
+        label="Name"
         isRequired
         fieldId="task-name"
         helperText="Please provide your task name"
@@ -89,7 +121,7 @@ const UploadTask: React.FC = () => {
           name="task-name"
         />
       </FormGroup>
-      <FormGroup label="Task-Tags" isRequired fieldId="task-tag" helperText="Please provide tags name of your task">
+      <FormGroup label="Tags" isRequired fieldId="task-tag" helperText="Please provide tags name of your task">
 
 
         <div className="tags-input">
@@ -116,7 +148,7 @@ const UploadTask: React.FC = () => {
 
 
       </FormGroup>
-      <FormGroup isRequired label="Task Description" helperText="Please fill description of your task" fieldId="description">
+      <FormGroup isRequired label="Description" helperText="Please fill description of your task" fieldId="description">
         <TextArea
           name="description"
           id="description"
@@ -124,8 +156,9 @@ const UploadTask: React.FC = () => {
       </FormGroup>
       <form onChange={onchange}>
         <input type="file" accept=".yaml" id="file" name="taskfile" />
+        {/* <Alert variant={alertVariant} isInline title={alertTitle} /> */}
       </form>
-
+      {s}
       <ActionGroup>
         <Button disabled variant="primary" type="submit">Submit Task</Button>
         <Link to="/">

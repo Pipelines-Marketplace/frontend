@@ -66,7 +66,7 @@ const App: React.FC<mainProps> = () => {
     // eslint-disable-next-line react/jsx-filename-extension
     <div>
       <Toolbar>
-        <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
+        <ToolbarGroup>
           <ToolbarItem style={{ color: 'white' }}>
             <Link to="/">
               <span style={{ marginRight: '2em', color: 'white' }}>Home</span>
@@ -80,7 +80,7 @@ const App: React.FC<mainProps> = () => {
               <span style={{ marginRight: '2em', color: 'white' }}>Community</span>
             </Link>
 
-            <Link to="/uploadtask">
+            <Link to="/upload">
               <span style={{ marginRight: '0em', color: 'white' }}>
                 {/* {' '} */}
               UploadTask
@@ -142,6 +142,7 @@ const App: React.FC<mainProps> = () => {
               <Route exact path="/" component={Filter} />
             </FlexItem>
             <FlexItem>
+              <Route exact path="/upload" component={UploadTask} />
               <Route exact path="/" component={TaskContainer} />
               <Route path="/search" component={TaskContainer} />
             </FlexItem>
