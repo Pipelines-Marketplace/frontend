@@ -12,11 +12,11 @@ import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/main.png';
 import imgAvatar from '../assets/logo/imgAvatar.png';
 import {
-  BellIcon,
+  BellIcon, HomeIcon,
 } from '@patternfly/react-icons';
 import Community from '../community/Community';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
-import PageHeading from '../page-heading/PageHeading';
+import PageHeading from '../background-image/BackgroundImage';
 import Filter from '../filter/Filter';
 import {
   Button,
@@ -31,9 +31,13 @@ import {
   Avatar,
   Flex,
   FlexItem,
+  BackgroundImage,
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
+import SearchTask from '../search-bar/SearchTask';
+import BackgroundImageHeader from '../background-image/BackgroundImage';
+
 
 interface mainProps {
 
@@ -62,23 +66,35 @@ const App: React.FC<mainProps> = () => {
     <div>
       <Toolbar>
         <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
-          <ToolbarItem>
+          <ToolbarItem style={{ color: 'white' }}>
+            <Link to="/">
+              <span style={{ marginRight: '2em', color: 'white' }}>Home</span>
+            </Link>
+
+            <Link to="/">
+              <span style={{ marginRight: '2em', color: 'white' }}>Search</span>
+            </Link>
+
+            <Link to="/">
+              <span style={{ marginRight: '2em', color: 'white' }}>Community</span>
+            </Link>
+
             <Link to="/uploadtask">
-              <span>
-                {' '}
-     Upload_Task
-                {' '}
+              <span style={{ marginRight: '0em', color: 'white' }}>
+                {/* {' '} */}
+              UploadTask
+                {/* {' '} */}
               </span>
               {' '}
             </Link>
             <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
-              <BellIcon />
+              {/* <BellIcon /> */}
             </Button>
           </ToolbarItem>
           <ToolbarItem>
 
             <Link to="/signin">
-              <span> Signin </span>
+              <span style={{ marginRight: '1em', color: 'white' }}> Signin </span>
               {' '}
             </Link>
             {/* <Button id="default-example-uid-02" onClick={SignIn} aria-label="Settings actions" variant={ButtonVariant.plain}>
@@ -91,27 +107,26 @@ const App: React.FC<mainProps> = () => {
     </div>
 
   );
-
   const Header = (
     <PageHeader
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
       logoProps={logoProps}
       toolbar={PageToolbar}
+
       avatar={<Avatar src={imgAvatar} alt="user icon" />}
       showNavToggle
       isNavOpen={isNavOpen}
       onNavToggle={onNavToggle}
-
     />
+
+
   );
-  //  code for navigation page
-  // const Sidebar = <Filter />;
   return (
     <Router>
       <Page header={Header}>
         {/* <PageSection variant={PageSectionVariants.light}> */}
-        <Route exact path="/" component={PageHeading} />
-        <Route exact path="/search" component={PageHeading} />
+        <Route exact path="/" component={BackgroundImageHeader} />
+        <Route exact path="/search" component={BackgroundImageHeader} />
 
         {/* </PageSection> */}
         <PageSection>

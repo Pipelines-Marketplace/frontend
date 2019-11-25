@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { Gallery } from '@patternfly/react-core';
 import Task from '../task/Task';
-import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
-import {Gallery} from '@patternfly/react-core';
+import { fetchTaskSuccess } from '../redux/Actions/TaskAction';
 import './index.css';
 
 export interface TaskPropData{
@@ -15,23 +15,21 @@ export interface TaskPropData{
 }
 
 const TaskContainer: React.FC = (props: any) => {
-  
- 
   let tempArr : any = [];
   React.useEffect(() => {
     props.fetchTaskSuccess();
-  },[]);
+  }, []);
 
   if (props.TaskData != null) {
     tempArr = props.TaskData;
   }
+  console.log(props.TaskData);
+
   return (
     <div className="block">
-      <Gallery gutter = "lg">
+      <Gallery gutter="lg">
         {
-          tempArr.map((task: any) => {
-            return <Task key={task['id']} task = {task} />;
-          })
+          tempArr.map((task: any) => <Task key={task.id} task ={task} />)
         }
       </Gallery>
     </div>
@@ -39,12 +37,8 @@ const TaskContainer: React.FC = (props: any) => {
 };
 
 
-const mapStateToProps = (state: any) => {
-  return {
-    TaskData: state.TaskData.TaskData,
+const mapStateToProps = (state: any) => ({
+  TaskData: state.TaskData.TaskData,
 
-  };
-};
-export default connect(mapStateToProps, {fetchTaskSuccess})(TaskContainer);
-
-
+});
+export default connect(mapStateToProps, { fetchTaskSuccess })(TaskContainer);
