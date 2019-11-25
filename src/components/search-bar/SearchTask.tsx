@@ -6,11 +6,12 @@ interface SearchTaskProps {
     onSearchTask: (text: string) => void;
 }
 
-const SearchTask: React.FC<SearchTaskProps> = (props) => {
+// eslint-disable-next-line react/prop-types
+const SearchTask: React.FC<SearchTaskProps> = ({onSearchTask}) => {
   const onEnterkey = (e: React.KeyboardEvent) => {
     const value = (e.target as HTMLInputElement).value;
     if (e.keyCode !== ENTER_KEY || !value.trim()) return;
-    // onSearchTask(value);
+    onSearchTask(value);
     (e.currentTarget as HTMLInputElement).value = '';
   };
 

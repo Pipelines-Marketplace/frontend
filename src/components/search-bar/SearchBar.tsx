@@ -1,21 +1,51 @@
 /* eslint-disable max-len */
-import React, {useState} from 'react';
-import {SearchIcon, FilterIcon} from '@patternfly/react-icons';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { SearchIcon, FilterIcon } from '@patternfly/react-icons';
 import '@patternfly/react-core/dist/styles/base.css';
 import './index.css';
 import {
   Button,
   ButtonVariant,
   InputGroup,
-  TextInput,
   Dropdown,
   DropdownToggle,
   DropdownItem,
-  DropdownSeparator,
   Flex,
 } from '@patternfly/react-core';
+import { fetchTaskSuccess } from '../redux/Actions/TaskAction';
+import SearchTask from './SearchTask';
+import store from '../redux/store';
 
-const SearchBar: React.FC = (props) => {
+export interface TaskPropData{
+  name : string,
+  description : string,
+  rating : number,
+  downloads : number,
+  yaml : string,
+  tags : [],
+}
+
+const SearchBar: React.FC = (props:any) => {
+  let tempArr: any = [];
+  const tempTask : any = [];
+  React.useEffect(() => {
+    props.fetchTaskSuccess();
+  }, []);
+  if (props.TaskData != null) {
+    tempArr = props.TaskData.map((task: any) => {
+      const taskData: TaskPropData = {
+        name: task.name,
+        description: task.description,
+        rating: 0,
+        downloads: 0,
+        yaml: task.yaml,
+        tags: task.tags,
+      };
+      return taskData;
+    });
+  }
+
   const [isOpen, set] = useState(false);
   const dropdownItems = [
     <DropdownItem key="link">Link</DropdownItem>,
@@ -25,65 +55,42 @@ const SearchBar: React.FC = (props) => {
     <DropdownItem key="disabled link" isDisabled>
           Disabled Link
     </DropdownItem>,
-    <DropdownItem key="disabled action" isDisabled component="button">
-          Disabled Action
-    </DropdownItem>,
-    <DropdownSeparator key="separator" />,
-    <DropdownItem key="separated link">Separated Link</DropdownItem>,
-    <DropdownItem key="separated action" component="button">
-          Separated Action
-    </DropdownItem>,
+
   ];
   const ontoggle = (isOpen: React.SetStateAction<boolean>) => set(isOpen);
   const onSelect = () => set(!isOpen);
 
-  // let tasksName:any = []
-  // const taskName = mockData.map((task, index) => {
-  //   tasksName.push(task.Name)      //Get all the task names
-  //   // return task.Name
-  // })
+  let [tasks, setTasks] = useState(''); // Get the user input
 
-  // var [tasks, setTasks] = useState('')      //Get the user input
-  // const searchTask = (text : string) => {
-  //     const task = {
-  //       text
-  //     }
-  //     tasks = task.text;
-  //     setTasks(tasks);
-  //     // console.log(tasks);
+  const searchTask = (text : string) => {
+    const task = {
+      text,
+    };
+    tasks = task.text; // user input
+    setTasks(tasks);
 
-  //     var _tasks = tasksName.filter((taskMatch:any) => {
-  //       var regex = new RegExp(taskMatch, 'gi')
-  //       var data = tasks.toLowerCase().match(regex);
-  //       // console.log(data)
+    if (props.TaskData != null) {
+      for (let i = 0; i < tempArr.length; i++) {
+        const regex = new RegExp(tempArr[i].name, 'gi');
+        const data = tasks.toLowerCase().match(regex);
+        if (data != null) {
+          tempTask.push(tempArr[i]);
+        }
+      }
+    }
 
-  //       // for(var i = 0; i < mockData.length; i++){
-  //       //   if(String(data) == mockData[i].Name.toLocaleLowerCase()){
-  //       //     //  console.log("Ayo")
-  //       //     const taskdata : TaskPropObject = {
-  //       //       id : mockData[i].id,
-  //       //       name : mockData[i].Name,
-  //       //       tags : mockData[i].Tags,
-  //       //       description : mockData[i].Description,
-  //       //       downloads : 0,
-  //       //       rating : 0
-  //       //     }
-  //       //     // console.log(taskdata)
-  //       //     return <Task task = {taskdata}/>
-  //       //   }
-  //       // }
-  //   })
-  // }
+    store.dispatch({ type: 'FETCH_TASK_SUCCESS', payload: tempTask });
+  };
 
   return (
 
-    <div>
-      <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
-        <React.Fragment>
+    <div className="search">
+      <Flex breakpointMods={[{ modifier: 'flex-1', breakpoint: 'lg' }]}>
+        <>
           <InputGroup style={{width: '70%'}}>
-            <TextInput name="textInput11" id="textInput11" type="search" aria-label="search input example">
-              {/* <SearchTask onSearchTask={searchTask}/> */}
-            </TextInput>
+            {/* <TextInput name="textInput11" id="textInput11" type="search" aria-label="search input example"> */}
+            <SearchTask onSearchTask={searchTask}/>
+            {/* </TextInput> */}
             <Button variant={ButtonVariant.control} aria-label="search button for search input" >
               <SearchIcon />
             </Button>
@@ -101,13 +108,16 @@ const SearchBar: React.FC = (props) => {
             />
           </div>
 
-        </React.Fragment>
+        </>
       </Flex>
     </div>
   );
 };
-// }
 
-// }
+const mapStateToProps = (state: any) => ({
+    TaskData: state.TaskData.TaskData,
+  });
 
-export default SearchBar;
+export default connect(mapStateToProps, { fetchTaskSuccess })(SearchBar);
+
+// export default SearchBar;

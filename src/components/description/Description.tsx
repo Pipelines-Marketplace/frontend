@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable max-len */
 import React from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
@@ -12,7 +13,8 @@ import {
   List,
   ListItem,
 } from '@patternfly/react-core';
-import {InfoCircleIcon} from '@patternfly/react-icons';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { InfoCircleIcon } from '@patternfly/react-icons';
 import './index.css';
 
 export interface DescriptionProp {
@@ -21,17 +23,19 @@ export interface DescriptionProp {
   Yaml : string
 }
 
-const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
+const Description: React.FC<DescriptionProp> = () => {
   const [activeTabKey, setActiveTabKey] = React.useState(0);
   const handleTabClick = (event: any, tabIndex: any) => {
     setActiveTabKey(tabIndex);
   };
   return (
-    <Card style={{minHeight: '40em', minWidth: '70em', maxWidth: '70em'}}>
+    <Card style={{ minHeight: '40em', minWidth: '70em', maxWidth: '70em' }}>
       <CardHead>
-        <div className="ok-icon"><InfoCircleIcon color='blue' size='sm' /></div>
+        <div className="ok-icon"><InfoCircleIcon color="blue" size="sm" /></div>
         <div className="description-heading">
-          Description {' '}
+          Description
+          {' '}
+          {' '}
           {/* <a href={task.Github} style={{textDecoration: 'none'}}>
             <GithubIcon color="black" size="md" />
           </a> */}
@@ -131,57 +135,82 @@ const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
             <br />
             metadata:
             <br />
-            {'  '}name: kaniko
+            {'  '}
+name: kaniko
             <br />
             spec:
             <br />
-            {'  '}inputs:
+            {'  '}
+inputs:
             <br />
-            {'  '}params:
+            {'  '}
+params:
             <br />
-            {'  '}- name: DOCKERFILE
+            {'  '}
+- name: DOCKERFILE
             <br />
-            {'   '}description: Path to the Dockerfile to build.
+            {'   '}
+description: Path to the Dockerfile to build.
             <br />
-            {'   '}default: ./Dockerfile
+            {'   '}
+default: ./Dockerfile
             <br />
-            {'  '}- name: CONTEXT
+            {'  '}
+- name: CONTEXT
             <br />
-            {'   '} description: The build context used by Kaniko.
+            {'   '}
+            {' '}
+description: The build context used by Kaniko.
             <br />
-            {'   '}default: ./
+            {'   '}
+default: ./
             <br />
-            {'  '}- name: EXTRA_ARGS
+            {'  '}
+- name: EXTRA_ARGS
             <br />
-            {'   '}default: `&apos`
+            {'   '}
+default: `&apos`
             <br />
-            {'  '}resources:
+            {'  '}
+resources:
             <br />
-            {'   '}- name: source
+            {'   '}
+- name: source
             <br />
-            {'     '}type: git
+            {'     '}
+type: git
             <br />
 
-            {'  '}outputs:
+            {'  '}
+outputs:
             <br />
-            {'   '}resources:
+            {'   '}
+resources:
             <br />
-            {'    '}- name: image
+            {'    '}
+- name: image
             <br />
-            {'      '}type: image
+            {'      '}
+type: image
             <br />
 
-            {'   '}steps:
+            {'   '}
+steps:
             <br />
-            {'    '}- name: build-and-push
+            {'    '}
+- name: build-and-push
             <br />
-            {'      '}workingdir: /workspace/source
+            {'      '}
+workingdir: /workspace/source
             <br />
-            {'      '}image: gcr.io/kaniko-project/executor:v0.13.0
+            {'      '}
+image: gcr.io/kaniko-project/executor:v0.13.0
             <br />
-            {'      '}# specifying DOCKER_CONFIG is required to allow kaniko to detect docker credential
+            {'      '}
+# specifying DOCKER_CONFIG is required to allow kaniko to detect docker credential
             <br />
-            {'      '}# https://github.com/tektoncd/pipeline/pull/706
+            {'      '}
+# https://github.com/tektoncd/pipeline/pull/706
           </pre>
         </Tab>
         <Tab eventKey={2} title="Resources">
@@ -201,9 +230,9 @@ const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
                 </Tab>
                 <Tab eventKey={2} title="Example">
                     {task.YAML}
-                </Tab>*/}
+                </Tab> */}
       </Tabs>
-    </Card >
+    </Card>
   );
 };
 

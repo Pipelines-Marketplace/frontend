@@ -1,10 +1,10 @@
 import React from 'react';
 import {
 } from '@patternfly/react-core';
-import {useParams} from 'react-router';
-import BasicDetail from './BasicDetail';
+import { useParams } from 'react-router';
 import {connect} from 'react-redux';
-import {fetchTaskName} from '../redux/Actions/TaskActionName';
+import BasicDetail from './BasicDetail';
+import { fetchTaskName } from '../redux/Actions/TaskActionName';
 
 export interface MockData{
   Name : string,
@@ -15,51 +15,50 @@ export interface MockData{
 }
 
 const Detail: React.FC = (props: any) => {
-  const {name} = useParams();
+  const { name } = useParams();
   React.useEffect(() => {
     props.fetchTaskName(name);
   });
   let tempArr : any = [];
 
   if (props.TaskName != null) {
-    Object.keys(props.TaskName).map(function(key) {
+    Object.keys(props.TaskName).map((key) => {
       tempArr.push({[key]: props.TaskName[key]});
       return tempArr;
     });
   }
 
   if (props.TaskData != null) {
-    tempArr = props.TaskData.map((task: any) =>{
+    tempArr = props.TaskData.map((task: any) => {
       const taskData: MockData = {
-        Name: task['Name'],
-        Description: task['Description'],
+        Name: task.Name,
+        Description: task.Description,
         Rating: 0,
         Downloads: 0,
-        YAML: task['YAML'],
+        YAML: task.YAML,
       };
       return taskData;
     });
-  };
+  }
 
-  if (props.TaskName==null) {
+  if (props.TaskName == null) {
     return (
       <BasicDetail task={props.TaskName} />
     );
-  };
+  }
 
   return (
     <div>
 
     </div>
+
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
+const mapStateToProps = (state: any) => ({
     TaskName: state.TaskName.TaskName,
-  };
-};
+  });
 
-export default connect(mapStateToProps, {fetchTaskName})(Detail);
+export default connect(mapStateToProps, { fetchTaskName })(Detail);
 
 // export default Detail;

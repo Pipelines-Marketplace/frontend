@@ -13,17 +13,13 @@ import UploadTask from '../upload-task/UploadTask';
 import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/main.png';
 import imgAvatar from '../assets/logo/imgAvatar.png';
-// eslint-disable-next-line import/order
-import { css } from '@patternfly/react-styles';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
-  BellIcon,
+  BellIcon, HomeIcon,
 } from '@patternfly/react-icons';
 import Community from '../community/Community';
 import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
-import PageHeading from '../page-heading/PageHeading';
+import PageHeading from '../background-image/BackgroundImage';
 import Filter from '../filter/Filter';
-
 import {
   Button,
   ButtonVariant,
@@ -35,9 +31,15 @@ import {
   Toolbar,
   ToolbarGroup,
   Avatar,
+  Flex,
+  FlexItem,
+  BackgroundImage,
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
+import SearchTask from '../search-bar/SearchTask';
+import BackgroundImageHeader from '../background-image/BackgroundImage';
+
 
 interface mainProps {
 
@@ -49,7 +51,6 @@ interface mainState {
 
 const App: React.FC<mainProps> = () => {
   const [isNavOpen, setNavToggle] = React.useState(true);
-  // const [activeItem, setActiveItem] = React.useState(0);
   const onNavToggle = () => {
     setNavToggle(!isNavOpen);
   };
@@ -60,77 +61,95 @@ const App: React.FC<mainProps> = () => {
     target: '',
 
   };
-  // const onNavSelect = (result: any) => {
-  //   setActiveItem(result.itemId);
-  // };
   // code for header contents
   const PageToolbar = (
     // eslint-disable-next-line react/jsx-filename-extension
     <div>
       <Toolbar>
         <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
-          <ToolbarItem>
+          <ToolbarItem style={{ color: 'white' }}>
+            <Link to="/">
+              <span style={{ marginRight: '2em', color: 'white' }}>Home</span>
+            </Link>
+
+            <Link to="/">
+              <span style={{ marginRight: '2em', color: 'white' }}>Search</span>
+            </Link>
+
+            <Link to="/">
+              <span style={{ marginRight: '2em', color: 'white' }}>Community</span>
+            </Link>
+
             <Link to="/uploadtask">
-              <span>
-                {' '}
-Upload_Task
-                {' '}
+              <span style={{ marginRight: '0em', color: 'white' }}>
+                {/* {' '} */}
+              UploadTask
+                {/* {' '} */}
               </span>
               {' '}
             </Link>
             <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
-              <BellIcon />
+              {/* <BellIcon /> */}
             </Button>
           </ToolbarItem>
           <ToolbarItem>
+
             <Link to="/signin">
-              <span> Signin </span>
+              <span style={{ marginRight: '1em', color: 'white' }}> Signin </span>
               {' '}
             </Link>
+            {/* <Button id="default-example-uid-02" onClick={SignIn} aria-label="Settings actions" variant={ButtonVariant.plain}>
+              SignIn
+            </Button> */}
+
           </ToolbarItem>
         </ToolbarGroup>
       </Toolbar>
     </div>
 
   );
-
   const Header = (
     <PageHeader
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
       logoProps={logoProps}
       toolbar={PageToolbar}
+
       avatar={<Avatar src={imgAvatar} alt="user icon" />}
       showNavToggle
       isNavOpen={isNavOpen}
       onNavToggle={onNavToggle}
-
     />
+
+
   );
-  const Sidebar = <Filter />;
   return (
     <Router>
-      <>
-        <Page header={Header} sidebar={Sidebar}>
-          {/* <PageSection variant={PageSectionVariants.light}> */}
-          <Route exact path="/" component={PageHeading} />
-          <Route exact path="/search" component={PageHeading} />
+      <Page header={Header}>
+        {/* <PageSection variant={PageSectionVariants.light}> */}
+        <Route exact path="/" component={BackgroundImageHeader} />
+        <Route exact path="/search" component={BackgroundImageHeader} />
 
-          {/* </PageSection> */}
-          <PageSection>
-            <Route exact path="/" component={SearchBar} />
-            <Route exact path="/signin" component={UploadTask} />
-            <Route exact path="/uploadtask" component={UploadTask} />
-            <Route exact path="/detail/:taskId" component={BasicDetailParent} />
-            <Route exact path="/search" component={SearchBar} />
-          </PageSection>
-          <PageSection style={{ minHeight: '100vh' }}>
-            <Route exact path="/" component={TaskContainer} />
-            <Route exact path="/detail/:taskId" component={Detail} />
-            <Route path="/search" component={TaskContainer} />
-            <Route path="/community" component={Community} />
-          </PageSection>
-        </Page>
-      </>
+        {/* </PageSection> */}
+        <PageSection>
+          <Route exact path="/" component={SearchBar} />
+          {/* <Route exact path="/uploadtask" component={Uploadtask} /> */}
+          <Route exact path="/detail/:taskId" component={BasicDetailParent} />
+          <Route exact path="/search" component={SearchBar} />
+        </PageSection>
+        <PageSection>
+          <Flex className="example-border" breakpointMods={[{ modifier: 'flex-1', breakpoint: 'lg' }]}>
+            <FlexItem>
+              <Route exact path="/" component={Filter} />
+            </FlexItem>
+            <FlexItem>
+              <Route exact path="/" component={TaskContainer} />
+              <Route path="/search" component={TaskContainer} />
+            </FlexItem>
+          </Flex>
+          <Route exact path="/detail/:taskId" component={Detail} />
+          <Route path="/community" component={Community} />
+        </PageSection>
+      </Page>
     </Router>
   );
 };
