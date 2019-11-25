@@ -51,13 +51,13 @@ const Task: React.FC<TaskProp> = (props:any) => {
           </div>
           <CardActions className="cardActions">
             <DownloadIcon className="download"/>
-            <TextContent className="text">10M</TextContent>
+            <TextContent className="text">{props.task.downloads}</TextContent>
             <OkIcon style={{color: 'green'}}/>
-            <TextContent className="text">4.5</TextContent>
+            <TextContent className="text">{props.task.rating}</TextContent>
           </CardActions>
         </CardHead>
         <CardHeader className="catalog-tile-pf-header">
-          <Link to={`/detail/${props.task.name}`}><span className="task-heading">{props.task.name}</span></Link>
+          <Link to={`/detail/${props.task.id}`}><span className="task-heading">{props.task.name}</span></Link>
         </CardHeader>
         <CardBody className="catalog-tile-pf-body">
           <div className="catalog-tile-pf-description">

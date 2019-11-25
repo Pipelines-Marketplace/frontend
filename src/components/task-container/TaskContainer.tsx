@@ -18,7 +18,8 @@ const TaskContainer: React.FC = (props: any) => {
   let tempArr : any = [];
   React.useEffect(() => {
     props.fetchTaskSuccess();
-  });
+  // eslint-disable-next-line
+  }, []);
 
   if (props.TaskData != null) {
     tempArr = props.TaskData;
