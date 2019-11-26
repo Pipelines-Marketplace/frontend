@@ -1,4 +1,4 @@
-* {
+/* * {
     box-sizing: border-box;
 }
 
@@ -14,12 +14,13 @@
         "filter  task-card-container"
         "footer footer";
     grid-template-columns: 1fr 6fr;
-    gap: 1em;
+    gap: 1em;   
 }
 
 .main>div {
     padding: 1em;
     background-color: lightgray;
+    
 }
 
 .task-card {
@@ -48,10 +49,13 @@
     grid-area: footer;
 }
 
+.navLink{
+    margin-left: 0.5em;   
+}
 
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */
-    .main {
+    /* .main {
         display: grid;
         grid-template-areas:
             "navbar"
@@ -62,4 +66,8 @@
         grid-template-columns: 1fr;
         gap: 1em;
     }
+} */ */
+
+.header{
+    background-color: #EDEDED;
 }

@@ -1,8 +1,13 @@
-import React from "react"
+import React from 'react';
+
+
 const Navbar: React.FC = () => {
-    return (
-        <span>Navbar</span>
-    );
-}
+  return (
+    <div>
+
+    </div>
+
+  );
+};
 
 export default Navbar;
