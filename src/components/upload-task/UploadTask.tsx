@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-filename-extension */
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './UploadTask.css';
 import {
   Form,
@@ -16,16 +15,13 @@ import {
 
 const UploadTask: React.FC = () => {
   const [status, setStatus] = useState('');
-  const [, setFilename] = useState('choose file');
 
   const intags : string[] = [];
   const [tags, setTags] = useState(intags);
   //  for onchange file uploading ...
   const onchange = (event: any) => {
-    // setFile(event.target.files[0]);
-    // setFilename(event.target.files[0].name);
-    // const filename = event.target.files[0];
-    const input = (document.querySelector('input[type="file"]')as HTMLInputElement);
+    const input =
+      document.querySelector('input[type="file"]')as HTMLInputElement;
     const data = new FormData();
     if (input.files != null) {
       data.append('file', input.files[0]);
@@ -65,7 +61,7 @@ const UploadTask: React.FC = () => {
       method: 'POST',
       body: taskinfo,
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'multipart/form-data',
       },
     });
@@ -81,8 +77,8 @@ const UploadTask: React.FC = () => {
   const removeTags = (indexToRemove:any) => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
-  // eslint-disable-next-line no-console
-  const alertVariant = 'default';
+
+  // const alertVariant = 'default';
   let s;
 
   if (status !== '') {
@@ -121,15 +117,18 @@ const UploadTask: React.FC = () => {
           name="task-name"
         />
       </FormGroup>
-      <FormGroup label="Tags" isRequired fieldId="task-tag" helperText="Please provide tags name of your task">
 
-
+      <FormGroup
+        label="Tags" isRequired fieldId="task-tag"
+        helperText="Please provide tags name of your task"
+      >
         <div className="tags-input">
           <ul id="tags">
             {tags.map((tag, index) => (
               <li key={tag} className="tag">
                 <span className="tag-title"><b>{tag}</b></span>
-                <span className="tag-close-icon" role="presentation" onClick={() => removeTags(index)}>
+                <span className="tag-close-icon" role="presentation"
+                  onClick={() => removeTags(index)}>
                   {'  '}
                   <b>x</b>
                 </span>
@@ -148,7 +147,10 @@ const UploadTask: React.FC = () => {
 
 
       </FormGroup>
-      <FormGroup isRequired label="Description" helperText="Please fill description of your task" fieldId="description">
+      <FormGroup isRequired label="Description"
+        helperText="Please fill description of your task"
+        fieldId="description"
+      >
         <TextArea
           name="description"
           id="description"

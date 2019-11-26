@@ -11,7 +11,7 @@ import {
   Badge,
   GalleryItem,
   TextContent,
-CardHead,
+  CardHead,
   CardHeader,
   CardFooter,
   CardBody,
@@ -42,28 +42,30 @@ const Task: React.FC<TaskProp> = (props:any) => {
   } else {
     tempArr.push([]);
   }
+  console.log(props.task.id);
+
 
   return (
     <GalleryItem>
       <Card className="card" isHoverable>
         <CardHead>
           <div>
-            <img src ={imgAvatar} alt="Task" style={{ height: '50px' }} />
+            <img src ={imgAvatar} alt="Task" style={{height: '50px'}} />
           </div>
           <CardActions className="cardActions">
-            <DownloadIcon className="download" />
-            <TextContent className="text"></TextContent>
-            <OkIcon style={{ color: 'green' }} />
-            <TextContent className="text">4.5</TextContent>
+            <DownloadIcon className="download"/>
+            <TextContent className="text">{props.task.downloads}</TextContent>
+            <OkIcon style={{color: 'green'}}/>
+            <TextContent className="text">{props.task.rating}</TextContent>
           </CardActions>
         </CardHead>
         <CardHeader className="catalog-tile-pf-header">
-          <Link to={`/detail/${props.task.name}`}><span className="task-heading">{props.task.name}</span></Link>
+          <Link to={'/detail/'+props.task.id}><span className="task-heading">{props.task.name}</span></Link>
         </CardHeader>
         <CardBody className="catalog-tile-pf-body">
           <div className="catalog-tile-pf-description">
             <span>
-              {`${props.task.description.substring(0, 100)  }   ...`}
+              {`${props.task.description.substring(0, 100) }   ...`}
             </span>
           </div>
         </CardBody>

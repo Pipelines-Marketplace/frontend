@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { SearchIcon, FilterIcon } from '@patternfly/react-icons';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {SearchIcon, FilterIcon} from '@patternfly/react-icons';
 import '@patternfly/react-core/dist/styles/base.css';
 import './index.css';
 import {
@@ -13,7 +13,7 @@ import {
   DropdownItem,
   Flex,
 } from '@patternfly/react-core';
-import { fetchTaskSuccess } from '../redux/Actions/TaskAction';
+import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
 import SearchTask from './SearchTask';
 import store from '../redux/store';
 
@@ -31,6 +31,7 @@ const SearchBar: React.FC = (props:any) => {
   const tempTask : any = [];
   React.useEffect(() => {
     props.fetchTaskSuccess();
+    // eslint-disable-next-line
   }, []);
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) => {
@@ -79,14 +80,16 @@ const SearchBar: React.FC = (props:any) => {
       }
     }
 
-    store.dispatch({ type: 'FETCH_TASK_SUCCESS', payload: tempTask });
+    if (tempTask.length > 0) {
+      store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
+    }
   };
 
   return (
 
     <div className="search">
-      <Flex breakpointMods={[{ modifier: 'flex-1', breakpoint: 'lg' }]}>
-        <>
+      <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
+        <React.Fragment>
           <InputGroup style={{width: '70%'}}>
             {/* <TextInput name="textInput11" id="textInput11" type="search" aria-label="search input example"> */}
             <SearchTask onSearchTask={searchTask}/>
@@ -107,17 +110,16 @@ const SearchBar: React.FC = (props:any) => {
               dropdownItems={dropdownItems}
             />
           </div>
-
-        </>
+        </React.Fragment>
       </Flex>
     </div>
   );
 };
 
 const mapStateToProps = (state: any) => ({
-    TaskData: state.TaskData.TaskData,
-  });
+  TaskData: state.TaskData.TaskData,
+});
 
-export default connect(mapStateToProps, { fetchTaskSuccess })(SearchBar);
+export default connect(mapStateToProps, {fetchTaskSuccess})(SearchBar);
 
 // export default SearchBar;

@@ -1,5 +1,4 @@
-/* eslint-disable import/order */
-/* eslint-disable import/no-unresolved */
+
 import React from 'react';
 import './index.css';
 import {
@@ -13,12 +12,7 @@ import UploadTask from '../upload-task/UploadTask';
 import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/main.png';
 import imgAvatar from '../assets/logo/imgAvatar.png';
-import {
-  BellIcon, HomeIcon,
-} from '@patternfly/react-icons';
 import Community from '../community/Community';
-import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
-import PageHeading from '../background-image/BackgroundImage';
 import Filter from '../filter/Filter';
 import {
   Button,
@@ -33,11 +27,9 @@ import {
   Avatar,
   Flex,
   FlexItem,
-  BackgroundImage,
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
-import SearchTask from '../search-bar/SearchTask';
 import BackgroundImageHeader from '../background-image/BackgroundImage';
 
 
@@ -67,40 +59,40 @@ const App: React.FC<mainProps> = () => {
     <div>
       <Toolbar>
         <ToolbarGroup>
-          <ToolbarItem style={{ color: 'white' }}>
+          <ToolbarItem style={{color: 'white'}}>
             <Link to="/">
-              <span style={{ marginRight: '2em', color: 'white' }}>Home</span>
+              <span style={{marginRight: '2em', color: 'white'}}>Home</span>
             </Link>
 
             <Link to="/">
-              <span style={{ marginRight: '2em', color: 'white' }}>Search</span>
+              <span style={{marginRight: '2em', color: 'white'}}>Search</span>
             </Link>
 
             <Link to="/">
-              <span style={{ marginRight: '2em', color: 'white' }}>Community</span>
+              <span style={{marginRight: '2em', color: 'white'}}>
+                Community
+              </span>
             </Link>
 
             <Link to="/upload">
-              <span style={{ marginRight: '0em', color: 'white' }}>
+              <span style={{marginRight: '0em', color: 'white'}}>
                 {/* {' '} */}
               UploadTask
                 {/* {' '} */}
               </span>
               {' '}
             </Link>
-            <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
-              {/* <BellIcon /> */}
+            <Button id="default-example-uid-01"
+              aria-label="Notifications actions"
+              variant={ButtonVariant.plain}>
             </Button>
           </ToolbarItem>
           <ToolbarItem>
 
             <Link to="/signin">
-              <span style={{ marginRight: '1em', color: 'white' }}> Signin </span>
+              <span style={{marginRight: '1em', color: 'white'}}> Signin </span>
               {' '}
             </Link>
-            {/* <Button id="default-example-uid-02" onClick={SignIn} aria-label="Settings actions" variant={ButtonVariant.plain}>
-              SignIn
-            </Button> */}
 
           </ToolbarItem>
         </ToolbarGroup>
@@ -137,7 +129,10 @@ const App: React.FC<mainProps> = () => {
           <Route exact path="/search" component={SearchBar} />
         </PageSection>
         <PageSection>
-          <Flex className="example-border" breakpointMods={[{ modifier: 'flex-1', breakpoint: 'lg' }]}>
+          <Flex
+            className="example-border"
+            breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}
+          >
             <FlexItem>
               <Route exact path="/" component={Filter} />
             </FlexItem>
