@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable max-len */
 import React from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
@@ -21,7 +22,7 @@ export interface DescriptionProp {
   Yaml : string
 }
 
-const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
+const Description: React.FC<DescriptionProp> = (props:any) => {
   const [activeTabKey, setActiveTabKey] = React.useState(0);
   const handleTabClick = (event: any, tabIndex: any) => {
     setActiveTabKey(tabIndex);
@@ -29,7 +30,7 @@ const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
   return (
     <Card style={{minHeight: '40em', minWidth: '70em', maxWidth: '70em'}}>
       <CardHead>
-        <div className="ok-icon"><InfoCircleIcon color='blue' size='sm' /></div>
+        <div className="ok-icon"><InfoCircleIcon color="blue" size="sm" /></div>
         <div className="description-heading">
           Description {' '}
         </div>
@@ -62,7 +63,7 @@ const Description: React.FC<DescriptionProp> = (props: DescriptionProp) => {
           </div>
         </Tab>
       </Tabs>
-    </Card >
+    </Card>
   );
 };
 

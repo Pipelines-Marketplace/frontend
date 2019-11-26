@@ -2,8 +2,8 @@ import React from 'react';
 import {
 } from '@patternfly/react-core';
 import {useParams} from 'react-router';
-import BasicDetail from './BasicDetail';
 import {connect} from 'react-redux';
+import BasicDetail from './BasicDetail';
 import {fetchTaskName} from '../redux/Actions/TaskActionName';
 
 const Detail: React.FC = (props: any) => {
@@ -13,24 +13,21 @@ const Detail: React.FC = (props: any) => {
     // eslint-disable-next-line
   }, []);
 
-  if (props.TaskName!=null) {
+  if (props.TaskName != null) {
     return (
       <BasicDetail task={props.TaskName} />
     );
-  };
+  }
 
   return (
-    <div>
+    <div />
 
-    </div>
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    TaskName: state.TaskName.TaskName,
-  };
-};
+const mapStateToProps = (state: any) => ({
+  TaskName: state.TaskName.TaskName,
+});
 
 export default connect(mapStateToProps, {fetchTaskName})(Detail);
 

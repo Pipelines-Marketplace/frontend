@@ -11,14 +11,15 @@ import {
   Badge,
   GalleryItem,
   TextContent,
-} from '@patternfly/react-core';
-import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
-import {CardHead,
+  CardHead,
   CardHeader,
   CardFooter,
   CardBody,
   CardActions} from '@patternfly/react-core';
+import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
+
 import imgAvatar from '../assets/logo/imgAvatar.png';
+
 export interface TaskPropObject {
   name : string;
   description : string;
@@ -47,7 +48,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
       <Card className="card" isHoverable>
         <CardHead>
           <div>
-            <img src = {imgAvatar} alt="Task" style={{height: '50px'}}/>
+            <img src ={imgAvatar} alt="Task" style={{height: '50px'}} />
           </div>
           <CardActions className="cardActions">
             <DownloadIcon className="download"/>
@@ -62,15 +63,13 @@ const Task: React.FC<TaskProp> = (props:any) => {
         <CardBody className="catalog-tile-pf-body">
           <div className="catalog-tile-pf-description">
             <span>
-              {props.task.description.substring(0, 100) + '   ...'}
+              {`${props.task.description.substring(0, 100) }   ...`}
             </span>
           </div>
         </CardBody>
         <CardFooter className="catalog-tile-pf-footer">
           {
-            tempArr[0].map((tag: any) =>{
-              return (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>);
-            })
+            tempArr[0].map((tag: any) => (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>))
           }
         </CardFooter>
       </Card>
