@@ -18,7 +18,9 @@ const Filter: React.FC = (props:any) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch('http://localhost:5000/tags').then((res) => res.json()).then((data) => setTags(data));
+      await fetch('http://localhost:5000/tags')
+          .then((res) => res.json())
+          .then((data) => setTags(data));
     };
     fetchData();
   }, []);

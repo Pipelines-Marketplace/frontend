@@ -33,4 +33,3 @@ const mapStateToProps = (state: any) => ({
 
 export default connect(mapStateToProps, {fetchTaskName})(Detail);
 
-// export default Detail;

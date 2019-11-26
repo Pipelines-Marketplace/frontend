@@ -7,8 +7,7 @@ export function fetchTaskDescription(id: any) {
     fetch('http://localhost:5000/task/'+id)
         .then((response) => response.json())
         .then((Task) => {
-          // eslint-disable-next-line
-          fetch('http://localhost:5000/task/'+Task.name+'/'+'readme')
+          fetch(`http://localhost:5000/task/${Task.name}/readme`)
               .then((response) => response.text())
               .then((TaskDescription) => dispatch({
                 type: FETCH_TASK_DESCRIPTION,
@@ -19,8 +18,7 @@ export function fetchTaskDescription(id: any) {
     fetch('http://localhost:5000/task/'+id)
         .then((response) => response.json())
         .then((Task) => {
-          // eslint-disable-next-line
-          fetch('http://localhost:5000/task/'+Task.name+'/'+'yaml')
+          fetch(`http://localhost:5000/task/${Task.name}/yaml`)
               .then((response) => response.text())
               .then((TaskYaml) => dispatch({
                 type: FETCH_TASK_YAML,

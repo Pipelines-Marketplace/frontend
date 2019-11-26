@@ -19,7 +19,7 @@ import avatarImg from './download.png';
 import './index.css';
 
 export interface BasicDetailPropObject {
-    // id: any
+    id: any
     name : string;
     description : string;
     downloads : number;
@@ -32,13 +32,13 @@ export interface BasicDetailProp {
   task: BasicDetailPropObject
 }
 
-const BasicDetail: React.FC<BasicDetailProp> = (props: any) => {
-  const tempArr : any = [];
+const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
+  const taskArr : any = [];
 
   if (props.task.tags != null) {
-    tempArr.push(props.task.tags);
+    taskArr.push(props.task.tags);
   } else {
-    tempArr.push([]);
+    taskArr.push([]);
   }
   console.log(props.task);
 
@@ -67,7 +67,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: any) => {
                 <FlexItem>{props.task.name}</FlexItem>
                 <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
                   {
-                    tempArr[0].map((tag: any) =>{
+                    taskArr[0].map((tag: any) =>{
                       return (
                         <Badge
                           style={{paddingRight: '1em'}} key={tag.Name}

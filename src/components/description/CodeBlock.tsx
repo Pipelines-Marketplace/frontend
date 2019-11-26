@@ -1,5 +1,3 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
