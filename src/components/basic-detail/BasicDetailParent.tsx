@@ -7,9 +7,11 @@ import BasicDetail from './BasicDetail';
 import {fetchTaskName} from '../redux/Actions/TaskActionName';
 
 const Detail: React.FC = (props: any) => {
-  const {id} = useParams();
+  const {taskId} = useParams();
+  console.log(taskId);
+
   React.useEffect(() => {
-    props.fetchTaskName(id);
+    props.fetchTaskName(taskId);
     // eslint-disable-next-line
   }, []);
 

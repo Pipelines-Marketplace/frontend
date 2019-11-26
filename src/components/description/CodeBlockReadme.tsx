@@ -1,5 +1,4 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable max-len */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
@@ -7,7 +6,9 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 const CodeBlockReadme = (props:any) => {
   const {value} = props;
   return (
-    <SyntaxHighlighter language="readme" showLineNumbers={true} wrapLines={true}>
+    <SyntaxHighlighter language="readme"
+      showLineNumbers={true} wrapLines={true}
+    >
       {value}
     </SyntaxHighlighter>
   );

@@ -10,11 +10,10 @@ import {useParams} from 'react-router';
 import {fetchTaskDescription} from '../redux/Actions/TaskActionDescription';
 
 const Detail: React.FC = (props: any) => {
-  const {id} = useParams();
+  const {taskId} = useParams();
   React.useEffect(() => {
-    props.fetchTaskDescription(id);
+    props.fetchTaskDescription(taskId);
   });
-
 
   const yamlData = '```'+props.TaskYaml+'```';
   return (

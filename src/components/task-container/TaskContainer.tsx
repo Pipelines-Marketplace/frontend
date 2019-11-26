@@ -24,7 +24,6 @@ const TaskContainer: React.FC = (props: any) => {
   if (props.TaskData != null) {
     tempArr = props.TaskData;
   }
-  console.log(props.TaskData);
 
   return (
     <div className="block">

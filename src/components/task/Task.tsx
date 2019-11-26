@@ -42,6 +42,8 @@ const Task: React.FC<TaskProp> = (props:any) => {
   } else {
     tempArr.push([]);
   }
+  console.log(props.task.id);
+
 
   return (
     <GalleryItem>
@@ -58,7 +60,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
           </CardActions>
         </CardHead>
         <CardHeader className="catalog-tile-pf-header">
-          <Link to={`/detail/${props.task.id}`}><span className="task-heading">{props.task.name}</span></Link>
+          <Link to={'/detail/'+props.task.id}><span className="task-heading">{props.task.name}</span></Link>
         </CardHeader>
         <CardBody className="catalog-tile-pf-body">
           <div className="catalog-tile-pf-description">

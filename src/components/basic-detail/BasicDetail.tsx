@@ -1,4 +1,4 @@
-//  eslint-enable max-len 
+//  eslint-enable max-len
 import React from 'react';
 import {
 
@@ -40,24 +40,39 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: any) => {
   } else {
     tempArr.push([]);
   }
+  console.log(props.task);
 
   return (
     <Card>
-      <Flex breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}>
+      <Flex
+        breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}
+      >
         <div className="avatar">
-          <Flex breakpointMods={[{modifier: 'align-self-flex-center', breakpoint: 'lg'}]}>
-            <FlexItem><Avatar src={avatarImg} alt="avatar" style={{height: '5em', width: '5em'}}></Avatar></FlexItem>
+          <Flex
+            breakpointMods={[{modifier: 'align-self-flex-center',
+              breakpoint: 'lg'}]}
+          >
+            <FlexItem>
+              <Avatar
+                src={avatarImg} alt="avatar"
+                style={{height: '5em', width: '5em'}}>
+              </Avatar>
+            </FlexItem>
           </Flex>
         </div>
         <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
           <FlexItem>
             <div className="data">
               <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
-                <FlexItem><span className="heading">{props.task.name}</span></FlexItem>
+                <FlexItem>{props.task.name}</FlexItem>
                 <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
                   {
                     tempArr[0].map((tag: any) =>{
-                      return (<Badge style={{paddingRight: '1em'}} key={tag.Name} className="badge">{tag}</Badge>);
+                      return (
+                        <Badge
+                          style={{paddingRight: '1em'}} key={tag.Name}
+                          className="badge">{tag}
+                        </Badge>);
                     })
                   }
                 </Flex>
@@ -67,10 +82,15 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: any) => {
         </Flex>
 
         <div className="download">
-          <Flex breakpointMods={[{modifier: 'align-right', breakpoint: 'lg'}, {modifier: 'column', breakpoint: 'lg'}]}>
+          <Flex
+            breakpointMods={[{modifier: 'align-right', breakpoint: 'lg'},
+              {modifier: 'column', breakpoint: 'lg'}]}
+          >
             <FlexItem><span className="downloadNumber"><DownloadIcon />
               {'  '}{props.task.downloads}</span></FlexItem>
-            <FlexItem><span className="star"><StarIcon color="gold" size="md" /></span></FlexItem>
+            <FlexItem>
+              <span className="star"><StarIcon color="gold" size="md" /></span>
+            </FlexItem>
             <FlexItem><span className="downloadIcon">
               <Button className="button" style={{width: '9em'}}>
                  Download

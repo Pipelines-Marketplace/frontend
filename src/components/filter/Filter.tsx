@@ -1,12 +1,10 @@
 /* eslint-disable consistent-return */
-/* eslint-disable import/no-extraneous-dependencies */
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+
 import './filter.css';
-import { Checkbox } from '@patternfly/react-core/dist/js/components';
-import { all } from 'q';
+import {Checkbox} from '@patternfly/react-core/dist/js/components';
+
 import store from '../redux/store';
-import { fetchTaskSuccess } from '../redux/Actions/TaskAction';
 
 
 export interface TagsData {
@@ -20,7 +18,7 @@ const Filter: React.FC = (props:any) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch('http://localhost:5000/tags').then((res) => res.json()).then((data) => setTags(data));
+      await fetch('http://localhost:5000/tags').then((res) => res.json()).then((data) => setTags(data));
     };
     fetchData();
   }, []);
@@ -42,10 +40,10 @@ const Filter: React.FC = (props:any) => {
       str = `${str + tagArray[i]}|`;
     }
     fetch(`http://localhost:5000/tasks${str}`)
-      .then((res) => res.json())
-      .then((data) => {
-        store.dispatch({ type: 'FETCH_TASK_SUCCESS', payload: data });
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
+        });
   };
   const addTag = (e: any) => {
     if (tagsSet.has(e.target.value) === false) {
@@ -68,14 +66,14 @@ const Filter: React.FC = (props:any) => {
       catStr = `${catStr + catArray[i]}|`;
     }
     fetch(`http://localhost:5000/tasks?category=${catStr}`)
-      .then((res) => res.json())
-      .then((data) => {
+        .then((res) => res.json())
+        .then((data) => {
         // const allTasks = [...props.TaskData, ...data];
         // data.map((task:any) => allTasks.push(task));
         // console.log(allTasks);
 
-        store.dispatch({ type: 'FETCH_TASK_SUCCESS', payload: data });
-      });
+          store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
+        });
   };
   const addCategory = (e: any) => {
     if (categorySet.has(e.target.value) === false) {
@@ -89,13 +87,13 @@ const Filter: React.FC = (props:any) => {
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <div className="filter-size">
-      <h2 style={{ marginBottom: '1em' }}>
+      <h2 style={{marginBottom: '1em'}}>
         {' '}
         <b>Types</b>
       </h2>
-      <div style={{ marginBottom: '0.4em' }}>
+      <div style={{marginBottom: '0.4em'}}>
         <Checkbox
-          style={{ width: '1em', height: '1em' }}
+          style={{width: '1em', height: '1em'}}
           label="Task"
           id="Task"
           value="task"
@@ -105,7 +103,7 @@ const Filter: React.FC = (props:any) => {
       </div>
       <div>
         <Checkbox
-          style={{ width: '1em', height: '1em' }}
+          style={{width: '1em', height: '1em'}}
           label="Pipelines"
           id=" "
           value="pipelines"
@@ -113,12 +111,12 @@ const Filter: React.FC = (props:any) => {
           aria-label="uncontrolled checkbox example"
         />
       </div>
-      <h2 style={{ marginBottom: '1em', marginTop: '1em' }}><b> Tags </b></h2>
+      <h2 style={{marginBottom: '1em', marginTop: '1em'}}><b> Tags </b></h2>
       {
         tags.map((it: any) => (
-          <div style={{ marginBottom: '0.4em' }}>
+          <div key = {it} style={{marginBottom: '0.4em'}}>
             <Checkbox
-              style={{ width: '1em', height: '1em' }}
+              style={{width: '1em', height: '1em'}}
               label={it.name}
               value={it.name}
               id={it.id}
@@ -126,17 +124,16 @@ const Filter: React.FC = (props:any) => {
               aria-label="uncontrolled checkbox example"
             />
           </div>
-
         ))
       }
-      <h2 style={{ marginBottom: '1em', marginTop: '1em' }}>
+      <h2 style={{marginBottom: '1em', marginTop: '1em'}}>
         {' '}
         <b>Categories</b>
         {' '}
       </h2>
-      <div style={{ marginBottom: '0.4em' }}>
+      <div style={{marginBottom: '0.4em'}}>
         <Checkbox
-          style={{ width: '1em', height: '1em' }}
+          style={{width: '1em', height: '1em'}}
           label="Build"
           value="build"
           onClick={addCategory}
@@ -144,9 +141,9 @@ const Filter: React.FC = (props:any) => {
           id="Build"
         />
       </div>
-      <div style={{ marginBottom: '0.4em' }}>
+      <div style={{marginBottom: '0.4em'}}>
         <Checkbox
-          style={{ width: '1em', height: '1em' }}
+          style={{width: '1em', height: '1em'}}
           label="Test"
           value="test"
           onClick={addCategory}
@@ -155,7 +152,7 @@ const Filter: React.FC = (props:any) => {
         />
       </div>
       <Checkbox
-        style={{ width: '1em', height: '1em' }}
+        style={{width: '1em', height: '1em'}}
         label="Deploy"
         value="deploy"
         onClick={addCategory}
