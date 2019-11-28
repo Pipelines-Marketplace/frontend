@@ -42,8 +42,6 @@ const Task: React.FC<TaskProp> = (props:any) => {
   } else {
     tempArr.push([]);
   }
-  console.log(props.task.id);
-
 
   return (
     <GalleryItem>
