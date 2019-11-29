@@ -51,7 +51,9 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
   // Function to download YAML file
   const [dwnld, setDownload] = React.useState(props.task.downloads);
   function download() {
-    fetch(`download/${props.task.id}`)
+    fetch(`http://localhost:5000/download/${props.task.id}`, {
+      method: 'POST',
+    })
         .then((response) => {
           response.blob().then((blob) => {
             const url = window.URL.createObjectURL(blob);
