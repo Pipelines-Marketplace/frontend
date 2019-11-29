@@ -23,6 +23,7 @@ import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
 import avatarImg from './download.png';
 import './index.css';
+import store from '../redux/store';
 
 export interface BasicDetailPropObject {
     id: any
@@ -47,6 +48,25 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
     taskArr.push([]);
   }
 
+  // Function to download YAML file
+  const [dwnld, setDownload] = React.useState(props.task.downloads);
+  function download() {
+    fetch(`download/${props.task.id}`)
+        .then((response) => {
+          response.blob().then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = props.task.name +'.yaml';
+            a.click();
+
+            setDownload(props.task.downloads+ 1 );
+            props.task.downloads = dwnld + 1;
+            store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: props.task});
+          });
+        });
+  }
+
   return (
     <Flex>
       <Card style={{marginLeft: '7em', marginRight: '7em', marginTop: '2em'}}>
@@ -69,13 +89,13 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
             <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
               <FlexItem>
                 <DownloadIcon style={{marginRight: '1em', marginTop: '2em'}}/>
-                {props.task.downloads}
+                {dwnld}
               </FlexItem>
               <FlexItem>
                 <StarIcon color="gold" size="md" />
               </FlexItem>
               <FlexItem style={{marginLeft: '-3em'}}>
-                <Button style={{width: '9em'}}>
+                <Button style={{width: '9em'}} onClick={download}>
                 Download
                 </Button>
               </FlexItem>
