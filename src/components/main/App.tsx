@@ -31,8 +31,8 @@ import {
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
 import BackgroundImageHeader from '../background-image/BackgroundImage';
-import Login from '../Login/Login';
-import SignupForm from '../Login/Signup';
+import Login from '../Authentication/Login';
+import SignupForm from '../Authentication/Signup';
 
 
 interface mainProps {
