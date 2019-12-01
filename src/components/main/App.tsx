@@ -31,6 +31,8 @@ import {
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
 import BackgroundImageHeader from '../background-image/BackgroundImage';
+import Login from '../Login/Login';
+import SignupForm from '../Login/Signup';
 
 
 interface mainProps {
@@ -53,6 +55,23 @@ const App: React.FC<mainProps> = () => {
     target: '',
 
   };
+  const logoutUser=()=>{
+    localStorage.removeItem('token');
+    console.log('dasdas');
+  };
+  let authenticationButton;
+  if (localStorage.getItem('token')===null) {
+    authenticationButton= <Link to="/login">
+      <span style={{marginRight: '1em', color: 'white'}}> Login </span>
+    </Link>;
+  } else {
+    authenticationButton= <Link to="/logout">
+      <span style={{marginRight: '1em', color: 'white'}}
+        onClick={logoutUser}> Logout </span>
+    </Link>;
+  }
+
+
   // code for header contents
   const PageToolbar = (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -88,11 +107,10 @@ const App: React.FC<mainProps> = () => {
             </Button>
           </ToolbarItem>
           <ToolbarItem>
+            {
+              authenticationButton
+            }
 
-            <Link to="/signin">
-              <span style={{marginRight: '1em', color: 'white'}}> Signin </span>
-              {' '}
-            </Link>
 
           </ToolbarItem>
         </ToolbarGroup>
@@ -114,6 +132,7 @@ const App: React.FC<mainProps> = () => {
 
 
   );
+
   return (
     <Router>
       <Page header={Header}>
@@ -144,6 +163,11 @@ const App: React.FC<mainProps> = () => {
           </Flex>
           <Route exact path="/detail/:taskId" component={Detail} />
           <Route path="/community" component={Community} />
+        </PageSection>
+        <PageSection>
+          <Route path='/login' component={Login}/>
+          <Route path='/logout' component={Login}/>
+          <Route path='/signup' component={SignupForm}/>
         </PageSection>
       </Page>
     </Router>
