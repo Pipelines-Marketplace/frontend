@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable max-len */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
 import './index.css';
 import {
@@ -10,15 +10,42 @@ import {
 import {OkIcon} from '@patternfly/react-icons';
 import {ChartDonut} from '@patternfly/react-charts';
 import {useParams} from 'react-router';
+let averageRating:number = 0;
+let oneStar:number =0;
+let twoStar:number =0;
+let threeStar:number =0;
+let fourStar:number =0;
+let fiveStar:number =0;
 
-const Rating: React.FC = () => {
+const Rating: React.FC = (props:any) => {
+  console.log(props.rating);
+  const [rating, setRating] = useState([]);
   const {taskId} = useParams();
-  console.log(taskId);
+  useEffect(() =>{
+    fetch('http://localhost:5000/rating/'+taskId)
+        .then((res) => res.json())
+        .then((rating) => setRating(rating));
+  }, []);
+
+  if (rating!==undefined) {
+    const arr = Array.from(Object.values(rating));
+    oneStar=arr[2];
+    twoStar=arr[3];
+    threeStar=arr[4];
+    fourStar=arr[5];
+    fiveStar=arr[6];
+    const totalstar = (arr[2]+arr[3]+arr[4]+arr[5]+arr[6])+1;
+    // console.log('tss==', totalstar);
+    averageRating = (arr[2]*1+arr[3]*2+arr[4]*3+arr[5]*4+arr[6]*5)/totalstar;
+    // console.log('avg==', averageRating);
+  }
+
   const sendrating=(event:any) =>{
     if (event.target.value !== undefined) {
-      console.log(event.target.value);
+      // console.log(event.target.value);
     }
   };
+
   return (
     <Card style={{minHeight: '40em', maxWidth: '30em', minWidth: '27em'}}>
       <div className="card-head">
@@ -44,7 +71,12 @@ const Rating: React.FC = () => {
             ariaDesc="Average number of pets"
             ariaTitle="Task Rating "
             constrainToVisibleArea={true}
-            data={[{x: '5 Star', y: 60}, {x: '3 Star', y: 20}, {x: '2 Star', y: 20}]}
+            data={[{x: '5 Star', y: 2},
+              {x: '4 Star', y: {fourStar}},
+              {x: '3 Star', y: {threeStar}},
+              {x: '2 Star', y: {twoStar}},
+              {x: '1 Star', y: {oneStar}},
+            ]}
             labels={({datum}) => `${datum.x}: ${datum.y}%`}
             padding={{
               bottom: 20,
@@ -53,7 +85,7 @@ const Rating: React.FC = () => {
               top: 10,
             }}
             subTitle="Rating"
-            title="4.5"
+            title={`${averageRating}`}
             width={300}
           />
         </div>
