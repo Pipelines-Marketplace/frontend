@@ -12,10 +12,14 @@ import {
   DropdownToggle,
   DropdownItem,
   Flex,
+  TextInput,
+  ListItem,
+  List,
 } from '@patternfly/react-core';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
-import SearchTask from './SearchTask';
+// import SearchTask from './SearchTask';
 import store from '../redux/store';
+// import AutoComplete from './AutoComplete';
 
 export interface TaskPropData{
   name : string,
@@ -63,6 +67,7 @@ const SearchBar: React.FC = (props:any) => {
 
   let [tasks, setTasks] = useState(''); // Get the user input
 
+  // Search a task
   const searchTask = (text : string) => {
     const task = {
       text,
@@ -85,15 +90,52 @@ const SearchBar: React.FC = (props:any) => {
     }
   };
 
+  const taskNameArr: any = [];
+  if (props.TaskData != null) {
+    for (let i = 0; i < tempArr.length; i++) {
+      taskNameArr.push(tempArr[i].name);
+    }
+  }
+  // console.log(taskNameArr);
+
+  // AutoComplete text
+  const [suggestions, setState] = React.useState([]);
+  const [text, setText] = React.useState('');
+
+  const onTextChanged = (e: any) => {
+    const value = e;
+    let suggestions = [];
+    if (value.length > 0) {
+      const regex = new RegExp(`^${value}`, 'i');
+      suggestions = taskNameArr.sort().filter((v:any) => regex.test(v));
+    }
+    setState(suggestions);
+    setText(value);
+  };
+
+
+  const suggestionSelected = (value: any) => {
+    setText(value);
+    setState([]);
+    searchTask(value);
+  };
+
+  const textValue = text;
   return (
 
     <div className="search">
       <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
         <React.Fragment>
+
           <InputGroup style={{width: '70%'}}>
-            {/* <TextInput name="textInput11" id="textInput11" type="search" aria-label="search input example"> */}
-            <SearchTask onSearchTask={searchTask}/>
-            {/* </TextInput> */}
+            <div style = {{width: '100%'}}>
+              <TextInput value = {textValue} type="search" aria-label="search input example" onChange={onTextChanged} style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
+              {/* <AutoComplete suggestions = {suggestions}/> */}
+              <List style = {{textAlign: 'left', content: '', borderTop: '1px solid grey', margin: '0', padding: '0'}}>
+                {suggestions.map((item: any, index: any) => <ListItem style = {{listStyle: 'none', textAlign: 'left', textDecoration: 'underline', backgroundColor: 'rgba', cursor: 'pointer'}} onClick = {() => suggestionSelected(item)} key = {index}>{item}</ListItem>)}
+              </List>
+
+            </div>
             <Button variant={ButtonVariant.control} aria-label="search button for search input" >
               <SearchIcon />
             </Button>
