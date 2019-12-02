@@ -10,15 +10,22 @@ import {
 import {OkIcon} from '@patternfly/react-icons';
 import {ChartDonut} from '@patternfly/react-charts';
 import {useParams} from 'react-router';
+import {connect} from 'react-redux';
+import checkAuthentication from '../redux/Actions/CheckAuthAction';
+import store from '../redux/store';
+import {Link} from 'react-router-dom';
 let averageRating:number = 0;
 let oneStar:number =0;
 let twoStar:number =0;
 let threeStar:number =0;
 let fourStar:number =0;
 let fiveStar:number =0;
+let prevStar:number =0;
+let newStar:number =0;
 
 const Rating: React.FC = (props:any) => {
-  console.log(props.rating);
+  console.log('rating', props.isAuthenticated);
+  // console.log('new state after token created ', store.getState());
   const [rating, setRating] = useState([]);
   const {taskId} = useParams();
   useEffect(() =>{
@@ -35,18 +42,55 @@ const Rating: React.FC = (props:any) => {
     fourStar=arr[5];
     fiveStar=arr[6];
     const totalstar = (arr[2]+arr[3]+arr[4]+arr[5]+arr[6])+1;
-    // console.log('tss==', totalstar);
     averageRating = (arr[2]*1+arr[3]*2+arr[4]*3+arr[5]*4+arr[6]*5)/totalstar;
-    // console.log('avg==', averageRating);
   }
-
+  let login: any = '';
+  // accesing user rating information after given by the user
   const sendrating=(event:any) =>{
     if (event.target.value !== undefined) {
-      // console.log(event.target.value);
+      if ((prevStar === 0) && (newStar === 0)) {
+        newStar = event.target.value;
+      } else {
+        prevStar=newStar;
+        newStar=event.target.value;
+      }
+      const ratingData ={
+        'user_id': localStorage.getItem('usetrID'),
+        'task_id': taskId,
+        'stars': newStar,
+        'prev_stars': prevStar,
+      };
+      // sending rating info to server
+      fetch('http://localhost:5000/rating', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(ratingData),
+      }).then((res) => console.log(res)).
+          catch((err:any) => console.log(err));
+
+      // console.log('prevstar', prevStar);
+      // console.log('newStar', newStar);
+      // console.log(localStorage.getItem('usetrID'));
     }
   };
-
-  return (
+  if (props.isAuthenticated == true) {
+    login = <form onClick = {sendrating}>
+      <ul className="rate-area" >
+        <input type="radio" id="5-star" name="rating" value="5" /><label htmlFor="5-star" title="Amazing">5 stars</label>
+        <input type="radio" id="4-star" name="rating" value="4" /><label htmlFor="4-star" title="Good">4 stars</label>
+        <input type="radio" id="3-star" name="rating" value="3" /><label htmlFor="3-star" title="Average">3 stars</label>
+        <input type="radio" id="2-star" name="rating" value="2" /><label htmlFor="2-star" title="Not Good">2 stars</label>
+        <input type="radio" id="1-star" name="rating" value="1" /><label htmlFor="1-star" title="Bad">1 star</label>
+      </ul>
+    </form>;
+  } else {
+    login =
+       <Link to="/login"> <a style={{textDecoration: 'none'}}><b>Plaes Login to submit rating </b></a> </Link>;
+  }
+  {return (
     <Card style={{minHeight: '40em', maxWidth: '30em', minWidth: '27em'}}>
       <div className="card-head">
         <CardHead>
@@ -54,16 +98,8 @@ const Rating: React.FC = (props:any) => {
           <div className="rating-heading">Rating</div>
         </CardHead>
       </div>
-      <div className="rating-icon" >
-        <form onClick={sendrating}>
-          <ul className="rate-area" >
-            <input type="radio" id="5-star" name="rating" value="5" /><label htmlFor="5-star" title="Amazing">5 stars</label>
-            <input type="radio" id="4-star" name="rating" value="4" /><label htmlFor="4-star" title="Good">4 stars</label>
-            <input type="radio" id="3-star" name="rating" value="3" /><label htmlFor="3-star" title="Average">3 stars</label>
-            <input type="radio" id="2-star" name="rating" value="2" /><label htmlFor="2-star" title="Not Good">2 stars</label>
-            <input type="radio" id="1-star" name="rating" value="1" /><label htmlFor="1-star" title="Bad">1 star</label>
-          </ul>
-        </form>
+      <div className="rating-icon">
+        {login}
       </div>
       <div className="rating-icon">
         <div className="donut-chart-legend-right" >
@@ -90,10 +126,15 @@ const Rating: React.FC = (props:any) => {
           />
         </div>
       </div>
-
-
     </Card>
-  );
+  );}
 };
 
-export default Rating;
+const mapStateToProps = (state: any) => {
+  return {
+    isAuthenticated: state.isAuthenticated.isAuthenticated,
+  };
+};
+export default connect(mapStateToProps, checkAuthentication)(Rating);
+
+// export default Rating;

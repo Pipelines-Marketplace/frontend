@@ -1,17 +1,19 @@
 import {CHECK_USER_AUTHENTICATION} from '../Actions/TaskActionType';
+import checkAuthentication from '../Actions/CheckAuthAction';
 
-
+let checkAuth:boolean;
+if (localStorage.getItem('token')!== null) {
+  checkAuth=true;
+} else {
+  checkAuth=false;
+}
 const initialState={
-  isAuthenticated: false,
+  isAuthenticated: checkAuth,
 };
 
 const reducer=(state=initialState, action:any)=>{
-  console.log('sdasd');
-
   switch (action.type) {
     case CHECK_USER_AUTHENTICATION:
-      console.log('reducer');
-
       return {
         ...state,
         isAuthenticated: action.payload,
