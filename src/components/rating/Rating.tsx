@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import checkAuthentication from '../redux/Actions/CheckAuthAction';
 import store from '../redux/store';
 import {Link} from 'react-router-dom';
+import Login from '../Authentication/Login';
 let averageRating:number = 0;
 let oneStar:number =0;
 let twoStar:number =0;
@@ -50,32 +51,45 @@ const Rating: React.FC = (props:any) => {
     if (event.target.value !== undefined) {
       if ((prevStar === 0) && (newStar === 0)) {
         newStar = event.target.value;
+        const ratingData ={
+          'user_id': Number(localStorage.getItem('usetrID')),
+          'task_id': Number(taskId),
+          'stars': Number(newStar),
+          'prev_stars': Number(prevStar),
+        };
+        fetch('http://localhost:5000/rating', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(ratingData),
+        }).then((res) => console.log(res)).
+            catch((err:any) => console.log(err));
       } else {
         prevStar=newStar;
         newStar=event.target.value;
+        const ratingData ={
+          'user_id': Number(localStorage.getItem('usetrID')),
+          'task_id': Number(taskId),
+          'stars': Number(newStar),
+          'prev_stars': Number(prevStar),
+        };
+        console.log('userid,', typeof(ratingData.user_id));
+        // sending rating info to server
+        fetch('http://localhost:5000/rating', {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(ratingData),
+        }).then((res) => console.log(res)).
+            catch((err:any) => console.log(err));
       }
-      const ratingData ={
-        'user_id': localStorage.getItem('usetrID'),
-        'task_id': taskId,
-        'stars': newStar,
-        'prev_stars': prevStar,
-      };
-      // sending rating info to server
-      fetch('http://localhost:5000/rating', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(ratingData),
-      }).then((res) => console.log(res)).
-          catch((err:any) => console.log(err));
-
-      // console.log('prevstar', prevStar);
-      // console.log('newStar', newStar);
-      // console.log(localStorage.getItem('usetrID'));
     }
   };
+
   if (props.isAuthenticated == true) {
     login = <form onClick = {sendrating}>
       <ul className="rate-area" >
@@ -87,8 +101,18 @@ const Rating: React.FC = (props:any) => {
       </ul>
     </form>;
   } else {
-    login =
-       <Link to="/login"> <a style={{textDecoration: 'none'}}><b>Plaes Login to submit rating </b></a> </Link>;
+    login = <form >
+      <Link to="/login">
+        <ul className="rate-area" >
+          <input className="rate-area" type="radio" id="5-star" name="rating" value="5" />
+          <label htmlFor="5-star" title="Amazing">5 stars</label>
+          <input type="radio" id="4-star" name="rating" value="4" /><label htmlFor="4-star" title="Good">4 stars</label>
+          <input type="radio" id="3-star" name="rating" value="3" /><label htmlFor="3-star" title="Average">3 stars</label>
+          <input type="radio" id="2-star" name="rating" value="2" /><label htmlFor="2-star" title="Not Good">2 stars</label>
+          <input type="radio" id="1-star" name="rating" value="1" /><label htmlFor="1-star" title="Bad">1 star</label>
+        </ul>
+      </Link>
+    </form>;
   }
   {return (
     <Card style={{minHeight: '40em', maxWidth: '30em', minWidth: '27em'}}>
