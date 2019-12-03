@@ -71,7 +71,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
 
   return (
     <Flex>
-      <Card style={{marginLeft: '7em', marginRight: '7em', marginTop: '2em'}}>
+      <Card style={{marginLeft: '7em', marginRight: '7em', marginTop: '2em', width: '100%'}}>
         <CardHead>
           <img src ={avatarImg} alt="Task"
             style={{height: '7em', marginLeft: '3em'}}
