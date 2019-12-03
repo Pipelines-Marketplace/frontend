@@ -15,13 +15,13 @@ import {
   TextInput,
   ListItem,
   List,
+  Card,
 } from '@patternfly/react-core';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
-// import SearchTask from './SearchTask';
 import store from '../redux/store';
-// import AutoComplete from './AutoComplete';
 
 export interface TaskPropData{
+  id : number;
   name : string,
   description : string,
   rating : number,
@@ -40,6 +40,7 @@ const SearchBar: React.FC = (props:any) => {
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) => {
       const taskData: TaskPropData = {
+        id: task.id,
         name: task.name,
         description: task.description,
         rating: 0,
@@ -84,7 +85,6 @@ const SearchBar: React.FC = (props:any) => {
         }
       }
     }
-
     if (tempTask.length > 0) {
       store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
     }
@@ -98,7 +98,7 @@ const SearchBar: React.FC = (props:any) => {
   }
   // console.log(taskNameArr);
 
-  // AutoComplete text
+  // AutoComplete text while searching a task
   const [suggestions, setState] = React.useState([]);
   const [text, setText] = React.useState('');
 
@@ -129,17 +129,18 @@ const SearchBar: React.FC = (props:any) => {
 
           <InputGroup style={{width: '70%'}}>
             <div style = {{width: '100%'}}>
-              <TextInput value = {textValue} type="search" aria-label="search input example" onChange={onTextChanged} style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
-              {/* <AutoComplete suggestions = {suggestions}/> */}
+              <TextInput value = {textValue} type="search" onChange={onTextChanged} style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
               <List style = {{textAlign: 'left', content: '', borderTop: '1px solid grey', margin: '0', padding: '0'}}>
-                {suggestions.map((item: any, index: any) => <ListItem style = {{listStyle: 'none', textAlign: 'left', textDecoration: 'underline', backgroundColor: 'rgba', cursor: 'pointer'}} onClick = {() => suggestionSelected(item)} key = {index}>{item}</ListItem>)}
+                {suggestions.map((item: any, index: any) => <ListItem style = {{listStyle: 'none', textAlign: 'left', backgroundColor: 'rgba', cursor: 'pointer', padding: '10px 5px'}} onClick = {() => suggestionSelected(item)} key = {index}>{item}</ListItem>)}
               </List>
-
             </div>
+          </InputGroup>
+          <Card style = {{marginLeft: '-1em'}}>
             <Button variant={ButtonVariant.control} aria-label="search button for search input" >
               <SearchIcon />
             </Button>
-          </InputGroup>
+          </Card>
+
 
           <div className="filter">
             <Button variant={ButtonVariant.control} aria-label="search button for search input" >
