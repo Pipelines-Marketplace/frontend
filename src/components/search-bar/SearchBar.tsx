@@ -13,8 +13,6 @@ import {
   DropdownItem,
   Flex,
   TextInput,
-  ListItem,
-  List,
   Card,
 } from '@patternfly/react-core';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
@@ -96,7 +94,7 @@ const SearchBar: React.FC = (props:any) => {
       taskNameArr.push(tempArr[i].name);
     }
   }
-  // console.log(taskNameArr);
+
 
   // AutoComplete text while searching a task
   const [suggestions, setState] = React.useState([]);
@@ -113,7 +111,7 @@ const SearchBar: React.FC = (props:any) => {
     setText(value);
   };
 
-
+  // Suggesting a task name
   const suggestionSelected = (value: any) => {
     setText(value);
     setState([]);
@@ -128,11 +126,28 @@ const SearchBar: React.FC = (props:any) => {
         <React.Fragment>
 
           <InputGroup style={{width: '70%'}}>
-            <div style = {{width: '100%'}}>
-              <TextInput value = {textValue} type="search" onChange={onTextChanged} style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
-              <List style = {{textAlign: 'left', content: '', borderTop: '1px solid grey', margin: '0', padding: '0'}}>
-                {suggestions.map((item: any, index: any) => <ListItem style = {{listStyle: 'none', textAlign: 'left', backgroundColor: 'rgba', cursor: 'pointer', padding: '10px 5px'}} onClick = {() => suggestionSelected(item)} key = {index}>{item}</ListItem>)}
-              </List>
+            <div style = {{width: '100%', boxShadow: 'rgba'}}>
+              <TextInput value = {textValue} type="search"
+                onChange={onTextChanged}
+                style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
+
+              <div>
+                <ul
+                  style = {{textAlign: 'left', backgroundColor: 'white', margin: 0, position: 'absolute', width: '55.5%'}}
+                >
+                  {suggestions.map((item: any, index: any) =>
+
+                    <li
+                      style = {{listStyle: 'none', textAlign: 'left', cursor: 'pointer', padding: '10px 7px',
+                        border: '0.01em solid rgb(224,224,224)', borderTop: '0'}}
+                      onClick = {() => suggestionSelected(item)} key = {index}>
+                      {item}
+                    </li>,
+
+                  )}
+                </ul>
+              </div>
+
             </div>
           </InputGroup>
           <Card style = {{marginLeft: '-1em'}}>
@@ -140,7 +155,6 @@ const SearchBar: React.FC = (props:any) => {
               <SearchIcon />
             </Button>
           </Card>
-
 
           <div className="filter">
             <Button variant={ButtonVariant.control} aria-label="search button for search input" >
@@ -165,4 +179,4 @@ const mapStateToProps = (state: any) => ({
 
 export default connect(mapStateToProps, {fetchTaskSuccess})(SearchBar);
 
-// export default SearchBar;
+
