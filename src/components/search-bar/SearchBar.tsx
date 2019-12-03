@@ -54,6 +54,8 @@ const SearchBar: React.FC = (props:any) => {
   const dropdownItems = [
     <DropdownItem key="link" onClick = {sortByName}>Name</DropdownItem>,
     <DropdownItem key="link" onClick = {sortByDownloads}>Downloads</DropdownItem>,
+    <DropdownItem key="link" onClick = {sortByDownloads}>Ratings</DropdownItem>,
+    <DropdownItem key="link" onClick = {sortByDownloads}>Favourites</DropdownItem>,
   ];
   const ontoggle = (isOpen: React.SetStateAction<boolean>) => set(isOpen);
   const onSelect = () => set(!isOpen);
@@ -127,7 +129,7 @@ const SearchBar: React.FC = (props:any) => {
             </Button>
             <Dropdown
               onSelect = {onSelect}
-              toggle={<DropdownToggle onToggle={ontoggle}>Filter</DropdownToggle>}
+              toggle={<DropdownToggle onToggle={ontoggle}>Sort</DropdownToggle>}
               isOpen = {isOpen}
               dropdownItems={dropdownItems}
             />
