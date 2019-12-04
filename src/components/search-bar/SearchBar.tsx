@@ -41,8 +41,8 @@ const SearchBar: React.FC = (props:any) => {
         id: task.id,
         name: task.name,
         description: task.description,
-        rating: 0,
-        downloads: 0,
+        rating: task.rating,
+        downloads: task.downloads,
         yaml: task.yaml,
         tags: task.tags,
       };
