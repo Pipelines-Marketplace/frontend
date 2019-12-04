@@ -1,5 +1,4 @@
 import {CHECK_USER_AUTHENTICATION} from '../Actions/TaskActionType';
-import {dispatch} from 'd3';
 import store from '../store';
 function checkAuthentication() {
   let isAuthenticated:boolean;

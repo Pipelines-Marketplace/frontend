@@ -26,7 +26,7 @@ const Rating: React.FC = (props:any) => {
   const [stars, setStars]=useState(0);
   const [c, setC]=useState(0);
   const [avgRating, setAvgRating] = useState(0.0);
-  if ((props.TaskName != null) && (c==0)) {
+  if ((props.TaskName !== null) && (c === 0)) {
     setC((c) => c+1);
     setAvgRating(props.TaskName['rating'].toFixed(1));
   };
@@ -46,11 +46,12 @@ const Rating: React.FC = (props:any) => {
   }).then((res)=>res.json()).then((data)=>{
     setStars(Number(data['stars']));
   });
-  // api call for getting number of 1,2,3,4,5 star
+  // api call for getting number of 1,2,3,4,5 star of a task
   useEffect(() =>{
     fetch(`${process.env.REACT_APP_BACKEND_API}/rating/`+taskId)
         .then((res) => res.json())
         .then((rating) => setRating(rating));
+    // eslint-disable-next-line
   }, []);
   // for showing number of star given by user
   switch (stars) {
@@ -84,7 +85,7 @@ const Rating: React.FC = (props:any) => {
     threechecked=false;
     fourchecked=false;
     fivechecked=false;
-    if (event.target.value != undefined) {
+    if (event.target.value !== undefined) {
       switch (Number(event.target.value)) {
         case 1: onechecked=true;
           break;
@@ -137,7 +138,7 @@ const Rating: React.FC = (props:any) => {
     }
   };
   // for checking user is login or not
-  if (props.isAuthenticated == true) {
+  if (props.isAuthenticated === true) {
     login = <form onClick = {sendrating}>
       <ul className="rate-area" >
         <input type="radio" id="5-star"
@@ -182,7 +183,7 @@ const Rating: React.FC = (props:any) => {
       </Link>
     </form>;
   }
-  {return (
+  return (
     <Card style={{minHeight: '30em', maxWidth: '30em', minWidth: '27em'}}>
       <div className="card-head">
         <CardHead>
@@ -220,7 +221,7 @@ const Rating: React.FC = (props:any) => {
         </div>
       </div>
     </Card>
-  );}
+  );
 };
 const mapStateToProps = (state: any) => {
   return {

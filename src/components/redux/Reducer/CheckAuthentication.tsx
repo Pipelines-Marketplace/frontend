@@ -1,6 +1,4 @@
 import {CHECK_USER_AUTHENTICATION} from '../Actions/TaskActionType';
-import checkAuthentication from '../Actions/CheckAuthAction';
-
 let checkAuth:boolean;
 if (localStorage.getItem('token')!== null) {
   checkAuth=true;

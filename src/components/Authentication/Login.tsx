@@ -15,7 +15,6 @@ import {ExclamationCircleIcon,
   GoogleIcon,
   GitlabIcon} from '@patternfly/react-icons';
 import checkAuthentication from '../redux/Actions/CheckAuthAction';
-import store from '../redux/store';
 const Login:React.FC=(props:any)=>{
   const [showHelperText, setShowHelperText]=useState(false);
   const [usernameValue, setUsernameValue]=useState('');
