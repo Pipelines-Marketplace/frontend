@@ -6,8 +6,8 @@ export function fetchTaskDescription(id: any) {
   return function(dispatch: any) {
     fetch('http://localhost:5000/task/'+id)
         .then((response) => response.json())
-        .then((Task) => {
-          fetch(`http://localhost:5000/task/${Task.name}/readme`)
+        .then(() => {
+          fetch(`http://localhost:5000/task/${id}/readme`)
               .then((response) => response.text())
               .then((TaskDescription) => dispatch({
                 type: FETCH_TASK_DESCRIPTION,
@@ -17,8 +17,8 @@ export function fetchTaskDescription(id: any) {
 
     fetch('http://localhost:5000/task/'+id)
         .then((response) => response.json())
-        .then((Task) => {
-          fetch(`http://localhost:5000/task/${Task.name}/yaml`)
+        .then(() => {
+          fetch(`http://localhost:5000/task/${id}/yaml`)
               .then((response) => response.text())
               .then((TaskYaml) => dispatch({
                 type: FETCH_TASK_YAML,

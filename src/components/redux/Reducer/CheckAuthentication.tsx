@@ -6,12 +6,8 @@ const initialState={
 };
 
 const reducer=(state=initialState, action:any)=>{
-  console.log('sdasd');
-
   switch (action.type) {
     case CHECK_USER_AUTHENTICATION:
-      console.log('reducer');
-
       return {
         ...state,
         isAuthenticated: action.payload,

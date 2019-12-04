@@ -8,13 +8,31 @@ import {
 } from '@patternfly/react-core';
 import {useParams} from 'react-router';
 import {fetchTaskDescription} from '../redux/Actions/TaskActionDescription';
+import {fetchTaskName} from '../redux/Actions/TaskActionName';
 
 const Detail: React.FC = (props: any) => {
   const {taskId} = useParams();
   React.useEffect(() => {
     props.fetchTaskDescription(taskId);
-  });
+    props.fetchTaskName(taskId);
+    // eslint-disable-next-line
+  }, []);
 
+  const tempTask : any = [];
+  if (props.TaskName != null) {
+    tempTask.push(props.TaskName);
+  }
+
+  // if (props.TaskName != null) {
+  //   for (let i = 0; i < tempTask.length; i++) {
+  //     return ((tempTask[i].description));
+  //   }
+  // }
+
+  let taskDescription : string = '';
+  if (props.TaskName != null) {
+    taskDescription = (props.TaskName['description']);
+  };
   const yamlData = '```'+props.TaskYaml+'```';
   return (
     <div>
@@ -24,7 +42,8 @@ const Detail: React.FC = (props: any) => {
         <FlexItem>
           <Description
             Description = {props.TaskDescription}
-            Yaml = {yamlData} />
+            Yaml = {yamlData}
+            userTaskDescription = {taskDescription} />
         </FlexItem>
         <FlexItem>
           <Rating />
@@ -38,8 +57,10 @@ const mapStateToProps = (state: any) => {
   return {
     TaskDescription: state.TaskDescription.TaskDescription,
     TaskYaml: state.TaskYaml.TaskYaml,
+    TaskName: state.TaskName.TaskName,
   };
 };
-export default connect(mapStateToProps, {fetchTaskDescription})(Detail);
 
-// export default Detail;
+export default
+connect(mapStateToProps, {fetchTaskDescription, fetchTaskName})(Detail);
+
