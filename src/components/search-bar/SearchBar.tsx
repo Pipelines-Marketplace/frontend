@@ -12,12 +12,14 @@ import {
   DropdownToggle,
   DropdownItem,
   Flex,
+  TextInput,
+  Card,
 } from '@patternfly/react-core';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
-import SearchTask from './SearchTask';
 import store from '../redux/store';
 
 export interface TaskPropData{
+  id : number;
   name : string,
   description : string,
   rating : number,
@@ -36,10 +38,11 @@ const SearchBar: React.FC = (props:any) => {
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) => {
       const taskData: TaskPropData = {
+        id: task.id,
         name: task.name,
         description: task.description,
-        rating: 0,
-        downloads: 0,
+        rating: task.rating,
+        downloads: task.downloads,
         yaml: task.yaml,
         tags: task.tags,
       };
@@ -63,6 +66,7 @@ const SearchBar: React.FC = (props:any) => {
 
   let [tasks, setTasks] = useState(''); // Get the user input
 
+  // Search a task
   const searchTask = (text : string) => {
     const task = {
       text,
@@ -79,25 +83,78 @@ const SearchBar: React.FC = (props:any) => {
         }
       }
     }
-
     if (tempTask.length > 0) {
       store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
     }
   };
 
+  const taskNameArr: any = [];
+  if (props.TaskData != null) {
+    for (let i = 0; i < tempArr.length; i++) {
+      taskNameArr.push(tempArr[i].name);
+    }
+  }
+
+
+  // AutoComplete text while searching a task
+  const [suggestions, setState] = React.useState([]);
+  const [text, setText] = React.useState('');
+
+  const onTextChanged = (e: any) => {
+    const value = e;
+    let suggestions = [];
+    if (value.length > 0) {
+      const regex = new RegExp(`^${value}`, 'i');
+      suggestions = taskNameArr.sort().filter((v:any) => regex.test(v));
+    }
+    setState(suggestions);
+    setText(value);
+  };
+
+  // Suggesting a task name
+  const suggestionSelected = (value: any) => {
+    setText(value);
+    setState([]);
+    searchTask(value);
+  };
+
+  const textValue = text;
   return (
 
     <div className="search">
       <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
         <React.Fragment>
+
           <InputGroup style={{width: '70%'}}>
-            {/* <TextInput name="textInput11" id="textInput11" type="search" aria-label="search input example"> */}
-            <SearchTask onSearchTask={searchTask}/>
-            {/* </TextInput> */}
+            <div style = {{width: '100%', boxShadow: 'rgba'}}>
+              <TextInput value = {textValue} type="search"
+                onChange={onTextChanged}
+                style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
+
+              <div>
+                <ul
+                  style = {{textAlign: 'left', backgroundColor: 'white', margin: 0, position: 'absolute', width: '55.5%'}}
+                >
+                  {suggestions.map((item: any, index: any) =>
+
+                    <li
+                      style = {{listStyle: 'none', textAlign: 'left', cursor: 'pointer', padding: '10px 7px',
+                        border: '0.01em solid rgb(224,224,224)', borderTop: '0'}}
+                      onClick = {() => suggestionSelected(item)} key = {index}>
+                      {item}
+                    </li>,
+
+                  )}
+                </ul>
+              </div>
+
+            </div>
+          </InputGroup>
+          <Card style = {{marginLeft: '-1em'}}>
             <Button variant={ButtonVariant.control} aria-label="search button for search input" >
               <SearchIcon />
             </Button>
-          </InputGroup>
+          </Card>
 
           <div className="filter">
             <Button variant={ButtonVariant.control} aria-label="search button for search input" >
@@ -122,4 +179,4 @@ const mapStateToProps = (state: any) => ({
 
 export default connect(mapStateToProps, {fetchTaskSuccess})(SearchBar);
 
-// export default SearchBar;
+
