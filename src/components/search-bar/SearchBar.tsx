@@ -87,7 +87,7 @@ const SearchBar: React.FC = (props:any) => {
   // eslint-disable-next-line require-jsdoc
   function sortByRatings() {
     const taskarr = tempArr.sort((first:any, second: any) => {
-      if (first.ratings < second.ratings) {
+      if (first.rating < second.rating) {
         return 1;
       } else {
         return -1;
