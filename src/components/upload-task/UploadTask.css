@@ -1,9 +1,10 @@
+.flex-size{
 
-.form-size{
-    margin-top: 3em;
-	margin-left: 2em;
-	width: 90em;
+	min-width: 80em;
+
 }
+/*
+
 .tags-input {
 	display: flex;
 	align-items: flex-start;
@@ -65,17 +66,31 @@
 		border-radius: 50%;
 		background: #fff;
 		cursor: pointer;
+	} */
+@media  (max-width:1200) and  (min-width:800px){
+		.flex-size{ 
+			min-width: 30em;
+		}
+	
+		}
+@media  (max-width:800) and  (min-width:601px){
+	.flex-size{ 
+		min-width: 20em;
 	}
 
+	}
 
-@media screen and (max-width: 567px) {
+@media screen and (max-width:600px) {
+	.flex-size{
+		min-width: 20em;
+	}
 	.tags-input {
-		width: calc(100vw - 32px);
+		width: calc(80vw - 32px);
     }
     .font-size{
-        width: 20em;
+        width: 10em;
     }
     .tags-input{
-        width: 20em;
+        width: 10em;
     }
 }

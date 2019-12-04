@@ -31,7 +31,7 @@
 
   .avatar {
     margin-top: 1em;
-    margin-left: 1em;
+    margin-left: 2.5em;
   }
 
 
@@ -48,6 +48,7 @@
   .download {
     margin-top: 2em;
     margin-bottom: 2em;
+    margin-right: 4em;
   }
 
   .heading {
@@ -56,6 +57,9 @@
 
   .data {
     margin-left: 2em;
+    margin-top: 2em;
+    text-align: justify;
+    margin-bottom: 0.5em;
   }
 
   .button {
@@ -68,24 +72,13 @@
 
   @media screen and (max-width: 750px){
     .avatar{
-      margin:0 auto;
-      margin-top: 1em;
+      margin-top: 2em;
       margin-bottom: 0.5em;
     }
     .data{
       margin-left: 2em;
       margin-top: 0em;
       margin-bottom: 0em;
-    }
-    .vl{
-      transform: translate(14em) rotate(90deg) scale(1,3.7);
-      width: 4em;
-      margin-left: 1em;
-      margin-right: 3em;
-      height: 8em;
-      margin-bottom: 0em;
-      padding-left: 2em;
-      
     }
     .download{
       margin-left: 1em;

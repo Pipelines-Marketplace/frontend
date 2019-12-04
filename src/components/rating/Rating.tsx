@@ -42,14 +42,14 @@ const Rating: React.FC = (props:any) => {
     user_id: Number(localStorage.getItem('usetrID')),
     task_id: Number(taskId),
   };
-  fetch('http://localhost:5000/stars', {
+  fetch(`${process.env.REACT_APP_BACKEND_API}/stars`, {
     method: 'POST',
     body: JSON.stringify(prevStars),
   }).then((res)=>res.json()).then((data)=>{
     setStars(Number(data['stars']));
   });
   useEffect(() =>{
-    fetch('http://localhost:5000/rating/'+taskId)
+    fetch('${process.env.REACT_APP_BACKEND_API}/rating/'+taskId)
         .then((res) => res.json())
         .then((rating) => setRating(rating));
   }, []);
