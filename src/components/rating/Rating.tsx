@@ -12,10 +12,9 @@ import {ChartDonut} from '@patternfly/react-charts';
 import {useParams} from 'react-router';
 import {connect} from 'react-redux';
 import checkAuthentication from '../redux/Actions/CheckAuthAction';
-import store from '../redux/store';
 import {Link} from 'react-router-dom';
-import Login from '../Authentication/Login';
-let averageRating:number = 0;
+import {fetchTaskName} from '../redux/Actions/TaskActionName';
+
 let oneStar:number =0;
 let twoStar:number =0;
 let threeStar:number =0;
@@ -25,31 +24,79 @@ let prevStar:number =0;
 let newStar:number =0;
 
 const Rating: React.FC = (props:any) => {
-  console.log('rating', props.isAuthenticated);
-  // console.log('new state after token created ', store.getState());
   const [rating, setRating] = useState([]);
+  const [stars, setStars]=useState(0);
+  const [c, setC]=useState(0);
+
+  const [avgRating, setAvgRating] = useState(0.0);
+
+  if ((props.TaskName != null) && (c==0)) {
+    setC((c) => c+1);
+    setAvgRating(props.TaskName['rating'].toFixed(1));
+  };
   const {taskId} = useParams();
+  let onechecked; let twochecked;
+  let threechecked;
+  let fourchecked; let fivechecked;
+  const prevStars={
+    user_id: Number(localStorage.getItem('usetrID')),
+    task_id: Number(taskId),
+  };
+  fetch('http://localhost:5000/stars', {
+    method: 'POST',
+    body: JSON.stringify(prevStars),
+  }).then((res)=>res.json()).then((data)=>{
+    setStars(Number(data['stars']));
+  });
   useEffect(() =>{
     fetch('http://localhost:5000/rating/'+taskId)
         .then((res) => res.json())
         .then((rating) => setRating(rating));
   }, []);
+  switch (stars) {
+    case 1: onechecked=true;
 
+      break;
+    case 2: twochecked=true;
+      break;
+    case 3: threechecked=true;
+      break;
+    case 4: fourchecked=true;
+      break;
+    case 5: fivechecked=true;
+      break;
+  }
   if (rating!==undefined) {
     const arr = Array.from(Object.values(rating));
-    oneStar=arr[2];
-    twoStar=arr[3];
-    threeStar=arr[4];
-    fourStar=arr[5];
-    fiveStar=arr[6];
-    const totalstar = (arr[2]+arr[3]+arr[4]+arr[5]+arr[6])+1;
-    averageRating = (arr[2]*1+arr[3]*2+arr[4]*3+arr[5]*4+arr[6]*5)/totalstar;
+    let totalstar = (arr[2]+arr[3]+arr[4]+arr[5]+arr[6]);
+    if (totalstar ===0 ) totalstar=totalstar+1;
+    oneStar=(arr[2]/totalstar)*100;
+    twoStar=(arr[3]/totalstar)*100;
+    threeStar=(arr[4]/totalstar)*100;
+    fourStar=(arr[5]/totalstar)*100;
+    fiveStar=(arr[6]/totalstar)*100;
   }
   let login: any = '';
-  // accesing user rating information after given by the user
-  const sendrating=(event:any) =>{
-    if (event.target.value !== undefined) {
-      if ((prevStar === 0) && (newStar === 0)) {
+  const sendrating = (event:any) =>{
+    onechecked=false;
+    twochecked=false;
+    threechecked=false;
+    fourchecked=false;
+    fivechecked=false;
+    if (event.target.value != undefined) {
+      switch (Number(event.target.value)) {
+        case 1: onechecked=true;
+          break;
+        case 2: twochecked=true;
+          break;
+        case 3: threechecked=true;
+          break;
+        case 4: fourchecked=true;
+          break;
+        case 5: fivechecked=true;
+          break;
+      }
+      if ( (stars ===0) && (prevStar === 0) && (newStar === 0)) {
         newStar = event.target.value;
         const ratingData ={
           'user_id': Number(localStorage.getItem('usetrID')),
@@ -64,8 +111,8 @@ const Rating: React.FC = (props:any) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(ratingData),
-        }).then((res) => console.log(res)).
-            catch((err:any) => console.log(err));
+        }).then((res) => res.json())
+            .then((data) => setAvgRating(data['average'].toFixed(1)));
       } else {
         prevStar=newStar;
         newStar=event.target.value;
@@ -75,7 +122,6 @@ const Rating: React.FC = (props:any) => {
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
-        console.log('userid,', typeof(ratingData.user_id));
         // sending rating info to server
         fetch('http://localhost:5000/rating', {
           method: 'PUT',
@@ -84,8 +130,9 @@ const Rating: React.FC = (props:any) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(ratingData),
-        }).then((res) => console.log(res)).
-            catch((err:any) => console.log(err));
+        }).then((res) => res.json())
+            .then((data) => setAvgRating(data['average'].toFixed(1)));
+        ;
       }
     }
   };
@@ -93,32 +140,54 @@ const Rating: React.FC = (props:any) => {
   if (props.isAuthenticated == true) {
     login = <form onClick = {sendrating}>
       <ul className="rate-area" >
-        <input type="radio" id="5-star" name="rating" value="5" /><label htmlFor="5-star" title="Amazing">5 stars</label>
-        <input type="radio" id="4-star" name="rating" value="4" /><label htmlFor="4-star" title="Good">4 stars</label>
-        <input type="radio" id="3-star" name="rating" value="3" /><label htmlFor="3-star" title="Average">3 stars</label>
-        <input type="radio" id="2-star" name="rating" value="2" /><label htmlFor="2-star" title="Not Good">2 stars</label>
-        <input type="radio" id="1-star" name="rating" value="1" /><label htmlFor="1-star" title="Bad">1 star</label>
+        <input type="radio" id="5-star"
+          name="rating" value="5" checked={fivechecked}/>
+        <label htmlFor="5-star" title="Amazing">
+          5 stars</label>
+        <input type="radio" id="4-star"
+          name="rating" value="4" checked={fourchecked}/>
+        <label htmlFor="4-star" title="Good">
+          4 stars</label>
+        <input type="radio" id="3-star"
+          name="rating" value="3" checked={threechecked}/>
+        <label htmlFor="3-star" title="Average">
+           3 stars</label>
+        <input type="radio" id="2-star" name="rating"
+          value="2" checked={twochecked}/>
+        <label htmlFor="2-star" title="Not Good">
+          2 stars</label>
+        <input type="radio" id="1-star" name="rating"
+          value="1" checked={onechecked}/>
+        <label htmlFor="1-star" title="Bad">
+          1 star</label>
       </ul>
     </form>;
   } else {
     login = <form >
       <Link to="/login">
         <ul className="rate-area" >
-          <input className="rate-area" type="radio" id="5-star" name="rating" value="5" />
-          <label htmlFor="5-star" title="Amazing">5 stars</label>
-          <input type="radio" id="4-star" name="rating" value="4" /><label htmlFor="4-star" title="Good">4 stars</label>
-          <input type="radio" id="3-star" name="rating" value="3" /><label htmlFor="3-star" title="Average">3 stars</label>
-          <input type="radio" id="2-star" name="rating" value="2" /><label htmlFor="2-star" title="Not Good">2 stars</label>
-          <input type="radio" id="1-star" name="rating" value="1" /><label htmlFor="1-star" title="Bad">1 star</label>
+          <input className="rate-area" type="radio"
+            id="5-star" name="rating" value="5" />
+          <label htmlFor="5-star"></label>
+          <input type="radio" id="4-star"
+            name="rating" value="4" />
+          <label htmlFor="4-star" ></label>
+          <input type="radio" id="3-star" name="rating"
+            value="3" /><label htmlFor="3-star" ></label>
+          <input type="radio" id="2-star" name="rating"
+            value="2" /><label htmlFor="2-star" ></label>
+          <input type="radio" id="1-star" name="rating"
+            value="1" /><label htmlFor="1-star" ></label>
         </ul>
       </Link>
     </form>;
   }
   {return (
-    <Card style={{minHeight: '40em', maxWidth: '30em', minWidth: '27em'}}>
+    <Card style={{minHeight: '30em', maxWidth: '30em', minWidth: '27em'}}>
       <div className="card-head">
         <CardHead>
-          <div className="ok-icon"><OkIcon color='green' size='sm' /></div>
+          <div className="ok-icon">
+            <OkIcon color='green' size='sm' /></div>
           <div className="rating-heading">Rating</div>
         </CardHead>
       </div>
@@ -131,21 +200,21 @@ const Rating: React.FC = (props:any) => {
             ariaDesc="Average number of pets"
             ariaTitle="Task Rating "
             constrainToVisibleArea={true}
-            data={[{x: '5 Star', y: 2},
-              {x: '4 Star', y: {fourStar}},
-              {x: '3 Star', y: {threeStar}},
-              {x: '2 Star', y: {twoStar}},
-              {x: '1 Star', y: {oneStar}},
+            data={[{x: '5 Star', y: fiveStar.toFixed(1)},
+              {x: '4 Star', y: fourStar.toFixed(1)},
+              {x: '3 Star', y: threeStar.toFixed(1)},
+              {x: '2 Star', y: twoStar.toFixed(1)},
+              {x: '1 Star', y: oneStar.toFixed(1)},
             ]}
             labels={({datum}) => `${datum.x}: ${datum.y}%`}
             padding={{
               bottom: 20,
               left: 75,
-              right: 75, // Adjusted to accommodate legend
+              right: 75,
               top: 10,
             }}
             subTitle="Rating"
-            title={`${averageRating}`}
+            title={`${avgRating}`}
             width={300}
           />
         </div>
@@ -157,8 +226,8 @@ const Rating: React.FC = (props:any) => {
 const mapStateToProps = (state: any) => {
   return {
     isAuthenticated: state.isAuthenticated.isAuthenticated,
+    TaskName: state.TaskName.TaskName,
   };
 };
-export default connect(mapStateToProps, checkAuthentication)(Rating);
+export default connect(mapStateToProps, {checkAuthentication, fetchTaskName})(Rating);
 
-// export default Rating;
