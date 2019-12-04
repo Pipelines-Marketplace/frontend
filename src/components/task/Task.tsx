@@ -42,8 +42,6 @@ const Task: React.FC<TaskProp> = (props:any) => {
   } else {
     tempArr.push([]);
   }
-  console.log(props.task.id);
-
 
   return (
     <GalleryItem>
@@ -53,10 +51,10 @@ const Task: React.FC<TaskProp> = (props:any) => {
             <img src ={imgAvatar} alt="Task" style={{height: '50px'}} />
           </div>
           <CardActions className="cardActions">
-            <DownloadIcon className="download"/>
+            <DownloadIcon style = {{marginRight: '0.2em'}} className="download"/>
             <TextContent className="text">{props.task.downloads}</TextContent>
             <OkIcon style={{color: 'green'}}/>
-            <TextContent className="text">{props.task.rating}</TextContent>
+            <TextContent className="text">{props.task.rating.toFixed(1)}</TextContent>
           </CardActions>
         </CardHead>
         <CardHeader className="catalog-tile-pf-header">

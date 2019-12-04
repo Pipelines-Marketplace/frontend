@@ -11,7 +11,7 @@ import {ChartDonut} from '@patternfly/react-charts';
 
 const Rating: React.FC = () => {
   return (
-    <Card style={{minHeight: '40em', maxWidth: '30em', minWidth: '27em'}}>
+    <Card style={{minHeight: '40em', maxWidth: '30em', minWidth: '27em', marginRight: '7em'}}>
       <div className="card-head">
         <CardHead>
           <div className="ok-icon"><OkIcon color='green' size='sm' /></div>

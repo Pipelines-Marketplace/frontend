@@ -5,58 +5,70 @@ import {
   Tab,
   Card,
   CardHead,
-  TextContent,
+  CardBody,
+  Grid,
+  GridItem,
 } from '@patternfly/react-core';
 import {InfoCircleIcon} from '@patternfly/react-icons';
 import './index.css';
 import ReactMarkDown from 'react-markdown';
 import CodeBlock from './CodeBlock';
 import CodeBlockReadme from './CodeBlockReadme';
-import {ClipboardCopy} from '@patternfly/react-core';
 
 export interface DescriptionProp {
   // id: any
   Description: string,
-  Yaml : string
+  Yaml: string,
+  userTaskDescription: string
 }
 
-const Description: React.FC<DescriptionProp> = (props:any) => {
+
+const Description: React.FC<DescriptionProp> = (props: any) => {
   const [activeTabKey, setActiveTabKey] = React.useState(0);
   const handleTabClick = (event: any, tabIndex: any) => {
     setActiveTabKey(tabIndex);
   };
+
+  let markDown : string = '';
+  if (props.Description != null) {
+    if (props.Description.match('noreadme')) {
+      markDown = props.userTaskDescription;
+    } else {
+      markDown = props.Description;
+    }
+  }
+
   return (
-    <Card style={{minHeight: '40em', minWidth: '70em', maxWidth: '70em'}}>
+    <Card style={{marginLeft: '7em', marginRight: '3em', width: '71em'}}>
       <CardHead>
-        <div className="ok-icon"><InfoCircleIcon color="blue" size="sm" /></div>
-        <div className="description-heading">
-          Description {' '}
-        </div>
+        <InfoCircleIcon color="blue" size="sm" />
+        {'  '}Description {' '}
       </CardHead>
-      <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
-        {/* <Tabs> */}
-        <Tab eventKey={0} title="Description">
-          <div className="tabContent">
-            <TextContent>
-              <ReactMarkDown source = {props.Description}
-                renderers={{code: CodeBlockReadme}}
-              />
+      <CardBody>
+        <Grid style={{width: '100%'}}>
+          <GridItem span={12}>
+            <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
+              <Tab eventKey={0} title="Description">
+                <ReactMarkDown source={markDown}
+                  escapeHtml={true}
+                  renderers={{code: CodeBlockReadme}}
+                />
+              </Tab>
 
-            </TextContent>
-          </div>
-        </Tab>
-        <Tab eventKey={1} title="YAML">
-          <ReactMarkDown source = {props.Yaml}
-            renderers={{code: CodeBlock}}
-          />
-          <ClipboardCopy></ClipboardCopy>
-        </Tab>
-        <Tab eventKey={2} title="Resources">
-          <div className="example">
+              <Tab eventKey={1} title="YAML">
+                <ReactMarkDown source={props.Yaml}
+                  escapeHtml={true}
+                  renderers={{code: CodeBlock}}
+                />
+              </Tab>
 
-          </div>
-        </Tab>
-      </Tabs>
+              <Tab eventKey={2} title="Resources">
+                    To be continued .....
+              </Tab>
+            </Tabs>
+          </GridItem>
+        </Grid>
+      </CardBody>
     </Card>
   );
 };
