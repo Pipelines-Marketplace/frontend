@@ -18,7 +18,8 @@ import CodeBlockReadme from './CodeBlockReadme';
 export interface DescriptionProp {
   // id: any
   Description: string,
-  Yaml: string
+  Yaml: string,
+  userTaskDescription: string
 }
 
 
@@ -27,22 +28,31 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
   const handleTabClick = (event: any, tabIndex: any) => {
     setActiveTabKey(tabIndex);
   };
+
+  let markDown : string = '';
+  if (props.Description != null) {
+    if (props.Description.match('noreadme')) {
+      markDown = props.userTaskDescription;
+    } else {
+      markDown = props.Description;
+    }
+  }
+
   return (
-    <Card style={{marginLeft: '7em', marginRight: '7em'}}>
+    <Card style={{marginLeft: '7em', marginRight: '6em', width: '68em'}}>
       <CardHead>
         <InfoCircleIcon color="blue" size="sm" />
         {'  '}Description {' '}
       </CardHead>
       <CardBody>
-        <Grid>
+        <Grid style={{width: '100%'}}>
           <GridItem span={12}>
             <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
               <Tab eventKey={0} title="Description">
-                <ReactMarkDown source={props.Description}
+                <ReactMarkDown source={markDown}
                   escapeHtml={true}
                   renderers={{code: CodeBlockReadme}}
                 />
-                {/* {props.Description} */}
               </Tab>
 
               <Tab eventKey={1} title="YAML">
@@ -53,7 +63,7 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
               </Tab>
 
               <Tab eventKey={2} title="Resources">
-                    Yeh next sprint mein
+                    To be continued .....
               </Tab>
             </Tabs>
           </GridItem>
