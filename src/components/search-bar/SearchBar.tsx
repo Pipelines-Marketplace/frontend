@@ -35,6 +35,8 @@ const SearchBar: React.FC = (props:any) => {
     props.fetchTaskSuccess();
     // eslint-disable-next-line
   }, []);
+
+  // Getting all data from store
   if (props.TaskData != null) {
     tempArr = props.TaskData.map((task: any) => {
       const taskData: TaskPropData = {
@@ -50,20 +52,54 @@ const SearchBar: React.FC = (props:any) => {
     });
   }
 
+  // Dropdown menu
   const [isOpen, set] = useState(false);
   const dropdownItems = [
-    <DropdownItem key="link">Link</DropdownItem>,
-    <DropdownItem key="action" component="button">
-          Action
-    </DropdownItem>,
-    <DropdownItem key="disabled link" isDisabled>
-          Disabled Link
-    </DropdownItem>,
-
+    <DropdownItem key="link" onClick = {sortByName}>Name</DropdownItem>,
+    <DropdownItem key="link" onClick = {sortByDownloads}>Downloads</DropdownItem>,
+    <DropdownItem key="link" onClick = {sortByRatings}>Ratings</DropdownItem>,
+    <DropdownItem key="link" onClick = {sortByDownloads}>Favourites</DropdownItem>,
   ];
   const ontoggle = (isOpen: React.SetStateAction<boolean>) => set(isOpen);
   const onSelect = () => set(!isOpen);
 
+  // eslint-disable-next-line require-jsdoc
+  function sortByName() {
+    const taskarr = tempArr.sort((first:any, second: any) => {
+      if (first.name > second.name) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: taskarr});
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  function sortByDownloads() {
+    const taskarr = tempArr.sort((first:any, second: any) => {
+      if (first.downloads < second.downloads) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: taskarr});
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  function sortByRatings() {
+    const taskarr = tempArr.sort((first:any, second: any) => {
+      if (first.rating < second.rating) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: taskarr});
+  }
+
+  // Searching a task
   let [tasks, setTasks] = useState(''); // Get the user input
 
   // Search a task
@@ -162,7 +198,7 @@ const SearchBar: React.FC = (props:any) => {
             </Button>
             <Dropdown
               onSelect = {onSelect}
-              toggle={<DropdownToggle onToggle={ontoggle}>Filter</DropdownToggle>}
+              toggle={<DropdownToggle onToggle={ontoggle}>Sort</DropdownToggle>}
               isOpen = {isOpen}
               dropdownItems={dropdownItems}
             />
