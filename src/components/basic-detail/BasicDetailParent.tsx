@@ -8,7 +8,7 @@ import {fetchTaskName} from '../redux/Actions/TaskActionName';
 
 const Detail: React.FC = (props: any) => {
   const {taskId} = useParams();
-  console.log(taskId);
+
 
   React.useEffect(() => {
     props.fetchTaskName(taskId);

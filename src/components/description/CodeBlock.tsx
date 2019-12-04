@@ -6,7 +6,7 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 const CodeBlock = (props:any) => {
   const {value} = props;
   return (
-    <SyntaxHighlighter language="yaml" showLineNumbers={true} wrapLines={true}>
+    <SyntaxHighlighter language="yaml" showLineNumbers={true}>
       {value}
     </SyntaxHighlighter>
   );
