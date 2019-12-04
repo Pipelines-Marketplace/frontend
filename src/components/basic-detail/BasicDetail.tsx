@@ -51,7 +51,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
   // Function to download YAML file
   const [dwnld, setDownload] = React.useState(props.task.downloads);
   function download() {
-    fetch(`http://localhost:5000/download/${props.task.id}`, {
+    fetch(`${process.env.REACT_APP_BACKEND_API}/download/${props.task.id}`, {
       method: 'POST',
     })
         .then((response) => {
@@ -71,7 +71,8 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
 
   return (
     <Flex>
-      <Card style={{marginLeft: '7em', marginRight: '7em', marginTop: '2em', width: '100%'}}>
+      <Card style={{marginLeft: '7em', marginRight: '7em',
+        marginTop: '2em', width: '100%'}}>
         <CardHead>
           <img src ={avatarImg} alt="Task"
             style={{height: '7em', marginLeft: '3em'}}

@@ -18,7 +18,7 @@ const Filter: React.FC = (props:any) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch('http://localhost:5000/tags')
+      await fetch(`${process.env.REACT_APP_BACKEND_API}/tags`)
           .then((res) => res.json())
           .then((data) => setTags(data));
     };
@@ -41,7 +41,7 @@ const Filter: React.FC = (props:any) => {
       }
       str = `${str + tagArray[i]}|`;
     }
-    fetch(`http://localhost:5000/tasks${str}`)
+    fetch(`${process.env.REACT_APP_BACKEND_API}/tasks${str}`)
         .then((res) => res.json())
         .then((data) => {
           store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
@@ -67,7 +67,7 @@ const Filter: React.FC = (props:any) => {
     for (let i = 0; i < catArray.length; i++) {
       catStr = `${catStr + catArray[i]}|`;
     }
-    fetch(`http://localhost:5000/tasks?category=${catStr}`)
+    fetch(`${process.env.REACT_APP_BACKEND_API}/tasks?category=${catStr}`)
         .then((res) => res.json())
         .then((data) => {
         // const allTasks = [...props.TaskData, ...data];

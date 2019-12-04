@@ -28,7 +28,8 @@ const UploadTask: React.FC = () => {
       data.append('user', 'hubot');
       data.append(input.files[0].name, input.files[0]);
       console.log(input.files[0]);
-      fetch(`http://localhost:5001/lint/${input.files[0].name}`, {
+      fetch(`${process.env.REACT_APP_BACKEND_API}
+      /lint/${input.files[0].name}`, {
         method: 'POST',
         body: data,
         // eslint-disable-next-line no-console

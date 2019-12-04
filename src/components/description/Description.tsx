@@ -39,7 +39,7 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
   }
 
   return (
-    <Card style={{marginLeft: '7em', marginRight: '6em', width: '68em'}}>
+    <Card style={{marginLeft: '7em', marginRight: '3em', width: '71em'}}>
       <CardHead>
         <InfoCircleIcon color="blue" size="sm" />
         {'  '}Description {' '}
