@@ -23,6 +23,7 @@ import {
 const UploadTask: React.FC = () => {
   // const [status, setStatus] = useState();
   const intags: string[] = [];
+  const [uploadMessage, SetUploadMessage] = useState(' ');
   // const [buttonstatus, setButtonstatus] =useState(true);
   const [tags, setTags] = useState(intags);
 
@@ -63,23 +64,24 @@ const UploadTask: React.FC = () => {
     // const taskinfo = new FormData();
     const formdata = {
       name: data.get('task-name'),
-      tags: tags,
-      type: 'Task',
       description: data.get('description'),
-      gitlink: data.get('tasklink'),
+      type: 'Task',
+      tags: tags,
+      github: data.get('tasklink'),
+      user_id: 1,
     };
     console.log(JSON.stringify(formdata));
-    // taskinfo.append('data', JSON.stringify(formdata));
-    // fetch('https://b1d7348a-145b-4a5d-a596-8edfe3391c34.mock.pstmn.io/task', {
-    //   method: 'POST',
-    //   body: JSON.stringify(formdata),
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // });
+    fetch('http://localhost:5000/upload', {
+      method: 'POST',
+      body: JSON.stringify(formdata),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((resp) => resp.json()).then((data)=> SetUploadMessage(data.message));
   };
   const addTags = (event: any) => {
+    event.preventDefault();
     if (event.target.value !== '') {
       setTags([...tags, event.target.value]);
       event.target.value = '';
@@ -101,94 +103,94 @@ const UploadTask: React.FC = () => {
   ];
 
   return (
-    <Grid>
-      <Form isHorizontal className="flex-size">
-        <FormGroup
-          label="Name"
+    <Form className="flex-size" onSubmit={submitdata}>
+      <FormGroup
+        label="Name"
+        isRequired
+        fieldId="task-name"
+        helperText="Please provide your task name"
+      >
+        <TextInput
           isRequired
-          fieldId="task-name"
-          helperText="Please provide your task name"
-        >
+          type="text"
+          id="task-name"
+          name="task-name"
+          autoComplete="off"
+        />
+      </FormGroup>
+      <FormGroup
+        isRequired label="Description"
+        helperText="Please fill description of your task"
+        fieldId="description"
+      >
+        <TextArea
+          name="description"
+          id="description"
+        />
+      </FormGroup>
+      <FormGroup label="Tags" isRequired fieldId="task-tag"
+        helperText="Please provide tags name of your task"
+      >
+
+
+        <div className="tags-input">
+          <ChipGroup>
+            {tags.map((chip, index) => (
+              <Chip key={index} onClick={() => removeTags(index)} >
+                {chip}
+              </Chip>
+            ))}
+          </ChipGroup>
           <TextInput
             isRequired
             type="text"
-            id="task-name"
-            name="task-name"
+            id="task-tags"
+            name="task-tags"
+            onKeyPress=
+              {(event) => (event.key === 'Enter' ? addTags(event) : null)}
+            placeholder="Press enter to add tags"
             autoComplete="off"
           />
-        </FormGroup>
-        <FormGroup
-          isRequired label="Description"
-          helperText="Please fill description of your task"
-          fieldId="description"
-        >
-          <TextArea
-            name="description"
-            id="description"
-          />
-        </FormGroup>
-        <FormGroup label="Tags" isRequired fieldId="task-tag"
-          helperText="Please provide tags name of your task"
-        >
+        </div>
+      </FormGroup>
 
+      <FormGroup label="Type" isRequired fieldId="task-tag">
+        <Dropdown style = {{backgroundColor: 'white'}}
+          onSelect = {onSelect}
+          toggle={<DropdownToggle onToggle={ontoggle}>Task</DropdownToggle>}
+          isOpen = {isOpen}
+          dropdownItems={dropdownItems}
+        />
+      </FormGroup>
 
-          <div className="tags-input">
-            <ChipGroup>
-              {tags.map((chip, index) => (
-                <Chip key={index} onClick={() => removeTags(index)} >
-                  {chip}
-                </Chip>
-              ))}
-            </ChipGroup>
-            <TextInput
-              isRequired
-              type="text"
-              id="task-tags"
-              name="task-tags"
-              onClick=
-                {(event:any) => (event.key === 'Enter' ? addTags(event) : null)}
-              placeholder="Press enter to add tags"
-              autoComplete="off"
-            />
-          </div>
-        </FormGroup>
-
-        <FormGroup label="Type" isRequired fieldId="task-tag">
-          <Dropdown style = {{backgroundColor: 'white'}}
-            onSelect = {onSelect}
-            toggle={<DropdownToggle onToggle={ontoggle}>Task</DropdownToggle>}
-            isOpen = {isOpen}
-            dropdownItems={dropdownItems}
-          />
-        </FormGroup>
-
-        <FormGroup
-          label="Github"
-          helperText="Please provide the github link of your task"
-          fieldId="tasklink"
-        >
-          <TextInput
-            name="tasklink"
-            id="tasklink"
-          />
-        </FormGroup>
-        {/* <form onChange={onchange}>
+      <FormGroup
+        label="Github"
+        isRequired
+        helperText="Please provide the github link of your task"
+        fieldId="tasklink"
+      >
+        <TextInput
+          name="tasklink"
+          id="tasklink"
+        />
+      </FormGroup>
+      {/* <form onChange={onchange}>
           <input type="file" accept=".yaml" id="file" name="taskfile" />
         </form>
         {status} */}
-        <ActionGroup>
+      <ActionGroup>
 
-          <Button id="Button"
-            variant="primary"
-            type="submit"
-          >Submit Task</Button>
+        <Button id="Button"
+          variant="primary"
+          type="submit"
+        >Submit Task</Button>
 
-          <Link to="/" >
-            <Button variant="secondary" >Cancel</Button>
-          </Link>
-        </ActionGroup>
-      </Form>
-    </Grid>
+        <Link to="/" >
+          <Button variant="secondary" type="submit">Cancel</Button>
+        </Link>
+      </ActionGroup>
+    </Form>
+
   );
 };
 export default UploadTask;
