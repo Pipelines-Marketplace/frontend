@@ -38,7 +38,7 @@ const Login:React.FC=(props:any)=>{
 
   // Authenticate the user with given credentials
   const authenticationCheck=(username:string, password:string)=>{
-    fetch('http://localhost:5000/login', {
+    fetch(`${process.env.REACT_APP_BACKEND_API}/login`, {
       method: 'POST',
       body: JSON.stringify({username: username, password: password}),
     }).then((res)=>res.json())

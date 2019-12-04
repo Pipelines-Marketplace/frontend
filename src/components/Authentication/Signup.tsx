@@ -42,7 +42,7 @@ const SignupForm=()=> {
       lastname: lastName,
       password: password,
     };
-    fetch('http://localhost:5000/signup', {
+    fetch(`${process.env.REACT_APP_BACKEND_API}/signup`, {
       method: 'POST',
       body: JSON.stringify(newUser),
     }).then((res)=>res.json())
