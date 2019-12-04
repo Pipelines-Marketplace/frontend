@@ -23,12 +23,6 @@ const Detail: React.FC = (props: any) => {
     tempTask.push(props.TaskName);
   }
 
-  // if (props.TaskName != null) {
-  //   for (let i = 0; i < tempTask.length; i++) {
-  //     return ((tempTask[i].description));
-  //   }
-  // }
-
   let taskDescription : string = '';
   if (props.TaskName != null) {
     taskDescription = (props.TaskName['description']);
