@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable max-len */
 import React, {useState, useEffect} from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
 import './index.css';
@@ -11,10 +9,11 @@ import {OkIcon} from '@patternfly/react-icons';
 import {ChartDonut} from '@patternfly/react-charts';
 import {useParams} from 'react-router';
 import {connect} from 'react-redux';
-import checkAuthentication from '../redux/Actions/CheckAuthAction';
+import checkAuthentication
+  from '../redux/Actions/CheckAuthAction';
 import {Link} from 'react-router-dom';
-import {fetchTaskName} from '../redux/Actions/TaskActionName';
-
+import {fetchTaskName} from
+  '../redux/Actions/TaskActionName';
 let oneStar:number =0;
 let twoStar:number =0;
 let threeStar:number =0;
@@ -22,14 +21,11 @@ let fourStar:number =0;
 let fiveStar:number =0;
 let prevStar:number =0;
 let newStar:number =0;
-
 const Rating: React.FC = (props:any) => {
   const [rating, setRating] = useState([]);
   const [stars, setStars]=useState(0);
   const [c, setC]=useState(0);
-
   const [avgRating, setAvgRating] = useState(0.0);
-
   if ((props.TaskName != null) && (c==0)) {
     setC((c) => c+1);
     setAvgRating(props.TaskName['rating'].toFixed(1));
@@ -38,21 +34,25 @@ const Rating: React.FC = (props:any) => {
   let onechecked; let twochecked;
   let threechecked;
   let fourchecked; let fivechecked;
+  // storing information of taskid and =userid
   const prevStars={
     user_id: Number(localStorage.getItem('usetrID')),
     task_id: Number(taskId),
   };
+  // updating rating star
   fetch(`${process.env.REACT_APP_BACKEND_API}/stars`, {
     method: 'POST',
     body: JSON.stringify(prevStars),
   }).then((res)=>res.json()).then((data)=>{
     setStars(Number(data['stars']));
   });
+  // api call for getting number of 1,2,3,4,5 star
   useEffect(() =>{
-    fetch('${process.env.REACT_APP_BACKEND_API}/rating/'+taskId)
+    fetch(`${process.env.REACT_APP_BACKEND_API}/rating/`+taskId)
         .then((res) => res.json())
         .then((rating) => setRating(rating));
   }, []);
+  // for showing number of star given by user
   switch (stars) {
     case 1: onechecked=true;
 
@@ -77,6 +77,7 @@ const Rating: React.FC = (props:any) => {
     fiveStar=(arr[6]/totalstar)*100;
   }
   let login: any = '';
+  // sending rating information to backend
   const sendrating = (event:any) =>{
     onechecked=false;
     twochecked=false;
@@ -104,7 +105,7 @@ const Rating: React.FC = (props:any) => {
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
-        fetch('http://localhost:5000/rating', {
+        fetch(`${process.env.REACT_APP_BACKEND_API}/rating`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -122,8 +123,7 @@ const Rating: React.FC = (props:any) => {
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
-        // sending rating info to server
-        fetch('http://localhost:5000/rating', {
+        fetch(`${process.env.REACT_APP_BACKEND_API}/rating`, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
@@ -136,7 +136,7 @@ const Rating: React.FC = (props:any) => {
       }
     }
   };
-
+  // for checking user is login or not
   if (props.isAuthenticated == true) {
     login = <form onClick = {sendrating}>
       <ul className="rate-area" >
@@ -222,12 +222,12 @@ const Rating: React.FC = (props:any) => {
     </Card>
   );}
 };
-
 const mapStateToProps = (state: any) => {
   return {
     isAuthenticated: state.isAuthenticated.isAuthenticated,
     TaskName: state.TaskName.TaskName,
   };
 };
-export default connect(mapStateToProps, {checkAuthentication, fetchTaskName})(Rating);
+export default connect(mapStateToProps,
+    {checkAuthentication, fetchTaskName})(Rating);
 
