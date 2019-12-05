@@ -10,10 +10,7 @@ const Filter: React.FC = (props:any) => {
   const tagsSet = new Set();
   const [tags, setTags] = useState([]);
   const [toggle, setToggle] =useState('seeMore');
-  const [clearStatus, setClearStatus] =useState(' ');
   const [i, setI] =useState(10);
-
-  const status = 'Clear All';
   useEffect(() => {
     const fetchData = async () => {
       await fetch('http://localhost:5000/tags')
@@ -40,9 +37,6 @@ const Filter: React.FC = (props:any) => {
     }
 
     tagArray = Array.from(tagsSet);
-    if (tagArray.length >0) {
-      setClearStatus(status);
-    }
     for (let i = 0; i < tagArray.length; i++) {
       if (i === 0 && tagArray[i] !== 'task') {
         str += '?tags=';
@@ -109,8 +103,6 @@ const Filter: React.FC = (props:any) => {
       <h2 style={{marginBottom: '1em'}}>
         {' '}
         <b>Types</b>{'  '}
-        <Link to="/"> {clearStatus}</Link>
-
       </h2>
       <div style={{marginBottom: '0.4em'}}>
         <Checkbox
