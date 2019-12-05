@@ -22,6 +22,7 @@
 .rate-area {
     float: left;
     border-style: none;
+    margin-left: 4em;
   }
   
   .rate-area:not(:checked) > input {
@@ -37,7 +38,7 @@
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
-    font-size: 400%;
+    font-size: 350%;
     line-height: 1.2;
     color: lightgrey;
     text-shadow: 1px 1px #bbb;
@@ -48,7 +49,7 @@
   .rate-area > input:checked ~ label {
     color: gold;
     text-shadow: 1px 1px #c60;
-    font-size: 450% !important;
+    font-size: 350% !important;
   }
   
   .rate-area:not(:checked) > label:hover, .rate-area:not(:checked) > label:hover ~ label { color: gold; }

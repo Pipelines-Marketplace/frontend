@@ -26,7 +26,8 @@ const Rating: React.FC = (props:any) => {
   const [stars, setStars]=useState(0);
   const [c, setC]=useState(0);
   const [avgRating, setAvgRating] = useState(0.0);
-  if ((props.TaskName !== null) && (c === 0)) {
+  // eslint-disable-next-line
+  if ((props.TaskName != undefined) && (c == 0)) {
     setC((c) => c+1);
     setAvgRating(props.TaskName['rating'].toFixed(1));
   };
