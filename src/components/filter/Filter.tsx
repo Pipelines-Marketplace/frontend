@@ -5,6 +5,7 @@ import './filter.css';
 import {Checkbox} from '@patternfly/react-core/dist/js/components';
 
 import store from '../redux/store';
+import {API_URL} from '../../constants';
 
 
 export interface TagsData {
@@ -18,7 +19,7 @@ const Filter: React.FC = (props:any) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(`${process.env.REACT_APP_BACKEND_API}/tags`)
+      await fetch(`${API_URL}/tags`)
           .then((res) => res.json())
           .then((data) => setTags(data));
     };
@@ -41,7 +42,7 @@ const Filter: React.FC = (props:any) => {
       }
       str = `${str + tagArray[i]}|`;
     }
-    fetch(`${process.env.REACT_APP_BACKEND_API}/tasks${str}`)
+    fetch(`${API_URL}/tasks${str}`)
         .then((res) => res.json())
         .then((data) => {
           store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
@@ -67,7 +68,7 @@ const Filter: React.FC = (props:any) => {
     for (let i = 0; i < catArray.length; i++) {
       catStr = `${catStr + catArray[i]}|`;
     }
-    fetch(`${process.env.REACT_APP_BACKEND_API}/tasks?category=${catStr}`)
+    fetch(`${API_URL}/tasks?category=${catStr}`)
         .then((res) => res.json())
         .then((data) => {
         // const allTasks = [...props.TaskData, ...data];

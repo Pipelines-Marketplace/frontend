@@ -11,6 +11,7 @@ import {
   Button,
   FlexItem,
   Flex} from '@patternfly/react-core';
+import {API_URL} from '../../constants';
 
 // Interface representing new user
 interface registerUser{
@@ -42,7 +43,7 @@ const SignupForm=()=> {
       lastname: lastName,
       password: password,
     };
-    fetch(`${process.env.REACT_APP_BACKEND_API}/signup`, {
+    fetch(`${API_URL}/signup`, {
       method: 'POST',
       body: JSON.stringify(newUser),
     }).then((res)=>res.json())

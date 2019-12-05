@@ -71,7 +71,7 @@ const App: React.FC<mainProps> = () => {
     </Link>;
   }
 
-
+  console.log('aaja bhai', process.env);
   // code for header contents
   const PageToolbar = (
     // eslint-disable-next-line react/jsx-filename-extension
