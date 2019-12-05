@@ -14,6 +14,7 @@ import checkAuthentication
 import {Link} from 'react-router-dom';
 import {fetchTaskName} from
   '../redux/Actions/TaskActionName';
+import {API_URL} from '../../constants';
 let oneStar:number =0;
 let twoStar:number =0;
 let threeStar:number =0;
@@ -41,7 +42,7 @@ const Rating: React.FC = (props:any) => {
     task_id: Number(taskId),
   };
   // updating rating star
-  fetch(`${process.env.REACT_APP_BACKEND_API}/stars`, {
+  fetch(`${API_URL}/stars`, {
     method: 'POST',
     body: JSON.stringify(prevStars),
   }).then((res)=>res.json()).then((data)=>{
@@ -49,7 +50,7 @@ const Rating: React.FC = (props:any) => {
   });
   // api call for getting number of 1,2,3,4,5 star of a task
   useEffect(() =>{
-    fetch(`${process.env.REACT_APP_BACKEND_API}/rating/`+taskId)
+    fetch(`${API_URL}/rating/`+taskId)
         .then((res) => res.json())
         .then((rating) => setRating(rating));
     // eslint-disable-next-line
@@ -107,7 +108,7 @@ const Rating: React.FC = (props:any) => {
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
-        fetch(`${process.env.REACT_APP_BACKEND_API}/rating`, {
+        fetch(`${API_URL}/rating`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -125,7 +126,7 @@ const Rating: React.FC = (props:any) => {
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
-        fetch(`${process.env.REACT_APP_BACKEND_API}/rating`, {
+        fetch(`${API_URL}/rating`, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',

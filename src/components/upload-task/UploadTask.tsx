@@ -17,6 +17,7 @@ import {
 import {
   Link,
 } from 'react-router-dom';
+import {API_URL} from '../../constants';
 const UploadTask: React.FC = () => {
   const intags: string[] = [];
   const [uploadMessage, setUploadMessage] = useState(' ');
@@ -45,7 +46,7 @@ const UploadTask: React.FC = () => {
       github: data.get('tasklink'),
       user_id: Number(localStorage.getItem('usetrID')),
     };
-    fetch(`${process.env.REACT_APP_BACKEND_API}/upload`, {
+    fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: JSON.stringify(formdata),
       headers: {

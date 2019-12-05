@@ -5,6 +5,7 @@ import './filter.css';
 import {Checkbox} from '@patternfly/react-core/dist/js/components';
 
 import store from '../redux/store';
+import {API_URL} from '../../constants';
 
 
 export interface TagsData {
@@ -12,13 +13,14 @@ export interface TagsData {
   status: boolean
 }
 const Filter: React.FC = (props:any) => {
+  console.log('apiurl', API_URL);
   const tagsSet = new Set();
   const categorySet = new Set();
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(`${process.env.REACT_APP_BACKEND_API}/tags`)
+      await fetch(`${API_URL}/tags`)
           .then((res) => res.json())
           .then((data) => setTags(data));
     };
@@ -41,7 +43,7 @@ const Filter: React.FC = (props:any) => {
       }
       str = `${str + tagArray[i]}|`;
     }
-    fetch(`${process.env.REACT_APP_BACKEND_API}/tasks${str}`)
+    fetch(`${API_URL}/tasks${str}`)
         .then((res) => res.json())
         .then((data) => {
           store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
@@ -51,7 +53,6 @@ const Filter: React.FC = (props:any) => {
     if (tagsSet.has(e.target.value) === false) {
       tagsSet.add(e.target.value);
     } else {
-      console.log(e.target.value);
       tagsSet.delete(e.target.value);
     }
 
@@ -67,7 +68,7 @@ const Filter: React.FC = (props:any) => {
     for (let i = 0; i < catArray.length; i++) {
       catStr = `${catStr + catArray[i]}|`;
     }
-    fetch(`${process.env.REACT_APP_BACKEND_API}/tasks?category=${catStr}`)
+    fetch(`${API_URL}/tasks?category=${catStr}`)
         .then((res) => res.json())
         .then((data) => {
         // const allTasks = [...props.TaskData, ...data];

@@ -33,8 +33,6 @@ import BasicDetailParent from '../basic-detail/BasicDetailParent';
 import BackgroundImageHeader from '../background-image/BackgroundImage';
 import Login from '../Authentication/Login';
 import SignupForm from '../Authentication/Signup';
-
-
 interface mainProps {
 
 }
@@ -70,7 +68,6 @@ const App: React.FC<mainProps> = () => {
         onClick={logoutUser}> Logout </span>
     </Link>;
   }
-
 
   // code for header contents
   const PageToolbar = (
