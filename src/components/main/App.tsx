@@ -96,7 +96,7 @@ const App: React.FC<mainProps> = () => {
             <Link to="/upload">
               <span style={{marginRight: '0em', color: 'white'}}>
                 {/* {' '} */}
-              UploadTask
+              Upload
                 {/* {' '} */}
               </span>
               {' '}
