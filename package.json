@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://chetan-rns.github.io/frontend",
   "dependencies": {
     "@patternfly/react-charts": "^5.0.13",
     "@patternfly/react-core": "^3.112.3",
