@@ -1,12 +1,13 @@
 /* eslint-disable consistent-return */
+import {useHistory} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
-
 import './filter.css';
 import {Checkbox} from '@patternfly/react-core/dist/js/components';
 
 import store from '../redux/store';
-import {Link} from 'react-router-dom';
+
 const Filter: React.FC = (props:any) => {
+  const history = useHistory();
   const tagsSet = new Set();
   const [tags, setTags] = useState([]);
   const [toggle, setToggle] =useState('seeMore');
@@ -50,7 +51,6 @@ const Filter: React.FC = (props:any) => {
         });
   };
 
-
   const addTag = (e: any) => {
     if (tagsSet.has(e.target.value) === false) {
       tagsSet.add(e.target.value);
@@ -65,9 +65,9 @@ const Filter: React.FC = (props:any) => {
   // / jsx element for show tags
   const showTags:any=
   newtags.map((it: any) => (
-    <div key = {it} style={{marginBottom: '0.4em'}}>
+    <div key = {it} style={{marginBottom: '0.5em'}}>
       <Checkbox
-        style={{width: '1em', height: '1em'}}
+        style={{width: '1.2em', height: '1.2em'}}
         label={it.name[0].toUpperCase()+it.name.slice(1)}
         value={it.name}
         id={it.id}
@@ -75,14 +75,11 @@ const Filter: React.FC = (props:any) => {
         aria-label="uncontrolled checkbox example"
       />
     </div>
-
-
   ));
 
   const tagSize:number = tags.length;
   const [lessTags, setLessTags] = React.useState(tagSize);
   // /  for display more tags
-
   const moreTags=(e:any) =>{
     if (i >= newtags.length ) {
       setI(tagSize);
@@ -97,16 +94,20 @@ const Filter: React.FC = (props:any) => {
       setToggle('seeMore');
     }
   };
+  const clearAll=() =>{
+    history.push('/');
+    window.location.reload();
+  };
 
   return (
     <div className="filter-size">
       <h2 style={{marginBottom: '1em'}}>
         {' '}
-        <b>Types</b>{'  '}
+        <b>Types</b>{'  '} <a onClick={clearAll} style={{marginLeft: '2em'}}>ClearAll</a>
       </h2>
-      <div style={{marginBottom: '0.4em'}}>
+      <div style={{marginBottom: '0.5em'}}>
         <Checkbox
-          style={{width: '1em', height: '1em'}}
+          style={{width: '1.2em', height: '1.2em'}}
           label="Task"
           id="Task"
           value="task"
@@ -116,7 +117,7 @@ const Filter: React.FC = (props:any) => {
       </div>
       <div>
         <Checkbox
-          style={{width: '1em', height: '1em'}}
+          style={{width: '1.2em', height: '1.2em'}}
           label="Pipelines"
           id=" "
           value="pipelines"
