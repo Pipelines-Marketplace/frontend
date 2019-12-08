@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {
   Card,
   CardHeader,
@@ -10,9 +11,9 @@ import {
   ActionGroup,
   Button,
   FlexItem,
-  Flex} from '@patternfly/react-core';
+  Flex,
+  Alert} from '@patternfly/react-core';
 import {API_URL} from '../../constants';
-
 // Interface representing new user
 interface registerUser{
     username:string,
@@ -21,7 +22,9 @@ interface registerUser{
     lastname:string,
     password:string
 }
+
 const SignupForm=()=> {
+  const history = useHistory();
   const [username, setUsername]=useState('');
   const [email, setEmail]=useState('');
   const [firstName, setFirstName]=useState('');
@@ -29,7 +32,21 @@ const SignupForm=()=> {
   const [password, setPassword]=useState('');
   const [confirmPassword, setConfirmPassword]=useState('');
   const [isPasswordValid, setIsPasswordValid]=useState(true);
-
+  const [signinmessage, setSigninMessage] = useState('');
+  let sendStatus:any='';
+  // display signinmessage that is getting from server
+  const displaySignInMessage=(message:any) =>{
+    console.log(message);
+    console.log(typeof(message['status']));
+    if (message['status'] === 'false') {
+      console.log('sjjsjsnj ewhewhb');
+      sendStatus = <Alert variant="danger"
+        isInline title={message['message']} />;
+    } else {
+      history.push('/');
+    }
+    return sendStatus;
+  };
   // Register new user
   const registerUser=()=>{
     if (password!==confirmPassword) {
@@ -47,7 +64,7 @@ const SignupForm=()=> {
       method: 'POST',
       body: JSON.stringify(newUser),
     }).then((res)=>res.json())
-        .then((data)=>console.log(data));
+        .then((data)=> setSigninMessage(displaySignInMessage(data))); ;
   };
   return (
     <Card style={{maxWidth: '40.5em', margin: 'auto'}}>
@@ -138,6 +155,7 @@ const SignupForm=()=> {
               }}
             />
           </FormGroup>
+          {signinmessage}
           <div style={{margin: 'auto'}}>
             <ActionGroup>
               <Button variant="primary" onClick={registerUser}>Register</Button>

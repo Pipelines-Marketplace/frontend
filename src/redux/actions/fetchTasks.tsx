@@ -1,7 +1,8 @@
 import {FETCH_TASKS} from './types';
+import {API_URL} from '../../constants';
 
 export const fetchTasks=()=>(dispatch:any)=>{
-  fetch(`${process.env.REACT_APP_BACKEND_API}/tasks`)
+  fetch(`${API_URL}/tasks`)
       .then((res) => res.json())
       .then((tasks)=>dispatch({
         type: FETCH_TASKS,

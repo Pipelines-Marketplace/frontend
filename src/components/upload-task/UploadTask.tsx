@@ -17,6 +17,7 @@ import {
 import {
   Link,
 } from 'react-router-dom';
+import {API_URL} from '../../constants';
 const UploadTask: React.FC = () => {
   const intags: string[] = [];
   const [uploadMessage, setUploadMessage] = useState(' ');
@@ -45,7 +46,7 @@ const UploadTask: React.FC = () => {
       github: data.get('tasklink'),
       user_id: Number(localStorage.getItem('usetrID')),
     };
-    fetch(`${process.env.REACT_APP_BACKEND_API}/upload`, {
+    fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: JSON.stringify(formdata),
       headers: {
@@ -80,7 +81,8 @@ const UploadTask: React.FC = () => {
     </DropdownItem>,
   ];
   return (
-    <Form className="flex-size" onSubmit={submitdata}>
+    <Form className="flex-size" onSubmit={submitdata}
+      style = {{marginLeft: '5em'}}>
       <h1 style={{fontSize: '2em',
         fontFamily: 'bold'}}>Upload </h1>
       <FormGroup
@@ -99,11 +101,11 @@ const UploadTask: React.FC = () => {
       </FormGroup>
       <FormGroup
         isRequired label="Description"
-        helperText="Please fill description
-        of your task"
+        helperText="Please fill the description
+        of your task."
         fieldId="description"
       >
-        <TextArea
+        <TextArea style = {{height: '7em'}}
           name="description"
           id="description"
         />
@@ -123,6 +125,7 @@ const UploadTask: React.FC = () => {
             ))}
           </ChipGroup>
           <TextInput
+            style={{marginTop: '0.3em'}}
             isRequired
             type="text"
             id="task-tags"
@@ -136,14 +139,16 @@ const UploadTask: React.FC = () => {
         </div>
       </FormGroup>
       <FormGroup label="Type"
-        isRequired fieldId="task-tag">
-        <Dropdown style = {{backgroundColor: 'white'}}
-          onSelect = {onSelect}
-          toggle={<DropdownToggle onToggle={ontoggle}>
-            Task</DropdownToggle>}
-          isOpen = {isOpen}
-          dropdownItems={dropdownItems}
-        />
+        fieldId="task-tag">
+        <div>
+          <Dropdown style = {{backgroundColor: 'whitesmoke', width: '20em'}}
+            onSelect = {onSelect}
+            toggle={<DropdownToggle onToggle={ontoggle}>
+            Task</DropdownToggle>} // provide task type by default
+            isOpen = {isOpen}
+            dropdownItems={dropdownItems}
+          />
+        </div>
       </FormGroup>
       <FormGroup
         label="Github"

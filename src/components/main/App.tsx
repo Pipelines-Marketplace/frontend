@@ -1,6 +1,7 @@
 
 import React from 'react';
 import './index.css';
+import imgAvatar from '../assets/logo/imgAvatar.png';
 import {
   Link,
   BrowserRouter as Router,
@@ -11,7 +12,6 @@ import TaskContainer from '../task-container/TaskContainer';
 import UploadTask from '../upload-task/UploadTask';
 import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/main.png';
-import imgAvatar from '../assets/logo/imgAvatar.png';
 import Community from '../community/Community';
 import Filter from '../filter/Filter';
 import {
@@ -24,24 +24,21 @@ import {
   PageSection,
   Toolbar,
   ToolbarGroup,
-  Avatar,
   Flex,
   FlexItem,
+  Avatar,
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
 import BackgroundImageHeader from '../background-image/BackgroundImage';
 import Login from '../Authentication/Login';
 import SignupForm from '../Authentication/Signup';
-
-
 interface mainProps {
 
 }
 interface mainState {
   value: string;
 }
-
 
 const App: React.FC<mainProps> = () => {
   const [isNavOpen, setNavToggle] = React.useState(true);
@@ -53,25 +50,36 @@ const App: React.FC<mainProps> = () => {
     // eslint-disable-next-line no-console
     onClick: () => console.log('clicked logo'),
     target: '',
-
   };
   const logoutUser=()=>{
     localStorage.removeItem('token');
-    console.log('dasdas');
+    localStorage.removeItem('usetrID');
+    window.location.reload();
   };
+  let userimage:any;
+  let displayUpload:any ='';
   let authenticationButton;
   if (localStorage.getItem('token')===null) {
     authenticationButton= <Link to="/login">
       <span style={{marginRight: '1em', color: 'white'}}> Login </span>
     </Link>;
+    displayUpload='';
   } else {
-    authenticationButton= <Link to="/logout">
+    authenticationButton= <Link to="/">
       <span style={{marginRight: '1em', color: 'white'}}
         onClick={logoutUser}> Logout </span>
     </Link>;
+    displayUpload= <Link to="/upload">
+      <span style={{marginRight: '0em', color: 'white'}}>
+        {/* {' '} */}
+    Upload
+        {/* {' '} */}
+      </span>
+      {' '}
+    </Link>;
+    userimage = <Avatar src={imgAvatar} alt="" />;
   }
 
-  console.log('aaja bhai', process.env);
   // code for header contents
   const PageToolbar = (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -92,15 +100,7 @@ const App: React.FC<mainProps> = () => {
                 Community
               </span>
             </Link>
-
-            <Link to="/upload">
-              <span style={{marginRight: '0em', color: 'white'}}>
-                {/* {' '} */}
-              Upload
-                {/* {' '} */}
-              </span>
-              {' '}
-            </Link>
+            {displayUpload}
             <Button id="default-example-uid-01"
               aria-label="Notifications actions"
               variant={ButtonVariant.plain}>
@@ -113,6 +113,9 @@ const App: React.FC<mainProps> = () => {
 
 
           </ToolbarItem>
+          <ToolbarItem>
+            {userimage}
+          </ToolbarItem>
         </ToolbarGroup>
       </Toolbar>
     </div>
@@ -123,8 +126,6 @@ const App: React.FC<mainProps> = () => {
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
       logoProps={logoProps}
       toolbar={PageToolbar}
-
-      avatar={<Avatar src={imgAvatar} alt="user icon" />}
       showNavToggle
       isNavOpen={isNavOpen}
       onNavToggle={onNavToggle}

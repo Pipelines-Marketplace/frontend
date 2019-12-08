@@ -13,6 +13,7 @@ export interface TagsData {
   status: boolean
 }
 const Filter: React.FC = (props:any) => {
+  console.log('apiurl', API_URL);
   const tagsSet = new Set();
   const categorySet = new Set();
   const [tags, setTags] = useState([]);
@@ -52,7 +53,6 @@ const Filter: React.FC = (props:any) => {
     if (tagsSet.has(e.target.value) === false) {
       tagsSet.add(e.target.value);
     } else {
-      console.log(e.target.value);
       tagsSet.delete(e.target.value);
     }
 

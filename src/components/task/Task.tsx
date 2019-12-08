@@ -19,7 +19,6 @@ import {
 import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
 
 import imgAvatar from '../assets/logo/imgAvatar.png';
-
 export interface TaskPropObject {
   name : string;
   description : string;
