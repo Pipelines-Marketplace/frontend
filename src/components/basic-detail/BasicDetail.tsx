@@ -4,7 +4,6 @@ import {
 
   Card,
   Flex,
-  // Badge,
   FlexItem,
   Button,
   Grid,
@@ -24,6 +23,7 @@ import '@patternfly/react-core/dist/styles/base.css';
 import avatarImg from './download.png';
 import './index.css';
 import store from '../redux/store';
+import {API_URL} from '../../constants';
 
 export interface BasicDetailPropObject {
     id: any
@@ -51,7 +51,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
   // Function to download YAML file
   const [dwnld, setDownload] = React.useState(props.task.downloads);
   function download() {
-    fetch(`${process.env.REACT_APP_BACKEND_API}/download/${props.task.id}`, {
+    fetch(`${API_URL}/download/${props.task.id}`, {
       method: 'POST',
     })
         .then((response) => {

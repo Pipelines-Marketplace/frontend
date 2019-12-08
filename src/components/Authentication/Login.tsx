@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 // import brandImg from './brandImgColor.svg';
 import {
   LoginForm,
@@ -15,7 +16,9 @@ import {ExclamationCircleIcon,
   GoogleIcon,
   GitlabIcon} from '@patternfly/react-icons';
 import checkAuthentication from '../redux/Actions/CheckAuthAction';
+import {API_URL} from '../../constants';
 const Login:React.FC=(props:any)=>{
+  const history = useHistory();
   const [showHelperText, setShowHelperText]=useState(false);
   const [usernameValue, setUsernameValue]=useState('');
   const [isValidUsername, setIsValidUsername]=useState(true);
@@ -35,10 +38,9 @@ const Login:React.FC=(props:any)=>{
     const isChecked=isRememberMeChecked;
     setIsRememberMeChecked(!isChecked);
   };
-
   // Authenticate the user with given credentials
   const authenticationCheck=(username:string, password:string)=>{
-    fetch(`${process.env.REACT_APP_BACKEND_API}/login`, {
+    fetch(`${API_URL}/login`, {
       method: 'POST',
       body: JSON.stringify({username: username, password: password}),
     }).then((res)=>res.json())
@@ -51,6 +53,8 @@ const Login:React.FC=(props:any)=>{
             checkAuthentication();
             setIsValidPassword(true);
             setIsValidUsername(true);
+            history.push('/');
+            window.location.reload();
           } else {
             setIsValidPassword(false);
             setIsValidUsername(false);
