@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useHistory, Redirect} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 // import brandImg from './brandImgColor.svg';
 import {
   LoginForm,

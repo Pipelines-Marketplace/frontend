@@ -17,10 +17,8 @@ import {
 import {
   Link,
 } from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
 import {API_URL} from '../../constants';
 const UploadTask: React.FC = () => {
-  const history = useHistory();
   const intags: string[] = [];
   const [uploadMessage, setUploadMessage] = useState(' ');
   const [tags, setTags] = useState(intags);
