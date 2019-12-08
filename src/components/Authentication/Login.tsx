@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useHistory, Redirect} from 'react-router-dom';
 // import brandImg from './brandImgColor.svg';
 import {
   LoginForm,
@@ -17,6 +18,7 @@ import {ExclamationCircleIcon,
 import checkAuthentication from '../redux/Actions/CheckAuthAction';
 import {API_URL} from '../../constants';
 const Login:React.FC=(props:any)=>{
+  const history = useHistory();
   const [showHelperText, setShowHelperText]=useState(false);
   const [usernameValue, setUsernameValue]=useState('');
   const [isValidUsername, setIsValidUsername]=useState(true);
@@ -36,7 +38,6 @@ const Login:React.FC=(props:any)=>{
     const isChecked=isRememberMeChecked;
     setIsRememberMeChecked(!isChecked);
   };
-
   // Authenticate the user with given credentials
   const authenticationCheck=(username:string, password:string)=>{
     fetch(`${API_URL}/login`, {
@@ -52,6 +53,8 @@ const Login:React.FC=(props:any)=>{
             checkAuthentication();
             setIsValidPassword(true);
             setIsValidUsername(true);
+            history.push('/');
+            window.location.reload();
           } else {
             setIsValidPassword(false);
             setIsValidUsername(false);

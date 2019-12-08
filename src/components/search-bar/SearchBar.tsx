@@ -169,7 +169,7 @@ const SearchBar: React.FC = (props:any) => {
 
               <div>
                 <ul
-                  style = {{textAlign: 'left', backgroundColor: 'white', margin: 0, position: 'absolute', width: '55.5%'}}
+                  style = {{textAlign: 'left', backgroundColor: 'white', margin: 0, position: 'relative', width: '100%'}}
                 >
                   {suggestions.map((item: any, index: any) =>
 
