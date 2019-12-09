@@ -7,103 +7,84 @@ import {
   TextArea,
   ActionGroup,
   Button,
+  ChipGroup,
+  Chip,
+  Dropdown,
+  DropdownToggle,
+  DropdownItem,
   Alert,
 } from '@patternfly/react-core';
 import {
   Link,
 } from 'react-router-dom';
-
+import {API_URL} from '../../constants';
 const UploadTask: React.FC = () => {
-  const [status, setStatus] = useState('');
-
-  const intags : string[] = [];
+  const intags: string[] = [];
+  const [uploadMessage, setUploadMessage] = useState(' ');
   const [tags, setTags] = useState(intags);
-  //  for onchange file uploading ...
-  const onchange = (event: any) => {
-    const input =
-      document.querySelector('input[type="file"]')as HTMLInputElement;
-    const data = new FormData();
-    if (input.files != null) {
-      data.append('file', input.files[0]);
-      data.append('user', 'hubot');
-      data.append(input.files[0].name, input.files[0]);
-      console.log(input.files[0]);
-      fetch(`http://localhost:5001/lint/${input.files[0].name}`, {
-        method: 'POST',
-        body: data,
-        // eslint-disable-next-line no-console
-      }).then((res) => res.json()).then((d) => setStatus(d));
+  // alert message for task upload
+  let sendStatus:any='';
+  const alertMessage=(status :any) =>{
+    if (status['status'] === false) {
+      sendStatus = <Alert variant="danger"
+        isInline title={status['message']} />;
+    } else {
+      sendStatus = <Alert variant="success"
+        isInline title={status['message']} />;
     }
+    return sendStatus;
   };
-
-
-  const submitdata = (event:any) => {
+  // / function for uloading task file
+  const submitdata = (event: any) => {
     event.preventDefault();
-    //    console.log(file);
-    //    console.log('file data ')
     const data = new FormData(event.target);
-    const taskinfo = new FormData();
-    const listtag = (`${data.get('task-tags')}`).split(',');
     const formdata = {
       name: data.get('task-name'),
-      tags: listtag,
       description: data.get('description'),
-
+      type: 'Task',
+      tags: tags,
+      github: data.get('tasklink'),
+      user_id: Number(localStorage.getItem('usetrID')),
     };
-    // taskinfo.append('file', file);
-    taskinfo.append('data', JSON.stringify(formdata));
-
-    //   for (var value of taskinfo.values()) {
-    //     console.log(value);
-    //  }
-
-    fetch('https://b1d7348a-145b-4a5d-a596-8edfe3391c34.mock.pstmn.io/task', {
+    fetch(`${API_URL}/upload`, {
       method: 'POST',
-      body: taskinfo,
+      body: JSON.stringify(formdata),
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
-    });
+    }).then((resp) => resp.json())
+        .then((data)=>
+          setUploadMessage(alertMessage(data)));
   };
-  // adding tags
-  const addTags = (event:any) => {
+  const addTags = (event: any) => {
+    event.preventDefault();
     if (event.target.value !== '') {
       setTags([...tags, event.target.value]);
-      // eslint-disable-next-line no-param-reassign
       event.target.value = '';
     }
   };
-  const removeTags = (indexToRemove:any) => {
-    setTags([...tags.filter((_, index) => index !== indexToRemove)]);
+  const removeTags = (indexToRemove: any) => {
+    setTags([...tags.filter((val, index) =>
+      index !== indexToRemove)]);
   };
-
-  // const alertVariant = 'default';
-  let s;
-
-  if (status !== '') {
-    console.log('Success');
-    console.log(status);
-
-    console.log(status === 'Success');
-    console.log(typeof (status));
-    console.log(typeof ('Success'));
-
-
-    if (status.length === 7) {
-      const alertTitle = 'Validation Success';
-      s = <Alert variant="success" isInline title={alertTitle} />;
-    } else {
-      console.log('bdjabdja');
-      const alertTitle = status;
-      s = <Alert variant="danger" isInline title={alertTitle} />;
-    }
-  } else {
-    console.log('adsad');
-    s = null;
-  }
+  const [isOpen, set] = useState(false);
+  const ontoggle =
+  (isOpen: React.SetStateAction<boolean>) => set(isOpen);
+  const onSelect = () => set(!isOpen);
+  const dropdownItems = [
+    <DropdownItem key="link">
+      Task</DropdownItem>,
+    <DropdownItem key="action"
+      component="button">
+          Pipeline
+    </DropdownItem>,
+  ];
   return (
-    <Form isHorizontal onSubmit={submitdata} className="form-size">
+    <Form className="flex-size" onSubmit={submitdata}
+      style = {{marginLeft: '5em'}}>
+      <h1 style={{fontSize: '2em',
+        fontFamily: 'bold'}}>Upload </h1>
       <FormGroup
         label="Name"
         isRequired
@@ -115,62 +96,86 @@ const UploadTask: React.FC = () => {
           type="text"
           id="task-name"
           name="task-name"
+          autoComplete="off"
         />
       </FormGroup>
-
       <FormGroup
-        label="Tags" isRequired fieldId="task-tag"
-        helperText="Please provide tags name of your task"
-      >
-        <div className="tags-input">
-          <ul id="tags">
-            {tags.map((tag, index) => (
-              <li key={tag} className="tag">
-                <span className="tag-title"><b>{tag}</b></span>
-                <span className="tag-close-icon" role="presentation"
-                  onClick={() => removeTags(index)}>
-                  {'  '}
-                  <b>x</b>
-                </span>
-              </li>
-            ))}
-          </ul>
-          <TextInput
-            isRequired
-            type="text"
-            id="task-tags"
-            name="task-tags"
-            onKeyUp={(event) => (event.key === 'Enter' ? addTags(event) : null)}
-            placeholder="Press enter to add tags"
-          />
-        </div>
-
-
-      </FormGroup>
-      <FormGroup isRequired label="Description"
-        helperText="Please fill description of your task"
+        isRequired label="Description"
+        helperText="Please fill the description
+        of your task."
         fieldId="description"
       >
-        <TextArea
+        <TextArea style = {{height: '7em'}}
           name="description"
           id="description"
         />
       </FormGroup>
-      <form onChange={onchange}>
-        <input type="file" accept=".yaml" id="file" name="taskfile" />
-        {/* <Alert variant={alertVariant} isInline title={alertTitle} /> */}
-      </form>
-      {s}
+      <FormGroup label="Tags"
+        isRequired fieldId="task-tag"
+        helperText="Please provide
+         tags name of your task"
+      >
+        <div className="tags-input">
+          <ChipGroup>
+            {tags.map((chip, index) => (
+              <Chip key={index}
+                onClick={() => removeTags(index)} >
+                {chip}
+              </Chip>
+            ))}
+          </ChipGroup>
+          <TextInput
+            style={{marginTop: '0.3em'}}
+            isRequired
+            type="text"
+            id="task-tags"
+            name="task-tags"
+            onKeyPress=
+              {(event) =>
+                (event.key === 'Enter' ? addTags(event) : null)}
+            placeholder="Press enter to add tags"
+            autoComplete="off"
+          />
+        </div>
+      </FormGroup>
+      <FormGroup label="Type"
+        fieldId="task-tag">
+        <div>
+          <Dropdown style = {{backgroundColor: 'whitesmoke', width: '20em'}}
+            onSelect = {onSelect}
+            toggle={<DropdownToggle onToggle={ontoggle}>
+            Task</DropdownToggle>} // provide task type by default
+            isOpen = {isOpen}
+            dropdownItems={dropdownItems}
+          />
+        </div>
+      </FormGroup>
+      <FormGroup
+        label="Github"
+        isRequired
+        helperText="Please provide the
+         github link of your task"
+        fieldId="tasklink"
+      >
+        <TextInput
+          name="tasklink"
+          id="tasklink"
+        />
+      </FormGroup>
+      <b> {uploadMessage} </b>
       <ActionGroup>
-        <Button disabled variant="primary" type="submit">Submit Task</Button>
-        <Link to="/">
-          {' '}
-          <Button variant="secondary">Cancel</Button>
-          {' '}
+        <Button id="Button"
+          variant="primary"
+          type="submit"
+        >Submit Task</Button>
+        <Link to="/" >
+          <Button variant="secondary"
+            type="submit">Cancel</Button>
         </Link>
       </ActionGroup>
     </Form>
-
   );
 };
 export default UploadTask;
+
+

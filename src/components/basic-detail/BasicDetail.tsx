@@ -4,9 +4,15 @@ import {
 
   Card,
   Flex,
-  // Badge,
   FlexItem,
   Button,
+  Grid,
+  GridItem,
+  CardHead,
+  TextContent,
+  Text,
+  CardActions,
+  CardFooter,
 } from '@patternfly/react-core';
 import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
 import {
@@ -14,9 +20,10 @@ import {
 } from '@patternfly/react-core';
 import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
-import {Avatar} from '@patternfly/react-core';
 import avatarImg from './download.png';
 import './index.css';
+import store from '../redux/store';
+import {API_URL} from '../../constants';
 
 export interface BasicDetailPropObject {
     id: any
@@ -40,66 +47,80 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
   } else {
     taskArr.push([]);
   }
-  console.log(props.task);
+
+  // Function to download YAML file
+  const [dwnld, setDownload] = React.useState(props.task.downloads);
+  function download() {
+    fetch(`${API_URL}/download/${props.task.id}`, {
+      method: 'POST',
+    })
+        .then((response) => {
+          response.blob().then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = props.task.name +'.yaml';
+            a.click();
+
+            setDownload(props.task.downloads+ 1 );
+            props.task.downloads = dwnld + 1;
+            store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: props.task});
+          });
+        });
+  }
 
   return (
-    <Card>
-      <Flex
-        breakpointMods={[{modifier: 'align-items-center', breakpoint: 'lg'}]}
-      >
-        <div className="avatar">
-          <Flex
-            breakpointMods={[{modifier: 'align-self-flex-center',
-              breakpoint: 'lg'}]}
-          >
-            <FlexItem>
-              <Avatar
-                src={avatarImg} alt="avatar"
-                style={{height: '5em', width: '5em'}}>
-              </Avatar>
-            </FlexItem>
-          </Flex>
-        </div>
-        <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
-          <FlexItem>
-            <div className="data">
-              <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
-                <FlexItem>{props.task.name}</FlexItem>
-                <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
-                  {
-                    taskArr[0].map((tag: any) =>{
-                      return (
-                        <Badge
-                          style={{paddingRight: '1em'}} key={tag.Name}
-                          className="badge">{tag}
-                        </Badge>);
-                    })
-                  }
-                </Flex>
-              </Flex>
-            </div>
-          </FlexItem>
-        </Flex>
+    <Flex>
+      <Card style={{marginLeft: '7em', marginRight: '7em',
+        marginTop: '2em', width: '100%'}}>
+        <CardHead>
+          <img src ={avatarImg} alt="Task"
+            style={{height: '7em', marginLeft: '3em'}}
+          />
+          <TextContent style={{marginLeft: '4em'}}>
+            <Text style={{fontSize: '2em'}}>
+              {props.task.name.charAt(0).toUpperCase()+props.task.name.slice(1)}
+            </Text>
+            <Grid>
+              <GridItem span={10}>
+                {props.task.description}
+              </GridItem>
+            </Grid>
+          </TextContent>
 
-        <div className="download">
-          <Flex
-            breakpointMods={[{modifier: 'align-right', breakpoint: 'lg'},
-              {modifier: 'column', breakpoint: 'lg'}]}
-          >
-            <FlexItem><span className="downloadNumber"><DownloadIcon />
-              {'  '}{props.task.downloads}</span></FlexItem>
-            <FlexItem>
-              <span className="star"><StarIcon color="gold" size="md" /></span>
-            </FlexItem>
-            <FlexItem><span className="downloadIcon">
-              <Button className="button" style={{width: '9em'}}>
-                 Download
-              </Button></span></FlexItem>
-          </Flex>
-        </div>
+          <CardActions style={{marginRight: '5em'}}>
+            <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
+              <FlexItem>
+                <DownloadIcon style={{marginRight: '1em', marginTop: '2em'}}/>
+                {dwnld}
+              </FlexItem>
+              <FlexItem>
+                <StarIcon color="gold" size="md" />
+              </FlexItem>
+              <FlexItem style={{marginLeft: '-3em'}}>
+                <Button style={{width: '9em'}} onClick={download}>
+                Download
+                </Button>
+              </FlexItem>
+            </Flex>
+          </CardActions>
+        </CardHead>
 
-      </Flex>
-    </Card>
+        <CardFooter style={{marginLeft: '14em'}}>
+          {
+            taskArr[0].map((tag: any) =>{
+              return (
+                <Badge
+                  style={{paddingRight: '1em',
+                    marginBottom: '1em', marginRight: '1em'}}
+                  key={tag.Name}
+                  className="badge">{tag}
+                </Badge>);
+            })
+          }
+        </CardFooter>
+      </Card>
+    </Flex>
   );
 };
 

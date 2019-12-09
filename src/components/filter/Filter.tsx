@@ -5,6 +5,7 @@ import './filter.css';
 import {Checkbox} from '@patternfly/react-core/dist/js/components';
 
 import store from '../redux/store';
+import {API_URL} from '../../constants';
 
 const Filter: React.FC = (props:any) => {
   const history = useHistory();
@@ -14,7 +15,7 @@ const Filter: React.FC = (props:any) => {
   const [i, setI] =useState(10);
   useEffect(() => {
     const fetchData = async () => {
-      await fetch('http://localhost:5000/tags')
+      await fetch(`${API_URL}/tags`)
           .then((res) => res.json())
           .then((data) => setTags(data));
     };
@@ -44,7 +45,7 @@ const Filter: React.FC = (props:any) => {
       }
       str = `${str + tagArray[i]}|`;
     }
-    fetch(`http://localhost:5000/tasks${str}`)
+    fetch(`${API_URL}/tasks${str}`)
         .then((res) => res.json())
         .then((data) => {
           store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
