@@ -42,6 +42,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
     tempArr.push([]);
   }
 
+
   return (
     <GalleryItem>
       <Card className="card" isHoverable>

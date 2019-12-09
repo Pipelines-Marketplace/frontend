@@ -8,6 +8,8 @@ import {
   CardBody,
   Grid,
   GridItem,
+  Text,
+  TextContent,
 } from '@patternfly/react-core';
 import {InfoCircleIcon} from '@patternfly/react-icons';
 import './index.css';
@@ -41,8 +43,11 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
   return (
     <Card style={{marginLeft: '7em', marginRight: '3em', width: '71em'}}>
       <CardHead>
-        <InfoCircleIcon color="blue" size="sm" />
-        {'  '}Description {' '}
+        <InfoCircleIcon color="blue" size="sm"
+          style = {{marginRight: '0.5em', marginBottom: '0.2em'}}/>
+        <TextContent>
+          <Text style = {{fontWeight: 'bold'}} >Description</Text>
+        </TextContent>
       </CardHead>
       <CardBody>
         <Grid style={{width: '100%'}}>
