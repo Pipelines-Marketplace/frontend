@@ -26,7 +26,6 @@ const UploadTask: React.FC = () => {
   let sendStatus:any='';
   const alertMessage=(status :any) =>{
     if (status['status'] === false) {
-      setTimeout(() => window.location.assign('/'), 5000);
       sendStatus = <Alert variant="danger"
         isInline title={status['message']} />;
     } else {
@@ -143,7 +142,7 @@ const UploadTask: React.FC = () => {
       <FormGroup label="Type"
         fieldId="task-tag">
         <div>
-          <Dropdown style = {{backgroundColor: 'whitesmoke', width: '20em'}}
+          <Dropdown style = {{backgroundColor: 'whitesmoke'}}
             onSelect = {onSelect}
             toggle={<DropdownToggle onToggle={ontoggle}>
             Task</DropdownToggle>} // provide task type by default
