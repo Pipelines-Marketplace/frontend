@@ -54,7 +54,7 @@ const App: React.FC<mainProps> = () => {
   const logoutUser=()=>{
     localStorage.removeItem('token');
     localStorage.removeItem('usetrID');
-    window.location.reload();
+    window.location.assign('/');
   };
   let userimage:any;
   let displayUpload:any ='';
@@ -70,7 +70,9 @@ const App: React.FC<mainProps> = () => {
         onClick={logoutUser}> Logout </span>
     </Link>;
     displayUpload= <Link to="/upload">
-      <span style={{marginRight: '0em', color: 'white'}}>
+      <span style={{marginLeft:
+        '1.3em', marginRight:
+         '-0.6em', color: 'white'}}>
         {/* {' '} */}
     Upload
         {/* {' '} */}
@@ -96,7 +98,7 @@ const App: React.FC<mainProps> = () => {
             </Link>
 
             <Link to="/">
-              <span style={{marginRight: '2em', color: 'white'}}>
+              <span style={{marginRight: '0.2em', color: 'white'}}>
                 Community
               </span>
             </Link>
@@ -114,7 +116,7 @@ const App: React.FC<mainProps> = () => {
 
           </ToolbarItem>
           <ToolbarItem>
-            {userimage}
+            <Link to="/"> {userimage}  </Link>
           </ToolbarItem>
         </ToolbarGroup>
       </Toolbar>
