@@ -26,9 +26,11 @@ const UploadTask: React.FC = () => {
   let sendStatus:any='';
   const alertMessage=(status :any) =>{
     if (status['status'] === false) {
+      setTimeout(() => window.location.assign('/'), 5000);
       sendStatus = <Alert variant="danger"
         isInline title={status['message']} />;
     } else {
+      setTimeout(() => window.location.assign('/'), 5000);
       sendStatus = <Alert variant="success"
         isInline title={status['message']} />;
     }

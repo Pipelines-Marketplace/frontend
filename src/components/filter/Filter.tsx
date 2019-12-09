@@ -1,23 +1,18 @@
 /* eslint-disable consistent-return */
+import {useHistory, Link} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
-
 import './filter.css';
 import {Checkbox} from '@patternfly/react-core/dist/js/components';
 
 import store from '../redux/store';
 import {API_URL} from '../../constants';
 
-
-export interface TagsData {
-  name: string,
-  status: boolean
-}
 const Filter: React.FC = (props:any) => {
-  console.log('apiurl', API_URL);
+  const history = useHistory();
   const tagsSet = new Set();
-  const categorySet = new Set();
   const [tags, setTags] = useState([]);
-
+  const [toggle, setToggle] =useState('seeMore');
+  const [i, setI] =useState(10);
   useEffect(() => {
     const fetchData = async () => {
       await fetch(`${API_URL}/tags`)
@@ -26,7 +21,13 @@ const Filter: React.FC = (props:any) => {
     };
     fetchData();
   }, []);
+  // sorting tags in alphabetical order
+  tags.sort((a:any, b:any) =>
+  (a.name> b.name) ? 1 :
+  ((b.name > a.name) ? -1 : 0));
 
+  let tagArray:any=[];
+  // adding tags into array after click and display task based on tags
   const displaytask = () => {
     let str: string = '';
     if (tagsSet.has('task') === true) {
@@ -36,7 +37,8 @@ const Filter: React.FC = (props:any) => {
       tagsSet.clear();
       tagsSet.add('pipelines');
     }
-    const tagArray = Array.from(tagsSet);
+
+    tagArray = Array.from(tagsSet);
     for (let i = 0; i < tagArray.length; i++) {
       if (i === 0 && tagArray[i] !== 'task') {
         str += '?tags=';
@@ -49,6 +51,7 @@ const Filter: React.FC = (props:any) => {
           store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
         });
   };
+
   const addTag = (e: any) => {
     if (tagsSet.has(e.target.value) === false) {
       tagsSet.add(e.target.value);
@@ -58,45 +61,58 @@ const Filter: React.FC = (props:any) => {
 
     displaytask();
   };
-  const displayCategory = () => {
-    let catStr: string = '';
-    const catArray = Array.from(categorySet);
-    if (catArray.length === 0) {
-      displaytask();
-      return false;
-    }
-    for (let i = 0; i < catArray.length; i++) {
-      catStr = `${catStr + catArray[i]}|`;
-    }
-    fetch(`${API_URL}/tasks?category=${catStr}`)
-        .then((res) => res.json())
-        .then((data) => {
-        // const allTasks = [...props.TaskData, ...data];
-        // data.map((task:any) => allTasks.push(task));
-        // console.log(allTasks);
+  const newtags =tags.slice(0, i);
 
-          store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
-        });
-  };
-  const addCategory = (e: any) => {
-    if (categorySet.has(e.target.value) === false) {
-      categorySet.add(e.target.value);
+  // / jsx element for show tags
+  const showTags:any=
+  newtags.map((it: any) => (
+    <div key = {it} style={{marginBottom: '0.5em'}}>
+      <Checkbox
+        style={{width: '1.2em', height: '1.2em'}}
+        label={it.name[0].toUpperCase()+it.name.slice(1)}
+        value={it.name}
+        id={it.id}
+        onClick={addTag}
+        aria-label="uncontrolled checkbox example"
+      />
+    </div>
+  ));
+
+  const tagSize:number = tags.length;
+  const [lessTags, setLessTags] = React.useState(tagSize);
+  // /  for display more tags
+  const moreTags=(e:any) =>{
+    if (i >= newtags.length ) {
+      setI(tagSize);
+      // temp = tagSize;
+      setLessTags(tagSize);
+      setToggle('seeLess');
     } else {
-      categorySet.delete(e.target.value);
+      setI(newtags.length+7);
     }
-
-    displayCategory();
+    if (e.target.text.match('seeLess')) {
+      setI(lessTags-(13));
+      setToggle('seeMore');
+    }
   };
+  const clearAll=() =>{
+    history.push('/');
+    window.location.reload();
+  };
+
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <div className="filter-size">
       <h2 style={{marginBottom: '1em'}}>
         {' '}
-        <b>Types</b>
+        <b>Types</b>{'  '}
+        <Link to="/" onClick={clearAll}
+          style={{marginLeft: '2em'}}>
+          ClearAll
+        </Link>
       </h2>
-      <div style={{marginBottom: '0.4em'}}>
+      <div style={{marginBottom: '0.5em'}}>
         <Checkbox
-          style={{width: '1em', height: '1em'}}
+          style={{width: '1.2em', height: '1.2em'}}
           label="Task"
           id="Task"
           value="task"
@@ -106,7 +122,7 @@ const Filter: React.FC = (props:any) => {
       </div>
       <div>
         <Checkbox
-          style={{width: '1em', height: '1em'}}
+          style={{width: '1.2em', height: '1.2em'}}
           label="Pipelines"
           id=" "
           value="pipelines"
@@ -115,60 +131,9 @@ const Filter: React.FC = (props:any) => {
         />
       </div>
       <h2 style={{marginBottom: '1em', marginTop: '1em'}}><b> Tags </b></h2>
-      {
-        tags.map((it: any) => (
-          <div key = {it} style={{marginBottom: '0.4em'}}>
-            <Checkbox
-              style={{width: '1em', height: '1em'}}
-              label={it.name}
-              value={it.name}
-              id={it.id}
-              onClick={addTag}
-              aria-label="uncontrolled checkbox example"
-            />
-          </div>
-        ))
-      }
-      <h2 style={{marginBottom: '1em', marginTop: '1em'}}>
-        {' '}
-        <b>Categories</b>
-        {' '}
-      </h2>
-      <div style={{marginBottom: '0.4em'}}>
-        <Checkbox
-          style={{width: '1em', height: '1em'}}
-          label="Build"
-          value="build"
-          onClick={addCategory}
-          aria-label="uncontrolled checkbox example"
-          id="Build"
-        />
-      </div>
-      <div style={{marginBottom: '0.4em'}}>
-        <Checkbox
-          style={{width: '1em', height: '1em'}}
-          label="Test"
-          value="test"
-          onClick={addCategory}
-          aria-label="uncontrolled checkbox example"
-          id="Test"
-        />
-      </div>
-      <Checkbox
-        style={{width: '1em', height: '1em'}}
-        label="Deploy"
-        value="deploy"
-        onClick={addCategory}
-        aria-label="uncontrolled checkbox example"
-        id="Deploy"
-      />
+      {showTags}
+      <Link to="/" onClick={moreTags} id="see"> {toggle} </Link>
     </div>
   );
 };
-// const mapStateToProps = (state: any) => ({
-//   TaskData: state.TaskData.TaskData,
-
-// });
-// export default connect(mapStateToProps, { fetchTaskSuccess })(Filter);
-
 export default Filter;
