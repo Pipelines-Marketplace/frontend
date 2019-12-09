@@ -104,7 +104,11 @@ const Filter: React.FC = (props:any) => {
     <div className="filter-size">
       <h2 style={{marginBottom: '1em'}}>
         {' '}
-        <b>Types</b>{'  '} <a onClick={clearAll} style={{marginLeft: '2em'}}>ClearAll</a>
+        <b>Types</b>{'  '}
+        <a onClick={clearAll}
+          style={{marginLeft: '2em'}}>
+          ClearAll
+        </a>
       </h2>
       <div style={{marginBottom: '0.5em'}}>
         <Checkbox
