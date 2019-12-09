@@ -70,7 +70,9 @@ const App: React.FC<mainProps> = () => {
         onClick={logoutUser}> Logout </span>
     </Link>;
     displayUpload= <Link to="/upload">
-      <span style={{marginLeft: '1.3em', marginRight: '-0.6em', color: 'white'}}>
+      <span style={{marginLeft:
+        '1.3em', marginRight:
+         '-0.6em', color: 'white'}}>
         {/* {' '} */}
     Upload
         {/* {' '} */}

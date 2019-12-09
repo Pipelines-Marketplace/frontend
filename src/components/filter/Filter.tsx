@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import './filter.css';
 import {Checkbox} from '@patternfly/react-core/dist/js/components';
@@ -105,10 +105,10 @@ const Filter: React.FC = (props:any) => {
       <h2 style={{marginBottom: '1em'}}>
         {' '}
         <b>Types</b>{'  '}
-        <a onClick={clearAll}
+        <Link to="/" onClick={clearAll}
           style={{marginLeft: '2em'}}>
           ClearAll
-        </a>
+        </Link>
       </h2>
       <div style={{marginBottom: '0.5em'}}>
         <Checkbox
@@ -132,8 +132,7 @@ const Filter: React.FC = (props:any) => {
       </div>
       <h2 style={{marginBottom: '1em', marginTop: '1em'}}><b> Tags </b></h2>
       {showTags}
-
-      <a onClick={moreTags} id="see"> {toggle} </a>
+      <Link to="/" onClick={moreTags} id="see"> {toggle} </Link>
     </div>
   );
 };
