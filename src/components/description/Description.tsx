@@ -53,7 +53,8 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
         <Grid style={{width: '100%'}}>
           <GridItem span={12}>
             <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
-              <Tab eventKey={0} title="Description" style = {{marginBottom: '1em'}}>
+              <Tab eventKey={0} title="Description"
+                style = {{marginBottom: '1em'}}>
                 <ReactMarkDown source={markDown}
                   escapeHtml={true}
                   renderers={{code: CodeBlockReadme}}
