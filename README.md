@@ -9,10 +9,8 @@ Pipelines Marketplace is a web based platform for developers to discover, share 
 * Rate a task
 * Upload a task
 
-Backend service can be found on : 
-```
-https://github.com/Pipelines-Marketplace/backend
-```
+Backend service can be found on : <https://github.com/Pipelines-Marketplace/backend>
+
 
 ## Installation
 Fork and clone the application in local:
