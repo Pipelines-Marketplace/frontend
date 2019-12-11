@@ -33,6 +33,7 @@ import BasicDetailParent from '../basic-detail/BasicDetailParent';
 import BackgroundImageHeader from '../background-image/BackgroundImage';
 import Login from '../Authentication/Login';
 import SignupForm from '../Authentication/Signup';
+import Footer from '../footer/Footer';
 interface mainProps {
 
 }
@@ -59,10 +60,24 @@ const App: React.FC<mainProps> = () => {
   let userimage:any;
   let displayUpload:any ='';
   let authenticationButton;
+  const handleAuth=()=>{
+    console.log(document.URL);
+    const currentURL=window.location.search;
+    const code=currentURL.slice(5, currentURL.length);
+    const req={Token: code};
+    fetch('http://localhost:5000/oauth/redirect', {
+      method: 'POST',
+      body: JSON.stringify(req),
+    })
+        .then((res)=>res.json())
+        .then((data)=>console.log(data),
+        );
+  };
   if (localStorage.getItem('token')===null) {
     authenticationButton= <Link to="/login">
       <span style={{marginRight: '1em', color: 'white'}}> Login </span>
     </Link>;
+    // authenticationButton=<a href="https://github.com/login/oauth/authorize?client_id=aac6161a58b4d7798f05&redirect_uri=http://localhost:8080" onClick={handleAuth}>Login</a>;
     displayUpload='';
   } else {
     authenticationButton= <Link to="/">
@@ -172,6 +187,7 @@ const App: React.FC<mainProps> = () => {
           <Route path='/logout' component={Login}/>
           <Route path='/signup' component={SignupForm}/>
         </PageSection>
+        <Footer/>
       </Page>
     </Router>
   );
