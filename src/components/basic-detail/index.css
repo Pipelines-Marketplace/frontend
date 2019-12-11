@@ -31,7 +31,7 @@
 
   .avatar {
     margin-top: 1em;
-    margin-left: 1em;
+    margin-left: 2.5em;
   }
 
 
@@ -46,11 +46,9 @@
   }
 
   .download {
-    border-left: 0.2em solid rgb(30, 102, 204);
-    height: 7em;
     margin-top: 2em;
     margin-bottom: 2em;
-    padding-left: 2em;
+    margin-right: 4em;
   }
 
   .heading {
@@ -59,6 +57,9 @@
 
   .data {
     margin-left: 2em;
+    margin-top: 2em;
+    text-align: justify;
+    margin-bottom: 0.5em;
   }
 
   .button {
@@ -68,3 +69,22 @@
   .star {
     margin-left: 3em;
   }
+
+  @media screen and (max-width: 750px){
+    .avatar{
+      margin-top: 2em;
+      margin-bottom: 0.5em;
+    }
+    .data{
+      margin-left: 2em;
+      margin-top: 0em;
+      margin-bottom: 0em;
+    }
+    .download{
+      margin-left: 1em;
+    }
+    .badge{
+      padding-right: '0.5em';
+      padding-top: '0.5em';
+    }  
+  } 

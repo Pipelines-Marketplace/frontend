@@ -1,27 +1,60 @@
-import React from "react";
-import Description from "../description/Description";
-import Rating from "../rating/Rating";
+import React from 'react';
+import Description from '../description/Description';
+import Rating from '../rating/Rating';
+import {connect} from 'react-redux';
 import {
-    Flex,
-    FlexItem,
+  Flex,
+  FlexItem,
 } from '@patternfly/react-core';
-import { useParams } from "react-router";
-import BasicDetail from "../basic-detail/BasicDetail";
+import {useParams} from 'react-router';
+import {fetchTaskDescription} from '../redux/Actions/TaskActionDescription';
+import {fetchTaskName} from '../redux/Actions/TaskActionName';
 
-const Detail: React.FC = () => {
-    let { taskId } = useParams();
-    return (
-        <div>
-            <Flex breakpointMods={[{ modifier: "row", breakpoint: "lg" }, { modifier: "nowrap", breakpoint: "lg" }, { modifier: "column", breakpoint: "sm" }]}>
-                <FlexItem>
-                    <Description id={taskId} />
-                </FlexItem>
-                <FlexItem>
-                    <Rating />
-                </FlexItem>
-            </Flex>
-        </div>
-    );
-}
+const Detail: React.FC = (props: any) => {
+  const {taskId} = useParams();
+  React.useEffect(() => {
+    props.fetchTaskDescription(taskId);
+    props.fetchTaskName(taskId);
+    // eslint-disable-next-line
+  }, []);
 
-export default Detail;
+  const tempTask : any = [];
+  if (props.TaskName != null) {
+    tempTask.push(props.TaskName);
+  }
+
+  let taskDescription : string = '';
+  if (props.TaskName != null) {
+    taskDescription = (props.TaskName['description']);
+  };
+  const yamlData = '```'+props.TaskYaml+'```';
+  return (
+    <div>
+      <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'},
+        {modifier: 'nowrap', breakpoint: 'lg'},
+        {modifier: 'column', breakpoint: 'sm'}]}>
+        <FlexItem>
+          <Description
+            Description = {props.TaskDescription}
+            Yaml = {yamlData}
+            userTaskDescription = {taskDescription} />
+        </FlexItem>
+        <FlexItem>
+          <Rating />
+        </FlexItem>
+      </Flex>
+    </div>
+  );
+};
+
+const mapStateToProps = (state: any) => {
+  return {
+    TaskDescription: state.TaskDescription.TaskDescription,
+    TaskYaml: state.TaskYaml.TaskYaml,
+    TaskName: state.TaskName.TaskName,
+  };
+};
+
+export default
+connect(mapStateToProps, {fetchTaskDescription, fetchTaskName})(Detail);
+

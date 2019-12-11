@@ -1,20 +1,35 @@
-import React from "react";
-import Description from "../description/Description";
-import Rating from "../rating/Rating";
+import React from 'react';
 import {
-    Flex,
-    FlexItem,
 } from '@patternfly/react-core';
-import { useParams } from "react-router";
-import BasicDetail from "./BasicDetail";
+import {useParams} from 'react-router';
+import {connect} from 'react-redux';
+import BasicDetail from './BasicDetail';
+import {fetchTaskName} from '../redux/Actions/TaskActionName';
 
-const Detail: React.FC = () => {
-    let { taskId } = useParams();
+const Detail: React.FC = (props: any) => {
+  const {taskId} = useParams();
+
+
+  React.useEffect(() => {
+    props.fetchTaskName(taskId);
+    // eslint-disable-next-line
+  }, []);
+
+  if (props.TaskName != null) {
     return (
-        <div>
-            <BasicDetail id={taskId}/>
-        </div>
+      <BasicDetail task={props.TaskName} />
     );
-}
+  }
 
-export default Detail;
+  return (
+    <div />
+
+  );
+};
+
+const mapStateToProps = (state: any) => ({
+  TaskName: state.TaskName.TaskName,
+});
+
+export default connect(mapStateToProps, {fetchTaskName})(Detail);
+

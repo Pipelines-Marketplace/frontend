@@ -1,29 +1,39 @@
+
 import React from 'react';
-import "./index.css";
-import SearchBar from "../search-bar/SearchBar";
-import TaskContainer from "../task-container/TaskContainer";
-import '@patternfly/react-core/dist/styles/base.css';
-import logo from '../assets/logo/main.png'
+import './index.css';
 import imgAvatar from '../assets/logo/imgAvatar.png';
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
-import { css } from '@patternfly/react-styles';
-
-import { HomeIcon, SearchIcon, UsersIcon, BellIcon, CogIcon, UploadIcon, FileImageIcon } from '@patternfly/react-icons';
-import spacingStyles from '@patternfly/react-styles/css/utilities/Spacing/spacing';
-import Community from "../community/Community";
-import SearchPage from "../searchPage/SearchPage";
-import accessibleStyles from '@patternfly/react-styles/css/utilities/Accessibility/accessibility';
-import PageHeading from "../page-heading/PageHeading";
-
-
 import {
-  Button, Flex,ButtonVariant,
-  ToolbarItem, Page, Nav, NavItem, NavList, NavVariants, Brand, PageHeader, PageSidebar,
-  PageSection, PageSectionVariants, Toolbar, ToolbarGroup, Avatar, Text, TextContent
+  Link,
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+import SearchBar from '../search-bar/SearchBar';
+import TaskContainer from '../task-container/TaskContainer';
+import UploadTask from '../upload-task/UploadTask';
+import '@patternfly/react-core/dist/styles/base.css';
+import logo from '../assets/logo/main.png';
+import Community from '../community/Community';
+import Filter from '../filter/Filter';
+import {
+  Button,
+  ButtonVariant,
+  ToolbarItem,
+  Page,
+  Brand,
+  PageHeader,
+  PageSection,
+  Toolbar,
+  ToolbarGroup,
+  Flex,
+  FlexItem,
+  Avatar,
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
-
+import BackgroundImageHeader from '../background-image/BackgroundImage';
+import Login from '../Authentication/Login';
+import SignupForm from '../Authentication/Signup';
+import Footer from '../footer/Footer';
 interface mainProps {
 
 }
@@ -31,105 +41,141 @@ interface mainState {
   value: string;
 }
 
-const App: React.FC<mainProps> = (props) => {
-
-  const [isNavOpen, setNavToggle] = React.useState(true);
-
-  const [activeItem, setActiveItem] = React.useState(0);
-
-  const onNavToggle = () => {
-    setNavToggle(!isNavOpen);
-  }
-
-
+const App: React.FC<mainProps> = () => {
   const logoProps = {
     href: '/',
+    // eslint-disable-next-line no-console
     onClick: () => console.log('clicked logo'),
-    target: ''
-
+    target: '',
   };
-
-  function onNavSelect(result: any) {
-    setActiveItem(result.itemId);
+  const logoutUser=()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('usetrID');
+    window.location.assign('/');
+  };
+  let userimage:any;
+  let displayUpload:any ='';
+  let authenticationButton;
+  if (localStorage.getItem('token')===null) {
+    authenticationButton= <Link to="/login">
+      <span style={{marginRight: '1em', color: 'white'}}> Login </span>
+    </Link>;
+    displayUpload='';
+  } else {
+    authenticationButton= <Link to="/">
+      <span style={{marginRight: '1em', color: 'white'}}
+        onClick={logoutUser}> Logout </span>
+    </Link>;
+    displayUpload= <Link to="/upload">
+      <span style={{marginLeft:
+        '1.3em', marginRight:
+         '-0.6em', color: 'white'}}>
+        {/* {' '} */}
+    Upload
+        {/* {' '} */}
+      </span>
+      {' '}
+    </Link>;
+    userimage = <Avatar src={imgAvatar} alt="" />;
   }
+
   // code for header contents
   const PageToolbar = (
+    // eslint-disable-next-line react/jsx-filename-extension
     <div>
-    <Toolbar>
-      <ToolbarGroup className={css(accessibleStyles.screenReader, accessibleStyles.visibleOnLg)}>
-        <ToolbarItem>
-          <Button id="default-example-uid-01" aria-label="Notifications actions" variant={ButtonVariant.plain}>
-            <BellIcon />
-          </Button>
-        </ToolbarItem>
-        <ToolbarItem>
-          <Button id="default-example-uid-02" aria-label="Settings actions" variant={ButtonVariant.plain}>
-            <CogIcon />
-          </Button>
-        </ToolbarItem>
-      </ToolbarGroup>
-    </Toolbar>
+      <Toolbar>
+        <ToolbarGroup>
+          <ToolbarItem style={{color: 'white'}}>
+            <Link to="/">
+              <span style={{marginRight: '2em', color: 'white'}}>Home</span>
+            </Link>
+
+            <Link to="/">
+              <span style={{marginRight: '2em', color: 'white'}}>Search</span>
+            </Link>
+
+            <Link to="/">
+              <span style={{marginRight: '0.2em', color: 'white'}}>
+                Community
+              </span>
+            </Link>
+            {displayUpload}
+            <Button id="default-example-uid-01"
+              aria-label="Notifications actions"
+              variant={ButtonVariant.plain}>
+            </Button>
+          </ToolbarItem>
+          <ToolbarItem>
+            {
+              authenticationButton
+            }
+
+
+          </ToolbarItem>
+          <ToolbarItem>
+            <Link to="/"> {userimage}  </Link>
+          </ToolbarItem>
+        </ToolbarGroup>
+      </Toolbar>
     </div>
 
   );
-
   const Header = (
     <PageHeader
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
       logoProps={logoProps}
       toolbar={PageToolbar}
-      avatar={<Avatar src={imgAvatar} alt="user icon" />}
-      showNavToggle
-      isNavOpen={isNavOpen}
-      onNavToggle={onNavToggle}
-
+      // -------------/
+      // showNavToggle
+      // isNavOpen={isNavOpen}
+      // onNavToggle={onNavToggle}
     />
-  );
-  //  code for navigation page
-  const PageNav = (
 
-    <Nav onSelect={onNavSelect} aria-label="Nav" theme="dark">
-      <NavList variant={NavVariants.default}>
-        <NavItem itemId={0} isActive={activeItem === 0}><Link to="/">
-          <HomeIcon />{' '}<span className="navLink">Home</span>
-        </Link></NavItem>
-        <NavItem itemId={1} isActive={activeItem === 1}><Link to="/search">
-          <SearchIcon /> {' '}<span className="navLink">Search</span>
-        </Link></NavItem>
-        <NavItem itemId={2} isActive={activeItem === 2} ><Link to="/community">
-          <UsersIcon />{' '}<span className="navLink">Community</span>
-        </Link></NavItem>
-        <NavItem itemId={3} isActive={activeItem === 3} ><Link to="/community">
-          <FileImageIcon />{' '}<span className="navLink">My Content</span>
-        </Link></NavItem>
-      </NavList>
-    </Nav>
+
   );
-  const Sidebar = <PageSidebar nav={PageNav} isNavOpen={isNavOpen} theme="dark" />;
-  const DefaultSidebar = <PageSidebar nav={PageNav} theme="dark" />;
+
   return (
     <Router>
-      <React.Fragment>
-        <Page header={Header} sidebar={Sidebar}>
-          {/* <PageSection variant={PageSectionVariants.light}> */}
-          <Route exact path='/' component={PageHeading} />
-          <Route exact path='/search' component={PageHeading} />
-          {/* </PageSection> */}
-          <PageSection>
-            <Route exact path='/' component={SearchBar} />
-            <Route exact path='/detail/:taskId' component={BasicDetailParent} />
-            <Route exact path='/search' component={SearchBar} />
-          </PageSection>
-          <PageSection style={{ minHeight: "100vh" }}>
-            <Route exact path='/' component={TaskContainer} />
-            <Route exact path='/detail/:taskId' component={Detail} />
-            <Route path='/search' component={TaskContainer} />
-            <Route path='/community' component={Community} />
-          </PageSection>
-        </Page>
-      </React.Fragment>
+      <Page header={Header}>
+        {/* <PageSection variant={PageSectionVariants.light}> */}
+        <Route exact path="/" component={BackgroundImageHeader} />
+        <Route exact path="/search" component={BackgroundImageHeader} />
+
+        {/* </PageSection> */}
+        <PageSection>
+          <Route exact path="/" component={SearchBar} />
+          {/* <Route exact path="/uploadtask" component={Uploadtask} /> */}
+          <Route exact path="/detail/:taskId" component={BasicDetailParent} />
+          <Route exact path="/search" component={SearchBar} />
+        </PageSection>
+        <PageSection>
+          <Flex
+            className="example-border"
+            breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}
+          >
+            <FlexItem>
+              <Route exact path="/" component={Filter} />
+            </FlexItem>
+            <FlexItem>
+              <Route exact path="/upload" component={UploadTask} />
+              <Route exact path="/" component={TaskContainer} />
+              <Route path="/search" component={TaskContainer} />
+            </FlexItem>
+          </Flex>
+          <Route exact path="/detail/:taskId" component={Detail} />
+          <Route path="/community" component={Community} />
+        </PageSection>
+        <PageSection>
+          <Route path='/login' component={Login}/>
+          <Route path='/logout' component={Login}/>
+          <Route path='/signup' component={SignupForm}/>
+        </PageSection>
+
+        <Footer />
+
+      </Page>
     </Router>
   );
-}
+};
 
 export default App;

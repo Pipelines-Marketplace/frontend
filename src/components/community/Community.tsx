@@ -1,10 +1,8 @@
-import React from "react"
-import ReactDom from "react-dom"
-
+import React from 'react';
 const Community: React.FC = () => {
-    return (
-        <h1>Community</h1>
-    );
-}
+  return (
+    <h1>Community</h1>
+  );
+};
 
 export default Community;

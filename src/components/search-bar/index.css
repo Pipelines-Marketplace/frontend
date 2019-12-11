@@ -9,3 +9,12 @@
     margin-right: 0.3em;
     border-bottom: 0.1em s black;
 }
+
+.search{
+    margin-left: 21em;
+    margin-top: 2em;
+}
+
+li:hover{
+    background-color:lightgray 
+}
