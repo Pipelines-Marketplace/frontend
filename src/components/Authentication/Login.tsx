@@ -9,6 +9,7 @@ import {
 import {GithubIcon} from '@patternfly/react-icons';
 import checkAuthentication from '../redux/Actions/CheckAuthAction';
 import GitHubLogin from 'react-github-login';
+import {API_URL} from '../../constants';
 
 const Login:React.FC=()=>{
   const history = useHistory();
@@ -17,7 +18,7 @@ const Login:React.FC=()=>{
     const code={
       token: response.code.toString(),
     };
-    fetch('http://localhost:5000/oauth/redirect', {
+    fetch(`${API_URL}/oauth/redirect`, {
       method: 'POST',
       body: JSON.stringify(code),
     })
