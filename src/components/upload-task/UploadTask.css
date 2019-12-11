@@ -1,37 +1,3 @@
-/* .flex-size{
-
-	min-width: 80em;
-
-}
-@media  (max-width:1200) and  (min-width:800px){
-		.flex-size{ 
-			min-width: 30em;
-		}
-	
-		}
-@media  (max-width:800) and  (min-width:601px){
-	.flex-size{ 
-		min-width: 20em;
-	}
-
-	}
-
-@media screen and (max-width:600px) {
-	.flex-size{
-		min-width: 20em;
-	}
-	.tags-input {
-		width: calc(80vw - 32px);
-    }
-    .font-size{
-        width: 10em;
-    }
-    .tags-input{
-        width: 10em;
-    }
-} */
-
-
 .flex-size{
 	min-width: 80em;
 }
