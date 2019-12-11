@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import './UploadTask.css';
 import {
+  Link,
+} from 'react-router-dom';
+import {
   Form,
   FormGroup,
   TextInput,
@@ -14,31 +17,35 @@ import {
   DropdownItem,
   Alert,
 } from '@patternfly/react-core';
-import {
-  Link,
-} from 'react-router-dom';
 import {API_URL} from '../../constants';
 const UploadTask: React.FC = () => {
   const intags: string[] = [];
   const [uploadMessage, setUploadMessage] = useState(' ');
   const [tags, setTags] = useState(intags);
+  const [load, setLoad]=useState();
+  const spiner:any = <div className="loading">
+    Loading&#8230;
+  </div>;
   // alert message for task upload
   let sendStatus:any='';
   const alertMessage=(status :any) =>{
     if (status['status'] === false) {
-      setTimeout(() => window.location.assign('/'), 5000);
       sendStatus = <Alert variant="danger"
         isInline title={status['message']} />;
+      setLoad('');
     } else {
-      setTimeout(() => window.location.assign('/'), 5000);
       sendStatus = <Alert variant="success"
         isInline title={status['message']} />;
+      setLoad('');
+      setTimeout(() => window.location.assign('/'), 2000);
     }
     return sendStatus;
   };
   // / function for uloading task file
   const submitdata = (event: any) => {
     event.preventDefault();
+    setLoad(spiner);
+    // setTimeout(() => window.location.reload(true), 3000);
     const data = new FormData(event.target);
     const formdata = {
       name: data.get('task-name'),
@@ -143,7 +150,7 @@ const UploadTask: React.FC = () => {
       <FormGroup label="Type"
         fieldId="task-tag">
         <div>
-          <Dropdown style = {{backgroundColor: 'whitesmoke', width: '20em'}}
+          <Dropdown style = {{backgroundColor: 'whitesmoke'}}
             onSelect = {onSelect}
             toggle={<DropdownToggle onToggle={ontoggle}>
             Task</DropdownToggle>} // provide task type by default
@@ -165,6 +172,7 @@ const UploadTask: React.FC = () => {
         />
       </FormGroup>
       <b> {uploadMessage} </b>
+      {load }
       <ActionGroup>
         <Button id="Button"
           variant="primary"
@@ -179,5 +187,4 @@ const UploadTask: React.FC = () => {
   );
 };
 export default UploadTask;
-
 

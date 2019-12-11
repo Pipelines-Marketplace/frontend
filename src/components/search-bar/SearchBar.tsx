@@ -29,6 +29,7 @@ export interface TaskPropData{
 }
 
 const SearchBar: React.FC = (props:any) => {
+  const [sort, setSort]=useState('Sort');
   let tempArr: any = [];
   const tempTask : any = [];
   React.useEffect(() => {
@@ -64,7 +65,8 @@ const SearchBar: React.FC = (props:any) => {
   const onSelect = () => set(!isOpen);
 
   // eslint-disable-next-line require-jsdoc
-  function sortByName() {
+  function sortByName(event:any) {
+    setSort(event.target.text);
     const taskarr = tempArr.sort((first:any, second: any) => {
       if (first.name > second.name) {
         return 1;
@@ -76,7 +78,8 @@ const SearchBar: React.FC = (props:any) => {
   }
 
   // eslint-disable-next-line require-jsdoc
-  function sortByDownloads() {
+  function sortByDownloads(event:any) {
+    setSort(event.target.text);
     const taskarr = tempArr.sort((first:any, second: any) => {
       if (first.downloads < second.downloads) {
         return 1;
@@ -88,7 +91,8 @@ const SearchBar: React.FC = (props:any) => {
   }
 
   // eslint-disable-next-line require-jsdoc
-  function sortByRatings() {
+  function sortByRatings(event:any) {
+    setSort(event.target.text);
     const taskarr = tempArr.sort((first:any, second: any) => {
       if (first.rating < second.rating) {
         return 1;
@@ -161,15 +165,15 @@ const SearchBar: React.FC = (props:any) => {
       <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
         <React.Fragment>
 
-          <InputGroup style={{width: '70%'}}>
+          <InputGroup style={{width: '70%', marginLeft: '1em'}}>
             <div style = {{width: '100%', boxShadow: 'rgba'}}>
               <TextInput value = {textValue} type="search"
                 onChange={onTextChanged}
                 style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
 
-              <div>
+              <div style = {{position: 'relative'}}>
                 <ul
-                  style = {{textAlign: 'left', backgroundColor: 'white', margin: 0, position: 'relative', width: '100%'}}
+                  style = {{textAlign: 'left', backgroundColor: 'white', margin: 0, position: 'absolute', width: '100%'}}
                 >
                   {suggestions.map((item: any, index: any) =>
 
@@ -198,7 +202,7 @@ const SearchBar: React.FC = (props:any) => {
             </Button>
             <Dropdown
               onSelect = {onSelect}
-              toggle={<DropdownToggle onToggle={ontoggle}>Sort</DropdownToggle>}
+              toggle={<DropdownToggle onToggle={ontoggle}>{sort}</DropdownToggle>}
               isOpen = {isOpen}
               dropdownItems={dropdownItems}
             />

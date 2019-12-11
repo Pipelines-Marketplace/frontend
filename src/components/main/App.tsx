@@ -42,10 +42,6 @@ interface mainState {
 }
 
 const App: React.FC<mainProps> = () => {
-  const [isNavOpen, setNavToggle] = React.useState(true);
-  const onNavToggle = () => {
-    setNavToggle(!isNavOpen);
-  };
   const logoProps = {
     href: '/',
     // eslint-disable-next-line no-console
@@ -129,9 +125,10 @@ const App: React.FC<mainProps> = () => {
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
       logoProps={logoProps}
       toolbar={PageToolbar}
-      showNavToggle
-      isNavOpen={isNavOpen}
-      onNavToggle={onNavToggle}
+      // -------------/
+      // showNavToggle
+      // isNavOpen={isNavOpen}
+      // onNavToggle={onNavToggle}
     />
 
 
@@ -173,7 +170,9 @@ const App: React.FC<mainProps> = () => {
           <Route path='/logout' component={Login}/>
           <Route path='/signup' component={SignupForm}/>
         </PageSection>
-        <Footer/>
+
+        <Footer />
+
       </Page>
     </Router>
   );

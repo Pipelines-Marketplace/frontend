@@ -1,65 +1,126 @@
 import React from 'react';
-import './index.css';
-import {Flex, FlexItem, Avatar, Grid, GridItem, TextContent} from '@patternfly/react-core';
-import tektonLogo from '../assets/logo/logo.png';
+import {Card,
+  CardHead,
+  CardActions,
+  CardFooter,
+  TextContent,
+  Text,
+  GridItem,
+  Grid,
+  Flex,
+  FlexItem,
+  TextVariants,
+} from '@patternfly/react-core';
+import tekton from '../assets/logo/logo.png';
+
 const Footer: React.FC = () => {
   return (
+
     <div>
-      <span className="footer-link">
-        <Flex className="example-border" breakpointMods={[{modifier:
-          'justify-content-space-around', breakpoint: 'lg'}]}>
-          <FlexItem>
-            {/* <Flex>
-              <Flex style={{margin: '0'}}>
-                <FlexItem>
-                  <img src={tektonLogo} alt="" style={{marginTop: '3em', height: '7em'}}/>
-                </FlexItem>
-              </Flex>
-              <Flex breakpointMods={[{modifier:
-          'column', breakpoint: 'lg'}, {modifier:
-            'align-self-stretch', breakpoint: 'lg'}]}>
-                <FlexItem style={{marginTop: '5em', marginLeft: '3em'}}>
+      <Card style = {{height: '20em', backgroundColor: '#EDEDED'}}></Card>
+      <Card style = {{backgroundColor: '#151515'}}>
+        <CardHead>
+          <img src ={tekton} alt="Task"
+            style={{height: '7em', marginLeft: '5em'}}
+          />
+          <TextContent style={{marginLeft: '2em', color: 'white'}}>
+            <Text component={TextVariants.h1}>
+              Tekton
+            </Text>
+            <Grid>
+              <GridItem span={6}>
+                <Text style = {{color: 'white'}}>
+              The Tekton Pipelines project
+              provides k8s-style resources for declaring
+              CI/CD-style pipelines.Click here to learn more about
+                  <a href="https://github.com/tektoncd/pipeline">Tekton</a>
+                </Text>
+              </GridItem>
+            </Grid>
+          </TextContent>
 
-                  <span className="links-heading">
-                Tekton</span>
-                </FlexItem>
-                <FlexItem >
-                  <p className="tekton-def" style={{wordBreak: 'break-all'}}>
-            The Tekton Pipelines project provides k8s-style resources
-            for declaring CI/CD-style pipelines.Click here to learn more about
-                    <a href="https://github.com/tektoncd/pipeline">Tekton</a>
-                  </p>
-                </FlexItem>
-              </Flex>
-            </Flex> */}
-            {/* <img src={tektonLogo} alt="" style={{marginTop: '3em', height: '7em'}}/> */}
-          </FlexItem>
-          <FlexItem>
-            <span className="links-heading">Quick Links</span>
-            <Flex breakpointMods={[{modifier:
-          'column', breakpoint: 'lg'}]}>
-              <FlexItem><a href="/" className="links">About</a> </FlexItem>
-              <FlexItem><a href="/" className="links">Contribute</a></FlexItem>
-              <FlexItem><a href="/" className="links">Tekton</a></FlexItem>
+          <CardActions style = {{marginTop: '1.5em'}}>
+            <Flex breakpointMods = {[{modifier: 'nowrap', breakpoint: 'lg'}]}>
+
+              <FlexItem style={{marginRight: '5em'}}>
+                <Flex breakpointMods
+                  ={[{modifier: 'column', breakpoint: 'lg'}]}>
+
+                  <FlexItem >
+                    <TextContent>
+                      <Text style = {{color: 'white', marginTop: '1.5em'}}
+                        component={TextVariants.h1}>
+                      Links
+                      </Text>
+
+                      <Text>
+                        <a href = "/"
+                          style = {{color: 'white', marginTop: '1.5em'}} >
+                      About
+                        </a>
+                      </Text>
+
+                      <Text>
+                        <a href = "/"
+                          style = {{color: 'white', marginTop: '1.5em'}}>
+                      Contribute
+                        </a>
+                      </Text>
+
+                      <Text>
+                        <a href = "/"
+                          style = {{color: 'white', marginTop: '1.5em'}}>
+                      Tekton
+                        </a>
+                      </Text>
+
+                    </TextContent>
+                  </FlexItem>
+                </Flex>
+              </FlexItem>
+
+              <FlexItem style={{marginRight: '10em'}}>
+                <TextContent>
+                  <Text style = {{color: 'white', marginTop: '1.5em'}}
+                    component={TextVariants.h1}>
+                      Contribute
+                  </Text>
+                  <Text>
+                    <a href = "/"
+                      style = {{color: 'white', marginTop: '1.5em'}}>
+                      About
+                    </a>
+                  </Text>
+
+                  <Text>
+                    <a href = "/"
+                      style = {{color: 'white', marginTop: '1.5em'}}>
+                      Contribute
+                    </a>
+                  </Text>
+
+                  <Text>
+                    <a href = "/"
+                      style = {{color: 'white', marginTop: '1.5em'}}>
+                      Tekton
+                    </a>
+                  </Text>
+
+                </TextContent>
+              </FlexItem>
             </Flex>
-          </FlexItem>
-          <FlexItem>
-            <span className="links-heading">Contribute</span>
-            <Flex breakpointMods={[{modifier:
-          'column', breakpoint: 'lg'}]}>
-              <FlexItem><a href="/" className="links">About</a> </FlexItem>
-              <FlexItem><a href="/" className="links">Contribute</a></FlexItem>
-              <FlexItem><a href="/" className="links">Tekton</a></FlexItem>
-            </Flex>
-          </FlexItem>
-        </Flex>
-      </span>
-      <span className="copyrights">
-        <h4 className="copyrights-text">
-Copyright © 2019 Red Hat, Inc.</h4>
-      </span>
+
+          </CardActions>
+        </CardHead>
+
+        <CardFooter style = {{marginLeft: '45%'}}>
+          <Text style = {{color: 'white'}}>
+        Copyright © 2019 Red Hat, Inc.
+          </Text>
+        </CardFooter>
+
+      </Card>
     </div>
-
   );
 };
 
