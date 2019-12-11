@@ -33,6 +33,7 @@ import BasicDetailParent from '../basic-detail/BasicDetailParent';
 import BackgroundImageHeader from '../background-image/BackgroundImage';
 import Login from '../Authentication/Login';
 import SignupForm from '../Authentication/Signup';
+import Footer from '../footer/Footer';
 interface mainProps {
 
 }
@@ -169,6 +170,9 @@ const App: React.FC<mainProps> = () => {
           <Route path='/logout' component={Login}/>
           <Route path='/signup' component={SignupForm}/>
         </PageSection>
+
+        <Footer />
+
       </Page>
     </Router>
   );
