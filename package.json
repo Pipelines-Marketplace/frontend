@@ -36,7 +36,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.tsx",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "coverage": "react-scripts test --env=jsdom --coverage"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,8 +55,12 @@
     ]
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.4",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-google": "^0.14.0",

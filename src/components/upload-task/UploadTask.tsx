@@ -45,7 +45,6 @@ const UploadTask: React.FC = () => {
   const submitdata = (event: any) => {
     event.preventDefault();
     setLoad(spiner);
-    // setTimeout(() => window.location.reload(true), 3000);
     const data = new FormData(event.target);
     const formdata = {
       name: data.get('task-name'),
@@ -64,7 +63,8 @@ const UploadTask: React.FC = () => {
       },
     }).then((resp) => resp.json())
         .then((data)=>
-          setUploadMessage(alertMessage(data)));
+          setUploadMessage(alertMessage(data)))
+        .then((error:any) => console.log(error));
   };
   const addTags = (event: any) => {
     event.preventDefault();
@@ -90,7 +90,7 @@ const UploadTask: React.FC = () => {
     </DropdownItem>,
   ];
   return (
-    <Form className="flex-size" onSubmit={submitdata}
+    <Form id = "form" className="flex-size" onSubmit={submitdata}
       style = {{marginLeft: '5em'}}>
       <h1 style={{fontSize: '2em',
         fontFamily: 'bold'}}>Upload </h1>

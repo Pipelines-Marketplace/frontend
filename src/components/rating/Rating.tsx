@@ -242,7 +242,7 @@ const Rating: React.FC = (props:any) => {
           <div className="rating-heading">Rating</div>
         </CardHead>
       </div>
-      <div className="rating-icon">
+      <div className="rating-icon" id="rating">
         {login}
       </div>
       <div className="rating-icon">
