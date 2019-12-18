@@ -1,5 +1,5 @@
 //  eslint-enable max-len
-import React from 'react';
+import React, {useState} from 'react';
 import {
 
   Card,
@@ -13,6 +13,7 @@ import {
   Text,
   CardActions,
   CardFooter,
+  Modal,
 } from '@patternfly/react-core';
 import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
 import {
@@ -47,6 +48,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
   } else {
     taskArr.push([]);
   }
+  const [modalopen, setModalopen]=useState(false);
 
   // Function to download YAML file
   const [dwnld, setDownload] = React.useState(props.task.downloads);
@@ -68,6 +70,10 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
           });
         });
   }
+  const install=() =>{
+    setModalopen(!modalopen);
+  };
+
 
   return (
     <Flex>
@@ -98,9 +104,26 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
                 <StarIcon color="gold" size="md" />
               </FlexItem>
               <FlexItem style={{marginLeft: '-3em'}}>
-                <Button style={{width: '9em'}} onClick={download}>
-                Download
+                <Button style={{width: '9em'}} onClick={install}>
+                Install
                 </Button>
+                <Modal className = "-pf-c-modal-box--Zindex"
+                  width={'50%'}
+                  title="Copy following command to install
+                  the task/pipeline in your cluster"
+                  isOpen={modalopen}
+                  onClose={install}
+                  isFooterLeftAligned
+                >
+
+  Lorem ipsum dolor sit amet
+   consectetur adipiscing elit
+  sed do eiusmod tempor incididunt
+   ut labore et dolore
+
+                </Modal>
+
+
               </FlexItem>
             </Flex>
           </CardActions>

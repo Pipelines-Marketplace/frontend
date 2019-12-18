@@ -88,3 +88,9 @@
       padding-top: '0.5em';
     }  
   } 
+
+  .-pf-c-modal-box--Zindex{
+    
+    z-index: 100;
+   
+  }
