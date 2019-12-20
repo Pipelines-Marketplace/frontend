@@ -1,5 +1,6 @@
 //  eslint-enable max-len
 import React, {useState} from 'react';
+import Popup from 'reactjs-popup';
 import {
 
   Card,
@@ -14,8 +15,10 @@ import {
   CardActions,
   CardFooter,
   Modal,
+  TextVariants,
+  Tooltip,
 } from '@patternfly/react-core';
-import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
+import {DownloadIcon, StarIcon, CopyIcon} from '@patternfly/react-icons';
 import {
   Badge,
 } from '@patternfly/react-core';
@@ -25,6 +28,8 @@ import avatarImg from './download.png';
 import './index.css';
 import store from '../redux/store';
 import {API_URL} from '../../constants';
+// import SyntaxHighlighter from 'react-syntax-highlighter';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 
 export interface BasicDetailPropObject {
     id: any
@@ -49,6 +54,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
     taskArr.push([]);
   }
   const [modalopen, setModalopen]=useState(false);
+  const link =' kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/kubeval/kubeval.yaml ';
 
   // Function to download YAML file
   const [dwnld, setDownload] = React.useState(props.task.downloads);
@@ -70,8 +76,22 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
           });
         });
   }
+  // const mdlcode:any =
+  // const [mdl,setMdl]=useState();
   const install=() =>{
     setModalopen(!modalopen);
+  };
+  // function for copy Task installation link
+  const copy= (event:any) =>{
+    const el = document.createElement('textarea');
+    el.value = link;
+    el.setAttribute('readonly', '');
+    document.body.appendChild(el);
+    // Select text inside element
+    el.select();
+    // Copy text to clipboard
+    document.execCommand('copy');
+    document.body.removeChild(el);
   };
 
 
@@ -104,16 +124,58 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
                 <StarIcon color="gold" size="md" />
               </FlexItem>
               <FlexItem style={{marginLeft: '-3em'}}>
-                <Button style={{width: '9em'}} onClick={install}>
+                <div>
+                  { document.queryCommandSupported('copy')}
+                  <Popup trigger={<Button className="button"> Install </Button>} modal>
+                    {(close) => (
+                      <div className="modal">
+                        <a className="close" onClick={close}>
+                              &times;
+                        </a>
+                        <div className="header"> {props.task.name} </div>
+                        <div className="content" >
+                          {' '}
+                          <div style={{marginBottom: '2em'}}>
+                            <b> Install on Kubernetes  </b>
+                            <br />
+                             Installation
+                            <br />
+                          In order to use {props.task.name} Task
+                          you need to first install the Task.
+                            <br />
+                          </div>
+                          <TextContent>
+
+                            <Text component={TextVariants.blockquote}>
+                              {link}
+                              <Tooltip content="Copy to Clipboard">
+                                <CopyIcon
+                                  style = {{position: 'absolute', marginLeft: '5em', cursor: 'pointer'}}
+                                  size="md"
+                                  onClick = {copy}
+                                >
+                                </CopyIcon>
+                              </Tooltip>
+                            </Text>
+
+                          </TextContent>
+                          <br />
+                        </div>
+                      </div>
+                    )}
+                  </Popup>
+                </div>
+                {/* <Button style={{width: '9em'}} onClick={install}>
                 Install
                 </Button>
-                <Modal className = "-pf-c-modal-box--Zindex"
+                <Modal
                   width={'50%'}
                   title="Copy following command to install
                   the task/pipeline in your cluster"
                   isOpen={modalopen}
                   onClose={install}
                   isFooterLeftAligned
+                  className="abc"
                 >
 
   Lorem ipsum dolor sit amet
@@ -121,7 +183,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
   sed do eiusmod tempor incididunt
    ut labore et dolore
 
-                </Modal>
+                </Modal> */}
 
 
               </FlexItem>
