@@ -1,6 +1,4 @@
 import React from 'react';
-import {
-} from '@patternfly/react-core';
 import {useParams} from 'react-router';
 import {connect} from 'react-redux';
 import BasicDetail from './BasicDetail';
