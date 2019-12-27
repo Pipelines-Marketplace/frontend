@@ -28,7 +28,6 @@ import './index.css';
 import store from '../redux/store';
 import {API_URL} from '../../constants';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 
 export interface BasicDetailPropObject {
     id: any
@@ -91,7 +90,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
   return (
     <Flex>
       <Card style={{marginLeft: '7em', marginRight: '7em',
-        marginTop: '2em', width: '100%'}}>
+        marginTop: '2em', width: '100%', backgroundColor: '#EDEDED'}}>
         <CardHead>
           <img src ={avatarImg} alt="Task"
             style={{height: '7em', marginLeft: '3em'}}
