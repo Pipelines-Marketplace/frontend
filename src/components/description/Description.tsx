@@ -4,14 +4,10 @@ import {
   Tabs,
   Tab,
   Card,
-  CardHead,
   CardBody,
   Grid,
   GridItem,
-  Text,
-  TextContent,
 } from '@patternfly/react-core';
-import {InfoCircleIcon} from '@patternfly/react-icons';
 import './index.css';
 import ReactMarkDown from 'react-markdown';
 import CodeBlock from './CodeBlock';
@@ -41,35 +37,36 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
   }
 
   return (
-    <Card style={{marginLeft: '7em', marginRight: '3em', width: '71em'}}>
-      <CardHead>
-        <InfoCircleIcon color="blue" size="sm"
-          style = {{marginRight: '0.5em', marginBottom: '0.2em'}}/>
-        <TextContent>
-          <Text style = {{fontWeight: 'bold'}} >Description</Text>
-        </TextContent>
-      </CardHead>
+    <Card style={{marginLeft: '9em', marginRight: '3em', width: '90em'}}>
+
       <CardBody>
         <Grid style={{width: '100%'}}>
           <GridItem span={12}>
-            <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
-              <Tab eventKey={0} title="Description">
+            <Tabs activeKey={activeTabKey} isSecondary
+              onSelect={handleTabClick} style = {{boxShadow: 'none'}}>
+
+              <Tab eventKey={0} title="Description"
+                style = {{backgroundColor: 'white'}}>
+                <hr
+                  style = {{backgroundColor: '#EDEDED', marginBottom: '1em'}}>
+                </hr>
                 <ReactMarkDown source={markDown}
                   escapeHtml={true}
                   renderers={{code: CodeBlockReadme}}
                 />
               </Tab>
 
-              <Tab eventKey={1} title="YAML">
+              <Tab eventKey={1} title="YAML"
+                style = {{backgroundColor: 'white'}}>
+                <hr
+                  style = {{backgroundColor: '#EDEDED', marginBottom: '1em'}}>
+                </hr>
                 <ReactMarkDown source={props.Yaml}
                   escapeHtml={true}
                   renderers={{code: CodeBlock}}
                 />
               </Tab>
 
-              <Tab eventKey={2} title="Resources">
-                    To be continued .....
-              </Tab>
             </Tabs>
           </GridItem>
         </Grid>

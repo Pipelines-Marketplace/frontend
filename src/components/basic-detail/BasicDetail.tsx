@@ -1,7 +1,6 @@
 //  eslint-enable max-len
 import React from 'react';
 import {
-
   Card,
   Flex,
   FlexItem,
@@ -12,9 +11,8 @@ import {
   TextContent,
   Text,
   CardActions,
-  CardFooter,
 } from '@patternfly/react-core';
-import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
+import {DownloadIcon} from '@patternfly/react-icons';
 import {
   Badge,
 } from '@patternfly/react-core';
@@ -24,6 +22,7 @@ import avatarImg from './download.png';
 import './index.css';
 import store from '../redux/store';
 import {API_URL} from '../../constants';
+import Rating from '../rating/Rating';
 
 export interface BasicDetailPropObject {
     id: any
@@ -71,31 +70,44 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
 
   return (
     <Flex>
-      <Card style={{marginLeft: '7em', marginRight: '7em',
-        marginTop: '2em', width: '100%'}}>
-        <CardHead>
+      <Card style={{marginLeft: '-2em', marginRight: '-2em',
+        marginTop: '-2em', width: '120%', paddingBottom: '2em'}}>
+        <CardHead style = {{paddingTop: '2em'}}>
           <img src ={avatarImg} alt="Task"
-            style={{height: '7em', marginLeft: '3em'}}
+            style={{height: '7em', paddingLeft: '9em'}}
           />
-          <TextContent style={{marginLeft: '4em'}}>
+          <TextContent style={{paddingLeft: '4em', paddingTop: '2em'}}>
             <Text style={{fontSize: '2em'}}>
               {props.task.name.charAt(0).toUpperCase()+props.task.name.slice(1)}
             </Text>
             <Grid>
-              <GridItem span={10}>
+              <GridItem span={10} style = {{paddingBottom: '1.5em'}}>
                 {props.task.description}
+              </GridItem>
+              <GridItem>
+                {
+                  taskArr[0].map((tag: any) =>{
+                    return (
+                      <Badge
+                        style={{paddingRight: '1em',
+                          marginBottom: '1em', marginRight: '1em'}}
+                        key={tag.Name}
+                        className="badge">{tag}
+                      </Badge>);
+                  })
+                }
               </GridItem>
             </Grid>
           </TextContent>
 
-          <CardActions style={{marginRight: '5em'}}>
+          <CardActions style={{marginRight: '3em', paddingTop: '2em'}}>
             <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
               <FlexItem>
-                <DownloadIcon style={{marginRight: '1em', marginTop: '2em'}}/>
-                {dwnld}
+                <Rating />
               </FlexItem>
               <FlexItem>
-                <StarIcon color="gold" size="md" />
+                <DownloadIcon style={{marginRight: '1em'}}/>
+                {dwnld}
               </FlexItem>
               <FlexItem style={{marginLeft: '-3em'}}>
                 <Button style={{width: '9em'}} onClick={download}>
@@ -105,20 +117,6 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
             </Flex>
           </CardActions>
         </CardHead>
-
-        <CardFooter style={{marginLeft: '14em'}}>
-          {
-            taskArr[0].map((tag: any) =>{
-              return (
-                <Badge
-                  style={{paddingRight: '1em',
-                    marginBottom: '1em', marginRight: '1em'}}
-                  key={tag.Name}
-                  className="badge">{tag}
-                </Badge>);
-            })
-          }
-        </CardFooter>
       </Card>
     </Flex>
   );
