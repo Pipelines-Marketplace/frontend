@@ -54,6 +54,15 @@
 }
 
 .card{
-    height: 22em;
+    height: 23em;
     width: 18.5em;
+}
+
+.vtask{
+text-align: center;
+background-color : #B8AD8B;
+margin-left: 10em;
+color : white;
+padding-top: .1em;
+
 }
