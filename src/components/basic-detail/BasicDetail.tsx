@@ -27,6 +27,7 @@ import avatarImg from './download.png';
 import './index.css';
 import store from '../redux/store';
 import {API_URL} from '../../constants';
+import {grey} from 'color-name';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
 
 export interface BasicDetailPropObject {
@@ -139,8 +140,9 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
                           </div>
                           <TextContent>
 
-                            <Text component={TextVariants.blockquote}>
-                              {link}
+                            <Text>
+                              {`$ ${link}`}
+
                               <Tooltip content="Copy to Clipboard">
                                 <CopyIcon
                                   style = {{position: 'absolute', marginLeft: '6em', cursor: 'pointer'}}
