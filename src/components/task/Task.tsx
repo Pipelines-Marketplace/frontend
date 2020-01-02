@@ -35,21 +35,24 @@ export interface TaskProp {
 // eslint-disable-next-line
 const Task: React.FC<TaskProp> = (props:any) => {
   const tempArr : any = [];
+  console.log('verified', props.task.verified);
 
   if (props.task.tags != null) {
     tempArr.push(props.task.tags);
   } else {
     tempArr.push([]);
   }
-
+  let verifiedStatus:any;
+  if (props.task.verified === true) {
+    verifiedStatus= <div className="vtask" >
+  Verified
+    </div>;
+  }
 
   return (
     <GalleryItem>
       <Card className="card" isHoverable style = {{marginBottom: '2em'}}>
-        <div className="vtask" >
-            Verified TasK
-
-        </div>
+        {verifiedStatus}
 
         <CardHead>
           <div>
