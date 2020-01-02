@@ -8,11 +8,12 @@ import {InfoCircleIcon} from '@patternfly/react-icons';
 const Filter: React.FC = (props:any) => {
   const [tags, setTags] = useState();
   const [status, setStatus]=useState();
-  const [x, setX]=useState(false);
-
-  const tagitem =[{id: '1000', value: 'verified-task', isChecked: false},
-    {id: '1001', value: 'task', isChecked: false},
-    {id: '1003', value: 'pipelines', isChecked: false}];
+  // const resource=[{id: '1000', value: 'verified-task', isChecked: false},
+  //   {id: '1001', value: 'task', isChecked: false}];
+  const tagitem :any =[];
+  // const tagitem =[{id: '1000', value: 'verified-task', isChecked: false},
+  //   {id: '1001', value: 'task', isChecked: false},
+  //   {id: '1003', value: 'pipelines', isChecked: false}];
   const taglist=(data:any) =>{
     data.map((it:any ) =>
       tagitem.push({id: String(it.id), value: it.name, isChecked: false}));
@@ -46,7 +47,7 @@ const Filter: React.FC = (props:any) => {
     );
     setStatus(status);
   };
-  // / jsx element for show tags
+  // jsx element for show tags
   let showTags:any ='';
   if (status !== undefined) {
     showTags=
@@ -67,13 +68,13 @@ const Filter: React.FC = (props:any) => {
      ));
   }
   const cleartag=() =>{
+    // window.location.reload();
     status.map((it:any) =>{
       if (it.isChecked === true) {
         it.isChecked=false;
       }
     });
     setStatus(status);
-    console.log('clearststsu', status);
   };
   return (
     <div className="filter-size">
@@ -81,26 +82,6 @@ const Filter: React.FC = (props:any) => {
         {' '}
         <a href="#" onClick={cleartag}> ClearAll</a>{'  '}
       </h2>
-      <h2 style={{marginBottom: '1em'}}>
-        {' '}
-        <b>Verified Task</b>{'  '}
-        <Tooltip content={<div>
-           Verified Task and Pipelines by Tekton Catlog</div>}>
-          <InfoCircleIcon />
-        </Tooltip>
-      </h2>
-      <div style={{marginBottom: '0.5em'}}>
-        <Checkbox
-          // checked={x}
-          style={{width: '1.2em', height: '1.2em'}}
-          label="Verified Task"
-          id="1000"
-          value="vtask"
-          name="VerifiedTask"
-          onClick={add}
-          aria-label="uncontrolled checkbox example"
-        />
-      </div>
       <h2 style={{marginBottom: '1em'}}>
         {' '}
         <b>Types</b>{'  '}
@@ -129,8 +110,29 @@ const Filter: React.FC = (props:any) => {
           aria-label="uncontrolled checkbox example"
         />
       </div>
+      <h2 style={{marginBottom: '1em', marginTop: '1em'}}>
+        {' '}
+        <b>Verified </b>{'  '}
+        <Tooltip content={<div>
+           Verified Task and Pipelines by Tekton Catlog</div>}>
+          <InfoCircleIcon />
+        </Tooltip>
+      </h2>
+      <div style={{marginBottom: '0.5em'}}>
+        <Checkbox
+          // checked={x}
+          style={{width: '1.2em', height: '1.2em'}}
+          label="Verified"
+          id="1000"
+          value="vtask"
+          name="verified"
+          onClick={add}
+          aria-label="uncontrolled checkbox example"
+        />
+      </div>
       <h2 style={{marginBottom: '1em', marginTop: '1em'}}><b> Tags </b></h2>
       {showTags}
+
     </div>
   );
 };
