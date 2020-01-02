@@ -5,10 +5,10 @@ import {API_URL} from '../../../constants';
 // eslint-disable-next-line require-jsdoc
 export function fetchTaskDescription(id: any) {
   return function(dispatch: any) {
-    fetch(`${API_URL}/task/${id}`)
+    fetch(`${API_URL}/resource/${id}`)
         .then((response) => response.json())
         .then(() => {
-          fetch(`${API_URL}/task/${id}/readme`)
+          fetch(`${API_URL}/resource/readme/${id}`)
               .then((response) => response.text())
               .then((TaskDescription) => dispatch({
                 type: FETCH_TASK_DESCRIPTION,
@@ -16,10 +16,10 @@ export function fetchTaskDescription(id: any) {
               }));
         });
 
-    fetch(`${API_URL}/task/${id}`)
+    fetch(`${API_URL}/resource/${id}`)
         .then((response) => response.json())
         .then(() => {
-          fetch(`${API_URL}/task/${id}/yaml`)
+          fetch(`${API_URL}/resource/yaml/${id}`)
               .then((response) => response.text())
               .then((TaskYaml) => dispatch({
                 type: FETCH_TASK_YAML,

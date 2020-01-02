@@ -5,6 +5,7 @@ import Task from '../task/Task';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
 import {fetchTaskName} from '../redux/Actions/TaskActionName';
 import './index.css';
+import store from '../redux/store';
 
 export interface TaskPropData{
   name : string,
@@ -34,7 +35,6 @@ const TaskContainer: React.FC = (props: any) => {
       tempArr = props.TaskData;
     }
   }
-
 
   return (
     <div className="block">
