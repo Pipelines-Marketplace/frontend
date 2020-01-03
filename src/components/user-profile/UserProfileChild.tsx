@@ -10,6 +10,7 @@ import {Card,
 import {DownloadIcon, OkIcon, Remove2Icon} from '@patternfly/react-icons';
 import imgAvatar from '../assets/logo/imgAvatar.png';
 import {API_URL} from '../../constants';
+import {Link} from 'react-router-dom';
 
 export interface TaskPropObject {
     id: number;
@@ -32,49 +33,51 @@ const UserProfileChild: React.FC<TaskProp> = (props:any) => {
         .then((response) => response.json())
         .then((data: any) => window.location.reload());
   };
-
   return (
     <div>
       {
         props.task.map((item: any) => {
           return (
-            <Card style={{marginLeft: '13em', marginRight: '7em',
-              marginTop: '2em', width: '100%', padding: '0'}} key = "">
-              <CardHead>
-                <img src ={imgAvatar} alt="Task"
-                  style={{height: '3em', marginLeft: '2em'}}
-                />
+            <Link to={'/detail/'+item.id} key= "">
+              <Card style={{marginLeft: '13em', marginRight: '7em',
+                marginTop: '2em', width: '100%', padding: '0'}} key = "">
+                <CardHead>
+                  <img src ={imgAvatar} alt="Task"
+                    style={{height: '3em', marginLeft: '2em'}}
+                  />
 
-                <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
-                  <FlexItem>
-                    <TextContent
-                      style={{marginLeft: '3em', marginTop: '0.5em'}}>
-                      {item.name}
-                    </TextContent>
+                  <Flex
+                    breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
+                    <FlexItem>
+                      <TextContent
+                        style={{marginLeft: '3em', marginTop: '0.5em'}}>
+                        {item.name}
+                      </TextContent>
 
-                  </FlexItem>
-                </Flex>
+                    </FlexItem>
+                  </Flex>
 
-                <CardActions style={{marginRight: '5em'}}>
+                  <CardActions style={{marginRight: '5em'}}>
 
-                  <DownloadIcon
-                    style = {{marginRight: '0.2em'}} className="download"/>
-                  <TextContent className="text">{item.downloads}</TextContent>
+                    <DownloadIcon
+                      style = {{marginRight: '0.2em'}} className="download"/>
+                    <TextContent className="text">{item.downloads}</TextContent>
 
-                  <OkIcon style={{color: 'green'}}/>
-                  <TextContent className="text">{item.rating}</TextContent>
+                    <OkIcon style={{color: 'green'}}/>
+                    <TextContent className="text">{item.rating}</TextContent>
 
-                  <Button id = {item.id} variant="danger"
-                    style = {{marginLeft: '3em'}} type="submit"
-                    onClick = {deleteFunction}>Delete
-                    <Remove2Icon
-                      style = {{marginLeft: '1em', marginTop: '0.3em'}}/>
-                  </Button>
+                    <Button id = {item.id} variant="danger"
+                      style = {{marginLeft: '3em'}} type="submit"
+                      onClick = {deleteFunction}>Delete
+                      <Remove2Icon
+                        style = {{marginLeft: '1em', marginTop: '0.3em'}}/>
+                    </Button>
 
-                </CardActions>
-              </CardHead>
+                  </CardActions>
+                </CardHead>
 
-            </Card>
+              </Card>
+            </Link>
           );
         },
         )}

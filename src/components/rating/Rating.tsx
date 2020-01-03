@@ -14,6 +14,7 @@ import {Link} from 'react-router-dom';
 import {fetchTaskName} from
   '../redux/Actions/TaskActionName';
 import {API_URL} from '../../constants';
+import {OkIcon} from '@patternfly/react-icons';
 
 let prevStar:number =0;
 let newStar:number =0;
@@ -223,15 +224,28 @@ const Rating: React.FC = (props:any) => {
   return (
     <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
       <FlexItem style = {{marginLeft: '0.2em', marginTop: '0.2em'}}>
-        <Tooltip
-          content={
-            <div>Bhai le dekh le.</div>
-          }
-        >
-          <div className="numberCircle">
-            {avgRating}
-          </div>
-        </Tooltip>
+
+
+        <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
+          <FlexItem>
+            <OkIcon color="green"/>
+          </FlexItem>
+
+          <Tooltip
+            content={
+              <div>Average Rating</div>
+            }
+          >
+
+            <FlexItem>
+              <div>
+                {avgRating}
+              </div>
+            </FlexItem>
+
+          </Tooltip>
+
+        </Flex>
 
 
       </FlexItem>
