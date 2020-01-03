@@ -14,7 +14,7 @@ import {
   CardActions,
   CardFooter,
 } from '@patternfly/react-core';
-import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
+import {DownloadIcon, StarIcon, GithubIcon} from '@patternfly/react-icons';
 import {
   Badge,
 } from '@patternfly/react-core';
@@ -32,6 +32,7 @@ export interface BasicDetailPropObject {
     downloads : number;
     rating : number;
     yaml : string;
+    github: string
     tags : []
 }
 
@@ -81,6 +82,13 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
             <Text style={{fontSize: '2em'}}>
               {props.task.name.charAt(0).toUpperCase()+props.task.name.slice(1)}
             </Text>
+
+            <Text style={{fontSize: '1em'}}>
+              <GithubIcon size="md"
+                style = {{marginRight: '0.5em', marginBottom: '-0.3em'}} />
+              <a href={props.task.github} >Github</a>
+            </Text>
+
             <Grid>
               <GridItem span={10}>
                 {props.task.description}
