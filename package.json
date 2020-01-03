@@ -38,8 +38,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.tsx",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "coverage": "react-scripts test --env=jsdom --coverage"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
