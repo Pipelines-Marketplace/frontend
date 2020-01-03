@@ -1,6 +1,14 @@
 import React from 'react';
 import {API_URL} from '../../constants';
 import UserProfileChild from './UserProfileChild';
+import {EmptyState,
+  EmptyStateIcon,
+  EmptyStateBody,
+  Title,
+  Button,
+  EmptyStateVariant} from '@patternfly/react-core';
+import {CubesIcon} from '@patternfly/react-icons';
+import {Link} from 'react-router-dom';
 
 const UserProfile: React.FC = (props: any) => {
   const userGithubId = localStorage['usetrID'];
@@ -18,14 +26,38 @@ const UserProfile: React.FC = (props: any) => {
       return (
         <div>
           {
-            <UserProfileChild task = {userResource} />
-
+            <>
+              <Title headingLevel="h5" size="lg"
+                style = {{marginLeft: '7em', fontSize: '2em'}}>
+                  My Resources
+              </Title>
+              <UserProfileChild task = {userResource} />
+            </>
           }
 
         </div>
       );
     }
-  };
+    if (userResource.length === 0) {
+      return (
+        <EmptyState variant={EmptyStateVariant.full}
+          style = {{position: 'absolute', top: '10em',
+            bottom: 0, right: 0, left: 0, margin: 'auto'}}>
+          <EmptyStateIcon icon={CubesIcon} />
+          <Title headingLevel="h1" size="lg">
+      My Resources
+          </Title>
+          <EmptyStateBody>
+      It seems you haven&apos;t uploaded any resources.
+          </EmptyStateBody>
+          <br />
+          <Link to="/upload"><Button variant="primary">Upload</Button></Link>
+
+        </EmptyState>
+      );
+    }
+  } ;
+
 
   return (
     <div></div>
