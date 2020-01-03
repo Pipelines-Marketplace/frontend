@@ -14,10 +14,10 @@ import {
   Text,
   CardActions,
   CardFooter,
-  TextVariants,
-  Tooltip,
+  ClipboardCopy,
+  ClipboardCopyVariant,
 } from '@patternfly/react-core';
-import {DownloadIcon, StarIcon, CopyIcon} from '@patternfly/react-icons';
+import {DownloadIcon, StarIcon} from '@patternfly/react-icons';
 import {
   Badge,
 } from '@patternfly/react-core';
@@ -25,9 +25,8 @@ import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
 import avatarImg from './download.png';
 import './index.css';
-import store from '../redux/store';
 import {API_URL} from '../../constants';
-import {grey} from 'color-name';
+import {useParams} from 'react-router';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
 
 export interface BasicDetailPropObject {
@@ -45,48 +44,60 @@ export interface BasicDetailProp {
 }
 
 const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
+  const {taskId} = useParams();
   const taskArr : any = [];
+  const [resourcePath, setResourcePath]=useState();
 
   if (props.task.tags != null) {
     taskArr.push(props.task.tags);
   } else {
     taskArr.push([]);
   }
-  const [modalopen, setModalopen]=useState(false);
-  const link =' kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/golang/golang.yaml';
+  useEffect(() =>{
+    fetch(`${API_URL}/resource/links/${taskId}`)
+        .then((resp) => resp.json())
+        .then((data) => setResourcePath(data));
+  }, []);
+  const Myfun=(it:any) =>{
+    return (
 
-  // Function to download YAML file
-  const [dwnld, setDownload] = React.useState(props.task.downloads);
-  function download() {
-    fetch(`${API_URL}/download/${props.task.id}`, {
-      method: 'POST',
-    })
-        .then((response) => {
-          response.blob().then((blob) => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = props.task.name +'.yaml';
-            a.click();
+      <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
+        <FlexItem>
 
-            setDownload(props.task.downloads+ 1 );
-            props.task.downloads = dwnld + 1;
-            store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: props.task});
-          });
-        });
-  }
-  // function for copy Task installation link
-  const copy= (event:any) =>{
-    const el = document.createElement('textarea');
-    el.value = link;
-    el.setAttribute('readonly', '');
-    document.body.appendChild(el);
-    // Select text inside element
-    el.select();
-    // Copy text to clipboard
-    document.execCommand('copy');
-    document.body.removeChild(el);
+          <ClipboardCopy style = {{width: '53em'}}
+            isReadOnly variant={ClipboardCopyVariant.expansion}>
+            {`$ ${'kubectl apply -f ' + it.it}`}</ClipboardCopy>
+          <br />
+        </FlexItem>
+      </Flex>
+    );
   };
+
+
+  let taskLink :any;
+  let pipelineLink:any = '';
+  if (resourcePath !== undefined) {
+    // for displaying resources for pipelines
+    if (resourcePath['pipelines'] !== null) {
+      const pipelinePath = 'kubectl apply -f ' + resourcePath['pipelines'];
+      pipelineLink =
+      <div>
+        <Text style = {{paddingLeft: '0.5em'}}> <b>Pipeline</b> </Text>
+        <ClipboardCopy style = {{width: '53em', marginLeft: '2.8em'}} isReadOnly
+          variant={ClipboardCopyVariant.expansion}>
+          {`$ ${pipelinePath}`}</ClipboardCopy>
+
+      </div>;
+    }
+
+
+    taskLink = <ul>
+      {
+        resourcePath['tasks'].map((it:any) => <Myfun it={it} key={it} />)
+      }
+    </ul>;
+  }
+
 
   return (
     <Flex>
@@ -111,7 +122,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
             <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
               <FlexItem>
                 <DownloadIcon style={{marginRight: '1em', marginTop: '2em'}}/>
-                {dwnld}
+                {/* {dwnld} */}
               </FlexItem>
               <FlexItem>
                 <StarIcon color="gold" size="md" />
@@ -120,39 +131,37 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
 
                 <div>
                   { document.queryCommandSupported('copy')}
-                  <Popup trigger={<Button className="button"> Install </Button>} modal>
+                  <Popup trigger={<Button className="button"
+                  > Install </Button>} modal>
                     {(close) => (
                       <div className="modal">
                         <a className="close" onClick={close}>
                               &times;
                         </a>
+
                         <div className="header">
-                          {props.task.name.charAt(0).toUpperCase()+props.task.name.slice(1)}
+                          {props.task.name.charAt(0).toUpperCase()+
+                            props.task.name.slice(1)}
                         </div>
                         <div className="content" >
                           {' '}
-                          <div style={{marginBottom: '2em'}}>
-                            <span style={{fontSize: '1.5em'}}> Install on Kubernetes  </span>
-                            <br />
-                          In order to use {props.task.name} Task
-                          you need to first install the Task.
+                          <div style={{marginBottom: '1em', marginTop: '1em'}}>
+                            <span style={{fontSize: '1em', paddingLeft: '1em'}}>
+                            Install on Kubernetes  </span>
                             <br />
                           </div>
                           <TextContent>
+                            {/* <Text> */}
+                            {/* <b>{pipelines} </b> */}
+                            {pipelineLink}
+                            {/* </Text> */}
 
-                            <Text>
-                              {`$ ${link}`}
-
-                              <Tooltip content="Copy to Clipboard">
-                                <CopyIcon
-                                  style = {{position: 'absolute', marginLeft: '6em', cursor: 'pointer'}}
-                                  size="md"
-                                  onClick = {copy}
-                                >
-                                </CopyIcon>
-                              </Tooltip>
+                            <Text
+                              style = {{paddingLeft: '0.5em',
+                                marginTop: '0.5em'}}>
+                              <b>Tasks</b>
                             </Text>
-
+                            {taskLink}
                           </TextContent>
                           <br />
                         </div>

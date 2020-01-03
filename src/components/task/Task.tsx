@@ -35,8 +35,6 @@ export interface TaskProp {
 // eslint-disable-next-line
 const Task: React.FC<TaskProp> = (props:any) => {
   const tempArr : any = [];
-  console.log('verified', props.task.verified);
-
   if (props.task.tags != null) {
     tempArr.push(props.task.tags);
   } else {

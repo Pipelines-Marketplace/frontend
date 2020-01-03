@@ -20,6 +20,7 @@ import {
 import {API_URL} from '../../constants';
 const UploadTask: React.FC = () => {
   const intags: string[] = [];
+  const [type, setType]=useState('Task');
   const [uploadMessage, setUploadMessage] = useState(' ');
   const [tags, setTags] = useState(intags);
   const [load, setLoad]=useState();
@@ -49,11 +50,12 @@ const UploadTask: React.FC = () => {
     const formdata = {
       name: data.get('task-name'),
       description: data.get('description'),
-      type: 'Task',
+      type: type,
       tags: tags,
       github: data.get('tasklink'),
       user_id: Number(localStorage.getItem('usetrID')),
     };
+    console.log('datta', JSON.stringify(formdata));
     fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: JSON.stringify(formdata),
@@ -77,15 +79,22 @@ const UploadTask: React.FC = () => {
     setTags([...tags.filter((val, index) =>
       index !== indexToRemove)]);
   };
+  const typeset=(e:any) =>{
+    setType(e.target.text);
+  };
+
   const [isOpen, set] = useState(false);
   const ontoggle =
   (isOpen: React.SetStateAction<boolean>) => set(isOpen);
   const onSelect = () => set(!isOpen);
   const dropdownItems = [
-    <DropdownItem key="link">
+    <DropdownItem key="link"
+      onClick={typeset}
+    >
       Task</DropdownItem>,
     <DropdownItem key="action"
-      component="button">
+      onClick={typeset}
+    >
           Pipeline
     </DropdownItem>,
   ];
@@ -153,7 +162,7 @@ const UploadTask: React.FC = () => {
           <Dropdown style = {{backgroundColor: 'whitesmoke'}}
             onSelect = {onSelect}
             toggle={<DropdownToggle onToggle={ontoggle}>
-            Task</DropdownToggle>} // provide task type by default
+              {type}</DropdownToggle>} // provide task type by default
             isOpen = {isOpen}
             dropdownItems={dropdownItems}
           />

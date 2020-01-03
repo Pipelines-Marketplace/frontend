@@ -162,7 +162,7 @@ const App: React.FC<mainProps> = () => {
               <Route path="/search" component={TaskContainer} />
             </FlexItem>
           </Flex>
-          <Route exact path="/detail/:taskId" component={Detail} />
+          {/* <Route exact path="/detail/:taskId" component={Detail} /> */}
           <Route path="/community" component={Community} />
         </PageSection>
         <PageSection>
