@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Gallery} from '@patternfly/react-core';
 import Task from '../task/Task';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+import {fetchTaskName} from '../redux/Actions/TaskActionName';
 import './index.css';
 
 export interface TaskPropData{
@@ -21,8 +22,17 @@ const TaskContainer: React.FC = (props: any) => {
   // eslint-disable-next-line
   }, []);
 
-  if (props.TaskData != null) {
-    tempArr = props.TaskData;
+  if (props.TaskName != null) {
+    // tempArr = props.TaskName;
+    for (let i = 0; i < props.TaskData.length; i++) {
+      if (props.TaskName['id'] === props.TaskData[i]['id']) {
+        tempArr.push(props.TaskData[i]);
+      }
+    }
+  } else {
+    if (props.TaskData != null) {
+      tempArr = props.TaskData;
+    }
   }
 
   return (
@@ -39,6 +49,8 @@ const TaskContainer: React.FC = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   TaskData: state.TaskData.TaskData,
+  TaskName: state.TaskName.TaskName,
 
 });
-export default connect(mapStateToProps, {fetchTaskSuccess})(TaskContainer);
+export default
+connect(mapStateToProps, {fetchTaskSuccess, fetchTaskName})(TaskContainer);

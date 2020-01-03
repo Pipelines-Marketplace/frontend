@@ -26,14 +26,6 @@ const Filter: React.FC = (props:any) => {
         .then((data) => setTags(taglist(data)));
     setStatus(tagitem);
   }, []);
-
-
-  // sorting tags in alphabetical order
-  // tags.sort((a:any, b:any) =>
-  // (a.name> b.name) ? 1 :
-  // ((b.name > a.name) ? -1 : 0));
-
-  // dealing with after click
   const add=(e:any) =>{
     console.log('name', e.target.name);
 

@@ -16,6 +16,7 @@ import {
   Card,
 } from '@patternfly/react-core';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+import {fetchTaskName} from '../redux/Actions/TaskActionName';
 import store from '../redux/store';
 
 export interface TaskPropData{
@@ -114,17 +115,23 @@ const SearchBar: React.FC = (props:any) => {
     tasks = task.text; // user input
     setTasks(tasks);
 
+    const regex: any = [];
+    let data : any;
     if (props.TaskData != null) {
       for (let i = 0; i < tempArr.length; i++) {
-        const regex = new RegExp(tempArr[i].name, 'gi');
-        const data = tasks.toLowerCase().match(regex);
+        regex.push(tempArr[i].name);
+        if (tasks.toLocaleLowerCase() === regex[i]) {
+          data = tasks.toLocaleLowerCase;
+        }
+        console.log(data);
         if (data != null) {
           tempTask.push(tempArr[i]);
         }
       }
     }
+
     if (tempTask.length > 0) {
-      store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
+      store.dispatch({type: 'FETCH_TASK_NAME', payload: tempTask[0]});
     }
   };
 
@@ -168,7 +175,7 @@ const SearchBar: React.FC = (props:any) => {
           <InputGroup style={{width: '70%', marginLeft: '1em'}}>
             <div style = {{width: '100%', boxShadow: 'rgba'}}>
               <TextInput value = {textValue} type="search"
-                onChange={onTextChanged}
+                onChange={onTextChanged} placeholder = "Search for task or pipeline"
                 style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
 
               <div style = {{position: 'relative'}}>
@@ -217,6 +224,6 @@ const mapStateToProps = (state: any) => ({
   TaskData: state.TaskData.TaskData,
 });
 
-export default connect(mapStateToProps, {fetchTaskSuccess})(SearchBar);
+export default connect(mapStateToProps, {fetchTaskSuccess, fetchTaskName})(SearchBar);
 
 
