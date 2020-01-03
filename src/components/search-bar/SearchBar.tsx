@@ -27,6 +27,7 @@ export interface TaskPropData{
   downloads : number,
   yaml : string,
   tags : [],
+  verified: boolean,
 }
 
 const SearchBar: React.FC = (props:any) => {
@@ -49,6 +50,7 @@ const SearchBar: React.FC = (props:any) => {
         downloads: task.downloads,
         yaml: task.yaml,
         tags: task.tags,
+        verified: task.verified,
       };
       return taskData;
     });
@@ -88,6 +90,7 @@ const SearchBar: React.FC = (props:any) => {
         return -1;
       }
     });
+
     store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: taskarr});
   }
 
@@ -123,7 +126,6 @@ const SearchBar: React.FC = (props:any) => {
         if (tasks.toLocaleLowerCase() === regex[i]) {
           data = tasks.toLocaleLowerCase;
         }
-        console.log(data);
         if (data != null) {
           tempTask.push(tempArr[i]);
         }

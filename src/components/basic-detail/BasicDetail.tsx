@@ -12,7 +12,6 @@ import {
   TextContent,
   Text,
   CardActions,
-  CardFooter,
   ClipboardCopy,
   ClipboardCopyVariant,
 } from '@patternfly/react-core';
@@ -58,6 +57,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
     fetch(`${API_URL}/resource/links/${taskId}`)
         .then((resp) => resp.json())
         .then((data) => setResourcePath(data));
+    // eslint-disable-next-line
   }, []);
   const Myfun=(it:any) =>{
     return (
@@ -144,10 +144,10 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
               <FlexItem>
                 <Rating />
               </FlexItem>
-              {/* <FlexItem>
+              <FlexItem>
                 <DownloadIcon style={{marginRight: '1em'}}/>
-                {dwnld}
-              </FlexItem> */}
+                {props.task.downloads}
+              </FlexItem>
               <FlexItem style={{marginLeft: '-3em'}}>
 
                 <div>
@@ -156,9 +156,9 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
                   > Install </Button>} modal>
                     {(close) => (
                       <div className="modal">
-                        <a className="close" onClick={close}>
+                        <button className="close" onClick={close}>
                               &times;
-                        </a>
+                        </button>
 
                         <div className="header">
                           {props.task.name.charAt(0).toUpperCase()+

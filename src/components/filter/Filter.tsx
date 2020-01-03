@@ -1,130 +1,129 @@
 /* eslint-disable consistent-return */
+import {useHistory, Link} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import './filter.css';
-import {Checkbox, Tooltip} from '@patternfly/react-core/dist/js/components';
+import {Checkbox} from '@patternfly/react-core/dist/js/components';
+import store from '../redux/store';
 import {API_URL} from '../../constants';
-import {InfoCircleIcon} from '@patternfly/react-icons';
-
 const Filter: React.FC = (props:any) => {
-  const [tags, setTags] = useState();
-  const [status, setStatus]=useState();
-  // const resource=[{id: '1000', value: 'verified-task', isChecked: false},
-  //   {id: '1001', value: 'task', isChecked: false}];
-  const tagitem :any =[];
-  // const tagitem =[{id: '1000', value: 'verified-task', isChecked: false},
-  //   {id: '1001', value: 'task', isChecked: false},
-  //   {id: '1003', value: 'pipelines', isChecked: false}];
-  const taglist=(data:any) =>{
-    data.map((it:any ) =>
-      tagitem.push({id: String(it.id), value: it.name, isChecked: false}));
-    return tagitem;
-  };
+  const history = useHistory();
+  const tagsSet = new Set();
+  const [tags, setTags] = useState([]);
+  const [toggle, setToggle] =useState('seeMore');
+  const [i, setI] =useState(10);
   useEffect(() => {
-    // const fetchData = async () => {
-    fetch(`${API_URL}/tags`)
-        .then((res) => res.json())
-        .then((data) => setTags(taglist(data)));
-    setStatus(tagitem);
+    const fetchData = async () => {
+      await fetch(`${API_URL}/tags`)
+          .then((res) => res.json())
+          .then((data) => setTags(data));
+    };
+    fetchData();
   }, []);
-  const add=(e:any) =>{
-    console.log('name', e.target.name);
-
-    console.log('status', status);
-    //  for mapping the items
-    status.map((it:any) => {
-      if (it.id === e.target.id) {
-        it.isChecked=e.target.checked;
+  // sorting tags in alphabetical order
+  tags.sort((a:any, b:any) =>
+  (a.name> b.name) ? 1 :
+  ((b.name > a.name) ? -1 : 0));
+  let tagArray:any=[];
+  // adding tags into array after click and display task based on tags
+  const displaytask = () => {
+    let str: string = '';
+    if (tagsSet.has('task') === true) {
+      tagsSet.delete('task');
+    }
+    if (tagsSet.has('pipelines') === true) {
+      tagsSet.clear();
+      tagsSet.add('pipelines');
+    }
+    tagArray = Array.from(tagsSet);
+    for (let i = 0; i < tagArray.length; i++) {
+      if (i === 0 && tagArray[i] !== 'task') {
+        str += '?tags=';
       }
-    },
-    );
-    setStatus(status);
+      str = `${str + tagArray[i]}|`;
+    }
+    fetch(`${API_URL}/tasks${str}`)
+        .then((res) => res.json())
+        .then((data) => {
+          store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
+        });
   };
-  // jsx element for show tags
-  let showTags:any ='';
-  if (status !== undefined) {
-    showTags=
-     status.map((it: any) => (
-       <div key = {it} style={{marginBottom: '0.5em'}}>
-         <Checkbox
-           onClick={add}
-           isChecked={it.isChecked}
-           style={{width: '1.2em', height: '1.2em'}}
-           label={it.value[0].toUpperCase()+it.value.slice(1)}
-           value={it.value}
-           name="Tags"
-           id={it.id}
-           aria-label="uncontrolled checkbox example"
-
-         />
-       </div>
-     ));
-  }
-  const cleartag=() =>{
-    // window.location.reload();
-    status.map((it:any) =>{
-      if (it.isChecked === true) {
-        it.isChecked=false;
-      }
-    });
-    setStatus(status);
+  const addTag = (e: any) => {
+    if (tagsSet.has(e.target.value) === false) {
+      tagsSet.add(e.target.value);
+    } else {
+      tagsSet.delete(e.target.value);
+    }
+    displaytask();
+  };
+  const newtags =tags.slice(0, i);
+  // / jsx element for show tags
+  const showTags:any=
+  newtags.map((it: any) => (
+    <div key = {it} style={{marginBottom: '0.5em'}}>
+      <Checkbox
+        style={{width: '1.2em', height: '1.2em'}}
+        label={it.name[0].toUpperCase()+it.name.slice(1)}
+        value={it.name}
+        id={it.id}
+        onClick={addTag}
+        aria-label="uncontrolled checkbox example"
+      />
+    </div>
+  ));
+  const tagSize:number = tags.length;
+  const [lessTags, setLessTags] = React.useState(tagSize);
+  // /  for display more tags
+  const moreTags=(e:any) =>{
+    if (i >= newtags.length ) {
+      setI(tagSize);
+      // temp = tagSize;
+      setLessTags(tagSize);
+      setToggle('seeLess');
+    } else {
+      setI(newtags.length+7);
+    }
+    if (e.target.text.match('seeLess')) {
+      setI(lessTags-(13));
+      setToggle('seeMore');
+    }
+  };
+  const clearAll=() =>{
+    history.push('/');
+    window.location.reload();
   };
   return (
     <div className="filter-size">
       <h2 style={{marginBottom: '1em'}}>
         {' '}
-        <a href="#" onClick={cleartag}> ClearAll</a>{'  '}
-      </h2>
-      <h2 style={{marginBottom: '1em'}}>
-        {' '}
         <b>Types</b>{'  '}
+        <Link to="/" onClick={clearAll}
+          style={{marginLeft: '2em'}}>
+          ClearAll
+        </Link>
       </h2>
       <div style={{marginBottom: '0.5em'}}>
         <Checkbox
-          // checked={x}
           style={{width: '1.2em', height: '1.2em'}}
           label="Task"
-          name="Task"
-          id="1001"
+          id="Task"
           value="task"
-          onClick={add}
+          onClick={addTag}
           aria-label="uncontrolled checkbox example"
         />
       </div>
       <div>
         <Checkbox
-          onClick={add}
           style={{width: '1.2em', height: '1.2em'}}
           label="Pipelines"
-          name="Pipelines"
-          id="1002"
+          id=" "
           value="pipelines"
-
-          aria-label="uncontrolled checkbox example"
-        />
-      </div>
-      <h2 style={{marginBottom: '1em', marginTop: '1em'}}>
-        {' '}
-        <b>Verified </b>{'  '}
-        <Tooltip content={<div>
-           Verified Task and Pipelines by Tekton Catlog</div>}>
-          <InfoCircleIcon />
-        </Tooltip>
-      </h2>
-      <div style={{marginBottom: '0.5em'}}>
-        <Checkbox
-          // checked={x}
-          style={{width: '1.2em', height: '1.2em'}}
-          label="Verified"
-          id="1000"
-          value="vtask"
-          name="verified"
-          onClick={add}
+          onClick={addTag}
           aria-label="uncontrolled checkbox example"
         />
       </div>
       <h2 style={{marginBottom: '1em', marginTop: '1em'}}><b> Tags </b></h2>
       {showTags}
-
+      <Link to="/" onClick={moreTags} id="see"> {toggle} </Link>
     </div>
   );
 };
