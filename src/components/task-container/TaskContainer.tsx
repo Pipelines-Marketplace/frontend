@@ -35,7 +35,6 @@ const TaskContainer: React.FC = (props: any) => {
     }
   }
 
-
   return (
     <div className="block">
       <Gallery gutter="lg">

@@ -115,10 +115,15 @@ const SearchBar: React.FC = (props:any) => {
     tasks = task.text; // user input
     setTasks(tasks);
 
+    const regex: any = [];
+    let data : any;
     if (props.TaskData != null) {
       for (let i = 0; i < tempArr.length; i++) {
-        const regex = new RegExp(tempArr[i].name, 'gi');
-        const data = tasks.toLowerCase().match(regex);
+        regex.push(tempArr[i].name);
+        if (tasks.toLocaleLowerCase() === regex[i]) {
+          data = tasks.toLocaleLowerCase;
+        }
+        console.log(data);
         if (data != null) {
           tempTask.push(tempArr[i]);
         }
