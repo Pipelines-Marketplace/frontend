@@ -91,13 +91,14 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
       </div>;
     }
 
-
+    // if (resourcePath['tasks'] !== null) {
     taskLink = <ul>
       {
         resourcePath['tasks'].map((it:any) => <Myfun it={it} key={it} />)
       }
     </ul>;
   }
+  // }
 
 
   return (
@@ -172,10 +173,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
                             <br />
                           </div>
                           <TextContent>
-                            {/* <Text> */}
-                            {/* <b>{pipelines} </b> */}
                             {pipelineLink}
-                            {/* </Text> */}
 
                             <Text
                               style = {{paddingLeft: '0.5em',

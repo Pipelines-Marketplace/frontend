@@ -50,7 +50,7 @@ const UploadTask: React.FC = () => {
     const formdata = {
       name: data.get('task-name'),
       description: data.get('description'),
-      type: type,
+      type: type.toLowerCase(),
       tags: tags,
       github: data.get('tasklink'),
       user_id: Number(localStorage.getItem('usetrID')),
