@@ -3,10 +3,8 @@ import {useHistory, Link} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import './filter.css';
 import {Checkbox} from '@patternfly/react-core/dist/js/components';
-
 import store from '../redux/store';
 import {API_URL} from '../../constants';
-
 const Filter: React.FC = (props:any) => {
   const history = useHistory();
   const tagsSet = new Set();
@@ -25,7 +23,6 @@ const Filter: React.FC = (props:any) => {
   tags.sort((a:any, b:any) =>
   (a.name> b.name) ? 1 :
   ((b.name > a.name) ? -1 : 0));
-
   let tagArray:any=[];
   // adding tags into array after click and display task based on tags
   const displaytask = () => {
@@ -37,7 +34,6 @@ const Filter: React.FC = (props:any) => {
       tagsSet.clear();
       tagsSet.add('pipelines');
     }
-
     tagArray = Array.from(tagsSet);
     for (let i = 0; i < tagArray.length; i++) {
       if (i === 0 && tagArray[i] !== 'task') {
@@ -51,18 +47,15 @@ const Filter: React.FC = (props:any) => {
           store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: data});
         });
   };
-
   const addTag = (e: any) => {
     if (tagsSet.has(e.target.value) === false) {
       tagsSet.add(e.target.value);
     } else {
       tagsSet.delete(e.target.value);
     }
-
     displaytask();
   };
   const newtags =tags.slice(0, i);
-
   // / jsx element for show tags
   const showTags:any=
   newtags.map((it: any) => (
@@ -77,7 +70,6 @@ const Filter: React.FC = (props:any) => {
       />
     </div>
   ));
-
   const tagSize:number = tags.length;
   const [lessTags, setLessTags] = React.useState(tagSize);
   // /  for display more tags
@@ -99,7 +91,6 @@ const Filter: React.FC = (props:any) => {
     history.push('/');
     window.location.reload();
   };
-
   return (
     <div className="filter-size">
       <h2 style={{marginBottom: '1em'}}>

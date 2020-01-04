@@ -35,13 +35,9 @@ const Rating: React.FC = (props:any) => {
     setAvgRating(props.TaskName['rating'].toFixed(1));
   }
   const {taskId} = useParams();
-  // let onechecked; let twochecked;
-  // let threechecked;
-  // let fourchecked; let fivechecked;
-  // storing information of taskid and =userid
   const prevStars={
     user_id: Number(localStorage.getItem('usetrID')),
-    task_id: Number(taskId),
+    resource_id: Number(taskId),
   };
   // display previous rating for perticular user
   if (count ===0 ) {
@@ -49,6 +45,7 @@ const Rating: React.FC = (props:any) => {
       method: 'POST',
       body: JSON.stringify(prevStars),
     }).then((res)=>res.json()).then((data)=>{
+      console.log('stars', data);
       setStars(Number(data['stars']));
     });
     setCount((count) => count+1);
@@ -96,7 +93,8 @@ const Rating: React.FC = (props:any) => {
       },
       body: JSON.stringify(ratingData),
     }).then((res) => res.json())
-        .then((data) => setAvgRating(data['average'].toFixed(1)));
+        .then((data) =>
+          setAvgRating(data['average'].toFixed(1)));
   };
   const putData=(ratingData:any) =>{
     fetch(`${API_URL}/rating`, {
@@ -107,7 +105,8 @@ const Rating: React.FC = (props:any) => {
       },
       body: JSON.stringify(ratingData),
     }).then((res) => res.json())
-        .then((data) => setAvgRating(data['average'].toFixed(1)));
+        .then((data) =>
+          setAvgRating(data['average'].toFixed(1)));
   };
 
 
@@ -157,7 +156,7 @@ const Rating: React.FC = (props:any) => {
         newStar = event.target.value;
         const ratingData ={
           'user_id': Number(localStorage.getItem('usetrID')),
-          'task_id': Number(taskId),
+          'resource_id': Number(taskId),
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
@@ -167,10 +166,11 @@ const Rating: React.FC = (props:any) => {
         newStar=event.target.value;
         const ratingData ={
           'user_id': Number(localStorage.getItem('usetrID')),
-          'task_id': Number(taskId),
+          'resource_id': Number(taskId),
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
+
         putData(ratingData);
       }
     }

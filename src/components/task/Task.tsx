@@ -35,22 +35,29 @@ export interface TaskProp {
 // eslint-disable-next-line
 const Task: React.FC<TaskProp> = (props:any) => {
   const tempArr : any = [];
-
   if (props.task.tags != null) {
     tempArr.push(props.task.tags);
   } else {
     tempArr.push([]);
   }
-
+  let verifiedStatus:any;
+  if (props.task.verified === true) {
+    verifiedStatus= <div className="vtask" >
+  Verified
+    </div>;
+  }
 
   return (
     <GalleryItem>
       <Link to={'/detail/'+props.task.id}>
-        <Card className="card" isHoverable>
+        <Card className="card" isHoverable style = {{marginBottom: '2em'}}>
+          {verifiedStatus}
+
           <CardHead>
             <div>
               <img src ={imgAvatar} alt="Task" style={{height: '50px'}} />
             </div>
+
             <CardActions className="cardActions">
               <DownloadIcon style = {{marginRight: '0.2em'}} className="download"/>
               <TextContent className="text">{props.task.downloads}</TextContent>
@@ -70,7 +77,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
           </CardBody>
           <CardFooter className="catalog-tile-pf-footer">
             {
-              tempArr[0].map((tag: any) => (<Badge style={{marginLeft: '0.5em'}} key={tag.Name} className="badge">{tag}</Badge>))
+              tempArr[0].map((tag: any) => (<Badge style={{marginLeft: '0.5em', marginBottom: '1em'}} key={tag.Name} className="badge">{tag}</Badge>))
             }
           </CardFooter>
         </Card>

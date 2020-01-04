@@ -1,5 +1,6 @@
 //  eslint-enable max-len
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import Popup from 'reactjs-popup';
 import {
   Card,
   Flex,
@@ -11,6 +12,8 @@ import {
   TextContent,
   Text,
   CardActions,
+  ClipboardCopy,
+  ClipboardCopyVariant,
 } from '@patternfly/react-core';
 import {DownloadIcon, GithubIcon} from '@patternfly/react-icons';
 import {
@@ -20,8 +23,9 @@ import './index.css';
 import '@patternfly/react-core/dist/styles/base.css';
 import avatarImg from './download.png';
 import './index.css';
-import store from '../redux/store';
 import {API_URL} from '../../constants';
+import {useParams} from 'react-router';
+// import SyntaxHighlighter from 'react-syntax-highlighter';
 import Rating from '../rating/Rating';
 
 export interface BasicDetailPropObject {
@@ -40,34 +44,62 @@ export interface BasicDetailProp {
 }
 
 const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
+  const {taskId} = useParams();
   const taskArr : any = [];
+  const [resourcePath, setResourcePath]=useState();
 
   if (props.task.tags != null) {
     taskArr.push(props.task.tags);
   } else {
     taskArr.push([]);
   }
+  useEffect(() =>{
+    fetch(`${API_URL}/resource/links/${taskId}`)
+        .then((resp) => resp.json())
+        .then((data) => setResourcePath(data));
+    // eslint-disable-next-line
+  }, []);
+  const Myfun=(it:any) =>{
+    return (
 
-  // Function to download YAML file
-  const [dwnld, setDownload] = React.useState(props.task.downloads);
-  function download() {
-    fetch(`${API_URL}/download/${props.task.id}`, {
-      method: 'POST',
-    })
-        .then((response) => {
-          response.blob().then((blob) => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = props.task.name +'.yaml';
-            a.click();
+      <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
+        <FlexItem>
 
-            setDownload(props.task.downloads+ 1 );
-            props.task.downloads = dwnld + 1;
-            store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: props.task});
-          });
-        });
+          <ClipboardCopy style = {{width: '53em'}}
+            isReadOnly variant={ClipboardCopyVariant.expansion}>
+            {`$ ${'kubectl apply -f ' + it.it}`}</ClipboardCopy>
+          <br />
+        </FlexItem>
+      </Flex>
+    );
+  };
+
+
+  let taskLink :any;
+  let pipelineLink:any = '';
+  if (resourcePath !== undefined) {
+    // for displaying resources for pipelines
+    if (resourcePath['pipelines'] !== null) {
+      const pipelinePath = 'kubectl apply -f ' + resourcePath['pipelines'];
+      pipelineLink =
+      <div>
+        <Text style = {{paddingLeft: '0.5em'}}> <b>Pipeline</b> </Text>
+        <ClipboardCopy style = {{width: '53em', marginLeft: '2.8em'}} isReadOnly
+          variant={ClipboardCopyVariant.expansion}>
+          {`$ ${pipelinePath}`}</ClipboardCopy>
+
+      </div>;
+    }
+
+    // if (resourcePath['tasks'] !== null) {
+    taskLink = <ul>
+      {
+        resourcePath['tasks'].map((it:any) => <Myfun it={it} key={it} />)
+      }
+    </ul>;
   }
+  // }
+
 
   return (
     <Flex>
@@ -115,12 +147,48 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
               </FlexItem>
               <FlexItem>
                 <DownloadIcon style={{marginRight: '1em'}}/>
-                {dwnld}
+                {props.task.downloads}
               </FlexItem>
               <FlexItem style={{marginLeft: '-3em'}}>
-                <Button style={{width: '9em'}} onClick={download}>
-                Download
-                </Button>
+
+                <div>
+                  { document.queryCommandSupported('copy')}
+                  <Popup trigger={<Button className="button"
+                  > Install </Button>} modal>
+                    {(close) => (
+                      <div className="modal">
+                        <button className="close" onClick={close}>
+                              &times;
+                        </button>
+
+                        <div className="header">
+                          {props.task.name.charAt(0).toUpperCase()+
+                            props.task.name.slice(1)}
+                        </div>
+                        <div className="content" >
+                          {' '}
+                          <div style={{marginBottom: '1em', marginTop: '1em'}}>
+                            <span style={{fontSize: '1em', paddingLeft: '1em'}}>
+                            Install on Kubernetes  </span>
+                            <br />
+                          </div>
+                          <TextContent>
+                            {pipelineLink}
+
+                            <Text
+                              style = {{paddingLeft: '0.5em',
+                                marginTop: '0.5em'}}>
+                              <b>Tasks</b>
+                            </Text>
+                            {taskLink}
+                          </TextContent>
+                          <br />
+                        </div>
+                      </div>
+                    )}
+                  </Popup>
+                </div>
+
               </FlexItem>
             </Flex>
           </CardActions>
