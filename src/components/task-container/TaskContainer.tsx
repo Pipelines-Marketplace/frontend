@@ -12,6 +12,7 @@ import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
 import {fetchTaskName} from '../redux/Actions/TaskActionName';
 import './index.css';
 import {CubesIcon} from '@patternfly/react-icons';
+import Loader from '../loader/loader';
 
 export interface TaskPropData{
   name : string,
@@ -43,7 +44,7 @@ const TaskContainer: React.FC = (props: any) => {
         return (
 
           <div style = {{top: '50em',
-            bottom: '50em', right: '50em', marginLeft: '35em'}}>
+            bottom: '50em', right: '50em', marginLeft: '45em'}}>
             <EmptyState variant={EmptyStateVariant.full}>
               <EmptyStateIcon icon={CubesIcon} />
               <EmptyStateBody>
@@ -54,6 +55,14 @@ const TaskContainer: React.FC = (props: any) => {
         );
       }
     }
+  }
+
+  if (props.TaskData === undefined) {
+    return (
+      <div className="loader">
+        <Loader />
+      </div>
+    );
   }
 
   return (

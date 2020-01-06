@@ -1,5 +1,6 @@
 import React from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
+
 import {
   Tabs,
   Tab,
@@ -12,6 +13,7 @@ import './index.css';
 import ReactMarkDown from 'react-markdown';
 import CodeBlock from './CodeBlock';
 import CodeBlockReadme from './CodeBlockReadme';
+import Loader from '../loader/loader';
 
 export interface DescriptionProp {
   // id: any
@@ -43,6 +45,12 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
     } else {
       markDownYaml = props.Yaml;
     }
+  }
+
+  if (props.Description === undefined) {
+    return (
+      <Loader />
+    );
   }
 
   return (
