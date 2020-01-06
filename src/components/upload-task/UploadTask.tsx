@@ -55,7 +55,7 @@ const UploadTask: React.FC = () => {
       github: data.get('tasklink'),
       user_id: Number(localStorage.getItem('usetrID')),
     };
-    // console.log('datta', JSON.stringify(formdata));
+
     fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: JSON.stringify(formdata),

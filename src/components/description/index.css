@@ -17,3 +17,7 @@
 .readme > h2 {
     font-weight: bold;
 }
+
+.yaml > p {
+    text-align: center;
+}

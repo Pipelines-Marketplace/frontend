@@ -12,7 +12,6 @@ import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
 import {fetchTaskName} from '../redux/Actions/TaskActionName';
 import './index.css';
 import {CubesIcon} from '@patternfly/react-icons';
-// import {CubesIcon} from '@patternfly/react-icons';
 
 export interface TaskPropData{
   name : string,
@@ -31,7 +30,6 @@ const TaskContainer: React.FC = (props: any) => {
   }, []);
 
   if (props.TaskName != null) {
-    // tempArr = props.TaskName;
     for (let i = 0; i < props.TaskData.length; i++) {
       if (props.TaskName['id'] === props.TaskData[i]['id']) {
         tempArr.push(props.TaskData[i]);
@@ -43,9 +41,7 @@ const TaskContainer: React.FC = (props: any) => {
 
       if (tempArr.length === 0) {
         return (
-          // <div>
-          //   <h1 > There is no resources present.</h1>
-          // </div>
+
           <div style = {{top: '50em',
             bottom: '50em', right: '50em', marginLeft: '35em'}}>
             <EmptyState variant={EmptyStateVariant.full}>

@@ -50,7 +50,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
   return (
     <GalleryItem>
       <Link to={'/detail/'+props.task.id}>
-        <Card className="card" isHoverable style = {{marginBottom: '2em'}}>
+        <Card className="card" isHoverable style = {{marginBottom: '2em', borderRadius: '0.5em'}}>
           {verifiedStatus}
 
           <CardHead>
