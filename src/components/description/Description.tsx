@@ -53,6 +53,7 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
                 <ReactMarkDown source={markDown}
                   escapeHtml={true}
                   renderers={{code: CodeBlockReadme}}
+                  className="readme"
                 />
               </Tab>
 

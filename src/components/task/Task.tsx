@@ -66,7 +66,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
             </CardActions>
           </CardHead>
           <CardHeader className="catalog-tile-pf-header">
-            <span className="task-heading">{props.task.name}</span>
+            <span className="task-heading">{props.task.name[0].toUpperCase()+props.task.name.slice(1)}</span>
           </CardHeader>
           <CardBody className="catalog-tile-pf-body">
             <div className="catalog-tile-pf-description">
@@ -77,7 +77,8 @@ const Task: React.FC<TaskProp> = (props:any) => {
           </CardBody>
           <CardFooter className="catalog-tile-pf-footer">
             {
-              tempArr[0].map((tag: any) => (<Badge style={{marginLeft: '0.5em', marginBottom: '1em'}} key={tag.Name} className="badge">{tag}</Badge>))
+              tempArr[0].map((tag: any) => (<Badge style={{marginLeft: '0.2em',
+                marginBottom: '1em'}} key={tag.Name} className="badge">{tag}</Badge>))
             }
           </CardFooter>
         </Card>

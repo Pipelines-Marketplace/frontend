@@ -38,7 +38,6 @@ export interface BasicDetailPropObject {
     github: string
     tags : []
 }
-
 export interface BasicDetailProp {
   task: BasicDetailPropObject
 }
@@ -67,7 +66,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
 
           <ClipboardCopy style = {{width: '53em'}}
             isReadOnly variant={ClipboardCopyVariant.expansion}>
-            {`$ ${'kubectl apply -f ' + it.it}`}</ClipboardCopy>
+            {`kubectl apply -f ${it.it}`}</ClipboardCopy>
           <br />
         </FlexItem>
       </Flex>
@@ -86,19 +85,19 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
         <Text style = {{paddingLeft: '0.5em'}}> <b>Pipeline</b> </Text>
         <ClipboardCopy style = {{width: '53em', marginLeft: '2.8em'}} isReadOnly
           variant={ClipboardCopyVariant.expansion}>
-          {`$ ${pipelinePath}`}</ClipboardCopy>
+          {`${pipelinePath}`}</ClipboardCopy>
 
       </div>;
     }
 
-    // if (resourcePath['tasks'] !== null) {
-    taskLink = <ul>
-      {
-        resourcePath['tasks'].map((it:any) => <Myfun it={it} key={it} />)
-      }
-    </ul>;
+    if (resourcePath['tasks'] !== null) {
+      taskLink = <ul>
+        {
+          resourcePath['tasks'].map((it:any) => <Myfun it={it} key={it} />)
+        }
+      </ul>;
+    }
   }
-  // }
 
 
   return (
@@ -167,8 +166,9 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
                         </div>
                         <div className="content" >
                           {' '}
-                          <div style={{marginBottom: '1em', marginTop: '1em'}}>
-                            <span style={{fontSize: '1em', paddingLeft: '1em'}}>
+                          <div style={{marginBottom: '1em',
+                            marginLeft: '0.25em', marginTop: '1em'}}>
+                            <span style={{fontSize: '1em'}}>
                             Install on Kubernetes  </span>
                             <br />
                           </div>

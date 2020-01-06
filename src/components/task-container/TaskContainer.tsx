@@ -1,10 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Gallery} from '@patternfly/react-core';
+import {Gallery,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateBody,
+  EmptyStateVariant,
+}
+  from '@patternfly/react-core';
 import Task from '../task/Task';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
 import {fetchTaskName} from '../redux/Actions/TaskActionName';
 import './index.css';
+import {CubesIcon} from '@patternfly/react-icons';
+// import {CubesIcon} from '@patternfly/react-icons';
 
 export interface TaskPropData{
   name : string,
@@ -32,6 +40,23 @@ const TaskContainer: React.FC = (props: any) => {
   } else {
     if (props.TaskData != null) {
       tempArr = props.TaskData;
+
+      if (tempArr.length === 0) {
+        return (
+          // <div>
+          //   <h1 > There is no resources present.</h1>
+          // </div>
+          <div style = {{top: '50em',
+            bottom: '50em', right: '50em', marginLeft: '35em'}}>
+            <EmptyState variant={EmptyStateVariant.full}>
+              <EmptyStateIcon icon={CubesIcon} />
+              <EmptyStateBody>
+          No match found.
+              </EmptyStateBody>
+            </EmptyState>
+          </div>
+        );
+      }
     }
   }
 

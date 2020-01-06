@@ -62,7 +62,7 @@ const SearchBar: React.FC = (props:any) => {
     <DropdownItem key="link" onClick = {sortByName}>Name</DropdownItem>,
     <DropdownItem key="link" onClick = {sortByDownloads}>Downloads</DropdownItem>,
     <DropdownItem key="link" onClick = {sortByRatings}>Ratings</DropdownItem>,
-    <DropdownItem key="link" onClick = {sortByDownloads}>Favourites</DropdownItem>,
+    // <DropdownItem key="link" onClick = {sortByDownloads}>Favourites</DropdownItem>,
   ];
   const ontoggle = (isOpen: React.SetStateAction<boolean>) => set(isOpen);
   const onSelect = () => set(!isOpen);
@@ -174,7 +174,7 @@ const SearchBar: React.FC = (props:any) => {
       <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
         <React.Fragment>
 
-          <InputGroup style={{width: '70%', marginLeft: '1em'}}>
+          <InputGroup style={{width: '70%', marginLeft: '1m'}}>
             <div style = {{width: '100%', boxShadow: 'rgba'}}>
               <TextInput value = {textValue} type="search"
                 onChange={onTextChanged} placeholder = "Search for task or pipeline"

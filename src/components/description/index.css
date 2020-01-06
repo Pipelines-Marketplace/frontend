@@ -9,3 +9,11 @@
 .tabContent{
     margin:1em;
 }
+
+.readme > h2:first-child, .readme > h1:first-child  {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+.readme > h2 {
+    font-weight: bold;
+}
