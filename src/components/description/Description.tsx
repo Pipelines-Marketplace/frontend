@@ -36,6 +36,15 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
     }
   }
 
+  let markDownYaml : string = '';
+  if (props.Yaml != null) {
+    if (props.Yaml.match('noyaml')) {
+      markDownYaml = 'YAML file not found';
+    } else {
+      markDownYaml = props.Yaml;
+    }
+  }
+
   return (
     <Card style={{marginLeft: '9em', marginRight: '3em', width: '90em'}}>
 
@@ -53,6 +62,7 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
                 <ReactMarkDown source={markDown}
                   escapeHtml={true}
                   renderers={{code: CodeBlockReadme}}
+                  className="readme"
                 />
               </Tab>
 
@@ -61,9 +71,10 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
                 <hr
                   style = {{backgroundColor: '#EDEDED', marginBottom: '1em'}}>
                 </hr>
-                <ReactMarkDown source={props.Yaml}
+                <ReactMarkDown source={markDownYaml}
                   escapeHtml={true}
                   renderers={{code: CodeBlock}}
+                  className = "yaml"
                 />
               </Tab>
 

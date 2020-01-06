@@ -55,7 +55,7 @@ const UploadTask: React.FC = () => {
       github: data.get('tasklink'),
       user_id: Number(localStorage.getItem('usetrID')),
     };
-    console.log('datta', JSON.stringify(formdata));
+
     fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: JSON.stringify(formdata),
@@ -98,6 +98,8 @@ const UploadTask: React.FC = () => {
           Pipeline
     </DropdownItem>,
   ];
+
+
   return (
     <Form id = "form" className="flex-size" onSubmit={submitdata}
       style = {{marginLeft: '5em'}}>
@@ -107,7 +109,8 @@ const UploadTask: React.FC = () => {
         label="Name"
         isRequired
         fieldId="task-name"
-        helperText="Please provide your task name"
+        helperText="Please provide metadata name
+         of  Task/Pipeline YAML file."
       >
         <TextInput
           isRequired
@@ -120,7 +123,7 @@ const UploadTask: React.FC = () => {
       <FormGroup
         isRequired label="Description"
         helperText="Please fill the description
-        of your task."
+        of your Task/pipeline."
         fieldId="description"
       >
         <TextArea style = {{height: '7em'}}
@@ -131,7 +134,7 @@ const UploadTask: React.FC = () => {
       <FormGroup label="Tags"
         isRequired fieldId="task-tag"
         helperText="Please provide
-         tags name of your task"
+         tags name of your Task/Pipeline"
       >
         <div className="tags-input">
           <ChipGroup>
@@ -157,6 +160,7 @@ const UploadTask: React.FC = () => {
         </div>
       </FormGroup>
       <FormGroup label="Type"
+        isRequired
         fieldId="task-tag">
         <div>
           <Dropdown style = {{backgroundColor: 'whitesmoke'}}
@@ -172,7 +176,7 @@ const UploadTask: React.FC = () => {
         label="Github"
         isRequired
         helperText="Please provide the
-         github link of your task"
+         github link of your Task/Pipeline"
         fieldId="tasklink"
       >
         <TextInput
@@ -186,7 +190,7 @@ const UploadTask: React.FC = () => {
         <Button id="Button"
           variant="primary"
           type="submit"
-        >Submit Task</Button>
+        >Submit</Button>
         <Link to="/" >
           <Button variant="secondary"
             type="submit">Cancel</Button>

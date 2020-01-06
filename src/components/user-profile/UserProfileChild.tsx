@@ -38,46 +38,47 @@ const UserProfileChild: React.FC<TaskProp> = (props:any) => {
       {
         props.task.map((item: any) => {
           return (
-            <Link to={'/detail/'+item.id} key= "">
-              <Card style={{marginLeft: '13em', marginRight: '7em',
-                marginTop: '2em', width: '100%', padding: '0'}} key = "">
-                <CardHead>
-                  <img src ={imgAvatar} alt="Task"
-                    style={{height: '3em', marginLeft: '2em'}}
-                  />
 
-                  <Flex
-                    breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
-                    <FlexItem>
-                      <TextContent
-                        style={{marginLeft: '3em', marginTop: '0.5em'}}>
+            <Card style={{marginLeft: '13em', marginRight: '7em',
+              marginTop: '2em', width: '100%', padding: '0'}} key = "">
+              <CardHead>
+                <img src ={imgAvatar} alt="Task"
+                  style={{height: '3em', marginLeft: '2em'}}
+                />
+
+                <Flex
+                  breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
+                  <FlexItem>
+                    <TextContent
+                      style={{marginLeft: '3em', marginTop: '0.5em'}}>
+                      <Link to={'/detail/'+item.id} key= "">
                         {item.name}
-                      </TextContent>
+                      </Link>
+                    </TextContent>
 
-                    </FlexItem>
-                  </Flex>
+                  </FlexItem>
+                </Flex>
 
-                  <CardActions style={{marginRight: '5em'}}>
+                <CardActions style={{marginRight: '5em'}}>
 
-                    <DownloadIcon
-                      style = {{marginRight: '0.2em'}} className="download"/>
-                    <TextContent className="text">{item.downloads}</TextContent>
+                  <DownloadIcon
+                    style = {{marginRight: '0.2em'}} className="download"/>
+                  <TextContent className="text">{item.downloads}</TextContent>
 
-                    <OkIcon style={{color: 'green'}}/>
-                    <TextContent className="text">{item.rating}</TextContent>
+                  <OkIcon style={{color: 'green'}}/>
+                  <TextContent className="text">{item.rating}</TextContent>
 
-                    <Button id = {item.id} variant="danger"
-                      style = {{marginLeft: '3em'}} type="submit"
-                      onClick = {deleteFunction}>Delete
-                      <Remove2Icon
-                        style = {{marginLeft: '1em', marginTop: '0.3em'}}/>
-                    </Button>
+                  <Button id = {item.id} variant="danger"
+                    style = {{marginLeft: '3em'}} type="submit"
+                    onClick = {deleteFunction}>Delete
+                    <Remove2Icon
+                      style = {{marginLeft: '1em', marginTop: '0.3em'}}/>
+                  </Button>
 
-                  </CardActions>
-                </CardHead>
+                </CardActions>
+              </CardHead>
 
-              </Card>
-            </Link>
+            </Card>
           );
         },
         )}

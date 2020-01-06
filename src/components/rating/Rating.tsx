@@ -45,7 +45,6 @@ const Rating: React.FC = (props:any) => {
       method: 'POST',
       body: JSON.stringify(prevStars),
     }).then((res)=>res.json()).then((data)=>{
-      console.log('stars', data);
       setStars(Number(data['stars']));
     });
     setCount((count) => count+1);

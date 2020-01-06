@@ -128,10 +128,6 @@ const App: React.FC<mainProps> = () => {
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
       logoProps={logoProps}
       toolbar={PageToolbar}
-      // -------------/
-      // showNavToggle
-      // isNavOpen={isNavOpen}
-      // onNavToggle={onNavToggle}
     />
 
 
@@ -140,14 +136,12 @@ const App: React.FC<mainProps> = () => {
   return (
     <Router>
       <Page header={Header}>
-        {/* <PageSection variant={PageSectionVariants.light}> */}
         <Route exact path="/" component={BackgroundImageHeader} />
         <Route exact path="/search" component={BackgroundImageHeader} />
 
         {/* </PageSection> */}
         <PageSection>
           <Route exact path="/" component={SearchBar} />
-          {/* <Route exact path="/uploadtask" component={Uploadtask} /> */}
           <Route exact path="/detail/:taskId" component={BasicDetailParent} />
           <Route exact path="/search" component={SearchBar} />
         </PageSection>
