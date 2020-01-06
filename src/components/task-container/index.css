@@ -4,3 +4,7 @@
     min-width: 80em;
     /* margin-top:2em; */
 }
+
+.loader {
+    margin-left: -10em;
+}
