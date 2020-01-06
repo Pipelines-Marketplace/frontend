@@ -116,7 +116,7 @@ const BasicDetail: React.FC<BasicDetailProp> = (props: BasicDetailProp) => {
             <Text style={{fontSize: '1em'}}>
               <GithubIcon size="md"
                 style = {{marginRight: '0.5em', marginBottom: '-0.3em'}} />
-              <a href={props.task.github} >Github</a>
+              <a href={props.task.github} target = "_">Github</a>
             </Text>
 
             <Grid>
