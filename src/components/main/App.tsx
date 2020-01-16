@@ -14,6 +14,7 @@ import '@patternfly/react-core/dist/styles/base.css';
 import logo from '../assets/logo/main.png';
 import Community from '../community/Community';
 import Filter from '../filter/Filter';
+import UserProfile from '../user-profile/UserProfile';
 import {
   Button,
   ButtonVariant,
@@ -76,7 +77,9 @@ const App: React.FC<mainProps> = () => {
       </span>
       {' '}
     </Link>;
-    userimage = <Avatar src={imgAvatar} alt="" />;
+    userimage = <Link to = "/user-profile">
+      <Avatar src={imgAvatar} alt="" />
+    </Link>;
   }
 
   // code for header contents
@@ -125,10 +128,6 @@ const App: React.FC<mainProps> = () => {
       logo={<Brand src={logo} alt="Pipelines-Marketplace Logo" />}
       logoProps={logoProps}
       toolbar={PageToolbar}
-      // -------------/
-      // showNavToggle
-      // isNavOpen={isNavOpen}
-      // onNavToggle={onNavToggle}
     />
 
 
@@ -137,14 +136,12 @@ const App: React.FC<mainProps> = () => {
   return (
     <Router>
       <Page header={Header}>
-        {/* <PageSection variant={PageSectionVariants.light}> */}
         <Route exact path="/" component={BackgroundImageHeader} />
         <Route exact path="/search" component={BackgroundImageHeader} />
 
         {/* </PageSection> */}
         <PageSection>
           <Route exact path="/" component={SearchBar} />
-          {/* <Route exact path="/uploadtask" component={Uploadtask} /> */}
           <Route exact path="/detail/:taskId" component={BasicDetailParent} />
           <Route exact path="/search" component={SearchBar} />
         </PageSection>
@@ -157,6 +154,7 @@ const App: React.FC<mainProps> = () => {
               <Route exact path="/" component={Filter} />
             </FlexItem>
             <FlexItem>
+              <Route exact path="/user-profile" component={UserProfile}/>
               <Route exact path="/upload" component={UploadTask} />
               <Route exact path="/" component={TaskContainer} />
               <Route path="/search" component={TaskContainer} />

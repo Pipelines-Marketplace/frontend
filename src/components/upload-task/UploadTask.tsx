@@ -20,6 +20,7 @@ import {
 import {API_URL} from '../../constants';
 const UploadTask: React.FC = () => {
   const intags: string[] = [];
+  const [type, setType]=useState('Task');
   const [uploadMessage, setUploadMessage] = useState(' ');
   const [tags, setTags] = useState(intags);
   const [load, setLoad]=useState();
@@ -45,16 +46,16 @@ const UploadTask: React.FC = () => {
   const submitdata = (event: any) => {
     event.preventDefault();
     setLoad(spiner);
-    // setTimeout(() => window.location.reload(true), 3000);
     const data = new FormData(event.target);
     const formdata = {
       name: data.get('task-name'),
       description: data.get('description'),
-      type: 'Task',
+      type: type.toLowerCase(),
       tags: tags,
       github: data.get('tasklink'),
       user_id: Number(localStorage.getItem('usetrID')),
     };
+
     fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: JSON.stringify(formdata),
@@ -64,7 +65,8 @@ const UploadTask: React.FC = () => {
       },
     }).then((resp) => resp.json())
         .then((data)=>
-          setUploadMessage(alertMessage(data)));
+          setUploadMessage(alertMessage(data)))
+        .then((error:any) => console.log(error));
   };
   const addTags = (event: any) => {
     event.preventDefault();
@@ -77,20 +79,29 @@ const UploadTask: React.FC = () => {
     setTags([...tags.filter((val, index) =>
       index !== indexToRemove)]);
   };
+  const typeset=(e:any) =>{
+    setType(e.target.text);
+  };
+
   const [isOpen, set] = useState(false);
   const ontoggle =
   (isOpen: React.SetStateAction<boolean>) => set(isOpen);
   const onSelect = () => set(!isOpen);
   const dropdownItems = [
-    <DropdownItem key="link">
+    <DropdownItem key="link"
+      onClick={typeset}
+    >
       Task</DropdownItem>,
     <DropdownItem key="action"
-      component="button">
+      onClick={typeset}
+    >
           Pipeline
     </DropdownItem>,
   ];
+
+
   return (
-    <Form className="flex-size" onSubmit={submitdata}
+    <Form id = "form" className="flex-size" onSubmit={submitdata}
       style = {{marginLeft: '5em'}}>
       <h1 style={{fontSize: '2em',
         fontFamily: 'bold'}}>Upload </h1>
@@ -98,7 +109,8 @@ const UploadTask: React.FC = () => {
         label="Name"
         isRequired
         fieldId="task-name"
-        helperText="Please provide your task name"
+        helperText="Please provide metadata name
+         of  Task/Pipeline YAML file."
       >
         <TextInput
           isRequired
@@ -111,7 +123,7 @@ const UploadTask: React.FC = () => {
       <FormGroup
         isRequired label="Description"
         helperText="Please fill the description
-        of your task."
+        of your Task/pipeline."
         fieldId="description"
       >
         <TextArea style = {{height: '7em'}}
@@ -122,7 +134,7 @@ const UploadTask: React.FC = () => {
       <FormGroup label="Tags"
         isRequired fieldId="task-tag"
         helperText="Please provide
-         tags name of your task"
+         tags name of your Task/Pipeline"
       >
         <div className="tags-input">
           <ChipGroup>
@@ -148,12 +160,13 @@ const UploadTask: React.FC = () => {
         </div>
       </FormGroup>
       <FormGroup label="Type"
+        isRequired
         fieldId="task-tag">
         <div>
           <Dropdown style = {{backgroundColor: 'whitesmoke'}}
             onSelect = {onSelect}
             toggle={<DropdownToggle onToggle={ontoggle}>
-            Task</DropdownToggle>} // provide task type by default
+              {type}</DropdownToggle>} // provide task type by default
             isOpen = {isOpen}
             dropdownItems={dropdownItems}
           />
@@ -163,7 +176,7 @@ const UploadTask: React.FC = () => {
         label="Github"
         isRequired
         helperText="Please provide the
-         github link of your task"
+         github link of your Task/Pipeline"
         fieldId="tasklink"
       >
         <TextInput
@@ -177,7 +190,7 @@ const UploadTask: React.FC = () => {
         <Button id="Button"
           variant="primary"
           type="submit"
-        >Submit Task</Button>
+        >Submit</Button>
         <Link to="/" >
           <Button variant="secondary"
             type="submit">Cancel</Button>

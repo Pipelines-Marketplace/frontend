@@ -26,7 +26,7 @@ const CodeBlock = (props:any) => {
         <div style = {{position: 'relative'}}>
           <div>
             <CopyIcon
-              style = {{position: 'absolute', marginLeft: '66em', height: '2em',
+              style = {{position: 'absolute', marginLeft: '85em', height: '2em',
                 marginTop: '0.7em', cursor: 'pointer'}}
               onClick = {copy}>
             </CopyIcon>

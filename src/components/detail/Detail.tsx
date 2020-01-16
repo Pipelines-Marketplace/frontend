@@ -1,6 +1,5 @@
 import React from 'react';
 import Description from '../description/Description';
-import Rating from '../rating/Rating';
 import {connect} from 'react-redux';
 import {
   Flex,
@@ -23,6 +22,7 @@ const Detail: React.FC = (props: any) => {
     tempTask.push(props.TaskName);
   }
 
+
   let taskDescription : string = '';
   if (props.TaskName != null) {
     taskDescription = (props.TaskName['description']);
@@ -38,9 +38,6 @@ const Detail: React.FC = (props: any) => {
             Description = {props.TaskDescription}
             Yaml = {yamlData}
             userTaskDescription = {taskDescription} />
-        </FlexItem>
-        <FlexItem>
-          <Rating />
         </FlexItem>
       </Flex>
     </div>

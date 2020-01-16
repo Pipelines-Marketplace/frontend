@@ -42,11 +42,11 @@
 	width: 1em;
 	height: 1em;
 	margin-top: -0.5em;
-	-webkit-animation: spinner 3000ms ;
-	-moz-animation: spinner 3000ms ;
-	-ms-animation: spinner 3000ms ;
-	-o-animation: spinner 3000ms ;
-	animation: spinner 3000ms ;
+	-webkit-animation: spinner 6000ms ;
+	-moz-animation: spinner 6000ms ;
+	-ms-animation: spinner 6000ms ;
+	-o-animation: spinner 6000ms ;
+	animation: spinner 6000ms ;
 	border-radius: 2em;
 	-webkit-box-shadow:
 	 rgba(255,255,255, 0.75) 1.5em 0 0 0,
