@@ -25,9 +25,9 @@ import {
   PageSection,
   Toolbar,
   ToolbarGroup,
-  Flex,
-  FlexItem,
   Avatar,
+  Grid,
+  GridItem,
 } from '@patternfly/react-core';
 import Detail from '../detail/Detail';
 import BasicDetailParent from '../basic-detail/BasicDetailParent';
@@ -141,25 +141,27 @@ const App: React.FC<mainProps> = () => {
 
         {/* </PageSection> */}
         <PageSection>
-          <Route exact path="/" component={SearchBar} />
-          <Route exact path="/detail/:taskId" component={BasicDetailParent} />
-          <Route exact path="/search" component={SearchBar} />
+          <GridItem span={1}>
+
+          </GridItem>
+          <GridItem span={9}>
+            <Route exact path="/" component={SearchBar} />
+            <Route exact path="/detail/:taskId" component={BasicDetailParent} />
+            <Route exact path="/search" component={SearchBar} />
+          </GridItem>
         </PageSection>
         <PageSection>
-          <Flex
-            className="example-border"
-            breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}
-          >
-            <FlexItem>
+          <Grid sm={6} md={4} lg={4} xl2={1} >
+            <GridItem span={1} >
               <Route exact path="/" component={Filter} />
-            </FlexItem>
-            <FlexItem>
+            </GridItem>
+            <GridItem span={9} style = {{marginLeft: '2em'}} >
               <Route exact path="/user-profile" component={UserProfile}/>
               <Route exact path="/upload" component={UploadTask} />
               <Route exact path="/" component={TaskContainer} />
               <Route path="/search" component={TaskContainer} />
-            </FlexItem>
-          </Flex>
+            </GridItem>
+          </Grid>
           <Route exact path="/detail/:taskId" component={Detail} />
           <Route path="/community" component={Community} />
         </PageSection>
