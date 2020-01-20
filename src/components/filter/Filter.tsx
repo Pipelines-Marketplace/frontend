@@ -192,7 +192,7 @@ const Filter: React.FC = (props:any) => {
   };
 
   return (
-    <div className="filter-size">
+    <div className="filter-size" >
       <h2 style={{marginBottom: '1em'}}>
         {' '}
         <Button component='a' variant='link'
