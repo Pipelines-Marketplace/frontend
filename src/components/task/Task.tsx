@@ -15,7 +15,8 @@ import {
   CardHeader,
   CardFooter,
   CardBody,
-  CardActions} from '@patternfly/react-core';
+  CardActions,
+  Label} from '@patternfly/react-core';
 import {OkIcon, DownloadIcon} from '@patternfly/react-icons';
 
 import imgAvatar from '../assets/logo/imgAvatar.png';
@@ -43,7 +44,7 @@ const Task: React.FC<TaskProp> = (props:any) => {
   let verifiedStatus:any;
   if (props.task.verified === true) {
     verifiedStatus= <div className="vtask" >
-  Verified
+      <Label isCompact style = {{backgroundColor: '#B8AD8B', fontSize: '0.9em'}}>Verified</Label>
     </div>;
   }
 

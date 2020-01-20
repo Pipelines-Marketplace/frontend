@@ -12,13 +12,14 @@ import {API_URL} from '../../constants';
 import {InfoCircleIcon} from '@patternfly/react-icons';
 import store from '../redux/store';
 import {FETCH_TASK_SUCCESS} from '../redux/Actions/TaskActionType';
+
 const Filter: React.FC = (props:any) => {
   const [, setTags] = useState();
   const [status, setStatus]=useState();
   const [max, setMax]=useState(18);
   const [, setX]=useState(1); //
   const [clear, setClear]=useState(' ');
-  const [show, setShow]=useState('seeMore');
+  const [show, setShow]=useState('Show all');
   const tagitem :any =[{id: '1000', value: 'task', isChecked: false},
     {id: '1001', value: 'pipeline', isChecked: false},
     {id: '1002', value: 'verified', isChecked: false}];
@@ -73,10 +74,22 @@ const Filter: React.FC = (props:any) => {
       if (it.isChecked === true) {
         tagsurl+=it.value+'|';
       }
+      // if (it.isChecked === true) {
+      //   setClear('ClearAll');
+      // }
+    });
+    let flag:any= false;
+    status.forEach((it:any) =>{
       if (it.isChecked === true) {
-        setClear('ClearAll');
+        flag=true;
       }
     });
+    if (flag === true) {
+      setClear('ClearAll');
+    } else {
+      setClear(' ');
+    }
+
 
     fetch(`${API_URL}/resources/${typeurl}/${verifiedurl}?tags=${tagsurl} `)
         .then((resp) => resp.json())
@@ -171,10 +184,10 @@ const Filter: React.FC = (props:any) => {
 
     if (x< status.length) {
       setMax(status.length);
-      setShow('seeLess');
+      setShow('Show less');
     } else {
       setMax((x) => x-13);
-      setShow('seeMore');
+      setShow('Show all');
     }
   };
 
@@ -194,7 +207,7 @@ const Filter: React.FC = (props:any) => {
         {' '}
         <b>Verified </b>{'  '}
         <Tooltip content={<div>
-           Verified Task and Pipelines by Tekton Catlog</div>}>
+           Verified Task and Pipelines by Tekton Catalog</div>}>
           <InfoCircleIcon />
         </Tooltip>
       </h2>

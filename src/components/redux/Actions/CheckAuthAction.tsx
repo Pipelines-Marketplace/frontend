@@ -10,12 +10,5 @@ function checkAuthentication() {
     payload: isAuthenticated,
 
   });
-//   return function(dispatch:any) {
-//     return dispatch({
-//       type: CHECK_USER_AUTHENTICATION,
-//       payload: isAuthenticated,
-//     });
-//   };
-// };
 }
 export default checkAuthentication;
