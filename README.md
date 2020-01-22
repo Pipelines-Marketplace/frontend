@@ -13,27 +13,27 @@ Backend service can be found on : <https://github.com/Pipelines-Marketplace/back
 
 
 ## Run locally
-Fork and clone the application in local:
+* Fork and clone the application in local:
 ```
 git clone https://github.com/Pipelines-Marketplace/frontend/
 ```
 
-Go into the project folder and type the following command and further install the npm packages
+* Go into the project folder and type the following command and further install the npm packages
 
 ```
 cd frontend/
 npm install
 ```
 
-Create a .env file and use the backend service route and give it to the environment variable REACT_APP_BACKEND_API 
+* Create a .env file and use the backend service route and give it to the environment variable REACT_APP_BACKEND_API 
 
-Build the application 
+* Build the application 
 
 ```
 npm run build
 ```
 
-Run the proxy server.The application is exposed on port 3000
+* Run the proxy server.The application is exposed on port 3000
 
 ```
 node server.js
