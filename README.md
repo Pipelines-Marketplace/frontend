@@ -12,7 +12,7 @@ Pipelines Marketplace is a web based platform for developers to discover, share 
 Backend service can be found on : <https://github.com/Pipelines-Marketplace/backend>
 
 
-## Installation
+## Run locally
 Fork and clone the application in local:
 ```
 git clone https://github.com/Pipelines-Marketplace/frontend/
@@ -23,5 +23,20 @@ Go into the project folder and type the following command and further install th
 ```
 cd frontend/
 npm install
-npm start
 ```
+
+Create a .env file and use the backend service route and give it to the environment variable REACT_APP_BACKEND_API 
+
+Build the application 
+
+```
+npm run build
+```
+
+Run the proxy server.The application is exposed on port 3000
+
+```
+node server.js
+```
+
+
