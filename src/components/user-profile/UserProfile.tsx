@@ -28,7 +28,7 @@ const UserProfile: React.FC = (props: any) => {
           {
             <>
               <Title headingLevel="h5" size="lg"
-                style = {{marginLeft: '7em', fontSize: '2em'}}>
+                style = {{marginLeft: '1.5em', fontSize: '2em'}}>
                   My Resources
               </Title>
               <UserProfileChild task = {userResource} />

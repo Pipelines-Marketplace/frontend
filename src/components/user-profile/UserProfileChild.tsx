@@ -39,7 +39,7 @@ const UserProfileChild: React.FC<TaskProp> = (props:any) => {
         props.task.map((item: any) => {
           return (
 
-            <Card style={{marginLeft: '13em', marginRight: '7em',
+            <Card style={{marginLeft: '2em', marginRight: '7em',
               marginTop: '2em', width: '100%', padding: '0'}} key = "">
               <CardHead>
                 <img src ={imgAvatar} alt="Task"
