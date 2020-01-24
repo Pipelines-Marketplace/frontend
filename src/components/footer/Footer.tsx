@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
               The Tekton Pipelines project
               provides k8s-style resources for declaring
               CI/CD-style pipelines.Click here to learn more about
-                  <a href="https://github.com/tektoncd/pipeline">Tekton</a>
+                  <a href="https://github.com/tektoncd/pipeline" target="_">Tekton</a>
                 </Text>
               </GridItem>
             </Grid>

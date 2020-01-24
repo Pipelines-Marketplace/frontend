@@ -16,6 +16,7 @@ import {
   Card,
 } from '@patternfly/react-core';
 import {fetchTaskSuccess} from '../redux/Actions/TaskAction';
+import {fetchTaskName} from '../redux/Actions/TaskActionName';
 import store from '../redux/store';
 
 export interface TaskPropData{
@@ -26,6 +27,7 @@ export interface TaskPropData{
   downloads : number,
   yaml : string,
   tags : [],
+  verified: boolean,
 }
 
 const SearchBar: React.FC = (props:any) => {
@@ -48,6 +50,7 @@ const SearchBar: React.FC = (props:any) => {
         downloads: task.downloads,
         yaml: task.yaml,
         tags: task.tags,
+        verified: task.verified,
       };
       return taskData;
     });
@@ -59,7 +62,7 @@ const SearchBar: React.FC = (props:any) => {
     <DropdownItem key="link" onClick = {sortByName}>Name</DropdownItem>,
     <DropdownItem key="link" onClick = {sortByDownloads}>Downloads</DropdownItem>,
     <DropdownItem key="link" onClick = {sortByRatings}>Ratings</DropdownItem>,
-    <DropdownItem key="link" onClick = {sortByDownloads}>Favourites</DropdownItem>,
+    // <DropdownItem key="link" onClick = {sortByDownloads}>Favourites</DropdownItem>,
   ];
   const ontoggle = (isOpen: React.SetStateAction<boolean>) => set(isOpen);
   const onSelect = () => set(!isOpen);
@@ -87,6 +90,7 @@ const SearchBar: React.FC = (props:any) => {
         return -1;
       }
     });
+
     store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: taskarr});
   }
 
@@ -114,17 +118,22 @@ const SearchBar: React.FC = (props:any) => {
     tasks = task.text; // user input
     setTasks(tasks);
 
+    const regex: any = [];
+    let data : any;
     if (props.TaskData != null) {
       for (let i = 0; i < tempArr.length; i++) {
-        const regex = new RegExp(tempArr[i].name, 'gi');
-        const data = tasks.toLowerCase().match(regex);
+        regex.push(tempArr[i].name);
+        if (tasks.toLocaleLowerCase() === regex[i]) {
+          data = tasks.toLocaleLowerCase;
+        }
         if (data != null) {
           tempTask.push(tempArr[i]);
         }
       }
     }
+
     if (tempTask.length > 0) {
-      store.dispatch({type: 'FETCH_TASK_SUCCESS', payload: tempTask});
+      store.dispatch({type: 'FETCH_TASK_NAME', payload: tempTask[0]});
     }
   };
 
@@ -165,10 +174,10 @@ const SearchBar: React.FC = (props:any) => {
       <Flex breakpointMods={[{modifier: 'flex-1', breakpoint: 'lg'}]}>
         <React.Fragment>
 
-          <InputGroup style={{width: '70%', marginLeft: '1em'}}>
+          <InputGroup style={{width: '70%', marginLeft: '1m'}}>
             <div style = {{width: '100%', boxShadow: 'rgba'}}>
               <TextInput value = {textValue} type="search"
-                onChange={onTextChanged}
+                onChange={onTextChanged} placeholder = "Search for task or pipeline"
                 style = {{outline: 'none', boxSizing: 'border-box', padding: '10px 5px'}}/>
 
               <div style = {{position: 'relative'}}>
@@ -217,6 +226,6 @@ const mapStateToProps = (state: any) => ({
   TaskData: state.TaskData.TaskData,
 });
 
-export default connect(mapStateToProps, {fetchTaskSuccess})(SearchBar);
+export default connect(mapStateToProps, {fetchTaskSuccess, fetchTaskName})(SearchBar);
 
 

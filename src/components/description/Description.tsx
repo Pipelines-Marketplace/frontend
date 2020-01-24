@@ -1,21 +1,19 @@
 import React from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
+
 import {
   Tabs,
   Tab,
   Card,
-  CardHead,
   CardBody,
   Grid,
   GridItem,
-  Text,
-  TextContent,
 } from '@patternfly/react-core';
-import {InfoCircleIcon} from '@patternfly/react-icons';
 import './index.css';
 import ReactMarkDown from 'react-markdown';
 import CodeBlock from './CodeBlock';
 import CodeBlockReadme from './CodeBlockReadme';
+import Loader from '../loader/loader';
 
 export interface DescriptionProp {
   // id: any
@@ -40,36 +38,54 @@ const Description: React.FC<DescriptionProp> = (props: any) => {
     }
   }
 
+  let markDownYaml : string = '';
+  if (props.Yaml != null) {
+    if (props.Yaml.match('noyaml')) {
+      markDownYaml = 'YAML file not found';
+    } else {
+      markDownYaml = props.Yaml;
+    }
+  }
+
+  if (props.Description === undefined) {
+    return (
+      <Loader />
+    );
+  }
+
   return (
-    <Card style={{marginLeft: '7em', marginRight: '3em', width: '71em'}}>
-      <CardHead>
-        <InfoCircleIcon color="blue" size="sm"
-          style = {{marginRight: '0.5em', marginBottom: '0.2em'}}/>
-        <TextContent>
-          <Text style = {{fontWeight: 'bold'}} >Description</Text>
-        </TextContent>
-      </CardHead>
+    <Card style={{marginLeft: '9em', marginRight: '3em', width: '90em'}}>
+
       <CardBody>
         <Grid style={{width: '100%'}}>
           <GridItem span={12}>
-            <Tabs isFilled activeKey={activeTabKey} onSelect={handleTabClick}>
-              <Tab eventKey={0} title="Description">
+            <Tabs activeKey={activeTabKey} isSecondary
+              onSelect={handleTabClick} style = {{boxShadow: 'none'}}>
+
+              <Tab eventKey={0} title="Description"
+                style = {{backgroundColor: 'white'}}>
+                <hr
+                  style = {{backgroundColor: '#EDEDED', marginBottom: '1em'}}>
+                </hr>
                 <ReactMarkDown source={markDown}
                   escapeHtml={true}
                   renderers={{code: CodeBlockReadme}}
+                  className="readme"
                 />
               </Tab>
 
-              <Tab eventKey={1} title="YAML">
-                <ReactMarkDown source={props.Yaml}
+              <Tab eventKey={1} title="YAML"
+                style = {{backgroundColor: 'white'}}>
+                <hr
+                  style = {{backgroundColor: '#EDEDED', marginBottom: '1em'}}>
+                </hr>
+                <ReactMarkDown source={markDownYaml}
                   escapeHtml={true}
                   renderers={{code: CodeBlock}}
+                  className = "yaml"
                 />
               </Tab>
 
-              <Tab eventKey={2} title="Resources">
-                    To be continued .....
-              </Tab>
             </Tabs>
           </GridItem>
         </Grid>

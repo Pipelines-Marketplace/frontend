@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
 import './index.css';
 import {
-  Card,
-  CardHead,
+  Flex,
+  FlexItem,
+  Tooltip,
 } from '@patternfly/react-core';
-import {OkIcon} from '@patternfly/react-icons';
-import {ChartDonut} from '@patternfly/react-charts';
 import {useParams} from 'react-router';
 import {connect} from 'react-redux';
 import checkAuthentication
@@ -15,11 +14,8 @@ import {Link} from 'react-router-dom';
 import {fetchTaskName} from
   '../redux/Actions/TaskActionName';
 import {API_URL} from '../../constants';
-let oneStar:number =0;
-let twoStar:number =0;
-let threeStar:number =0;
-let fourStar:number =0;
-let fiveStar:number =0;
+import {OkIcon} from '@patternfly/react-icons';
+
 let prevStar:number =0;
 let newStar:number =0;
 const Rating: React.FC = (props:any) => {
@@ -39,13 +35,9 @@ const Rating: React.FC = (props:any) => {
     setAvgRating(props.TaskName['rating'].toFixed(1));
   }
   const {taskId} = useParams();
-  // let onechecked; let twochecked;
-  // let threechecked;
-  // let fourchecked; let fivechecked;
-  // storing information of taskid and =userid
   const prevStars={
     user_id: Number(localStorage.getItem('usetrID')),
-    task_id: Number(taskId),
+    resource_id: Number(taskId),
   };
   // display previous rating for perticular user
   if (count ===0 ) {
@@ -88,14 +80,6 @@ const Rating: React.FC = (props:any) => {
     const arr = Array.from(Object.values(rating));
     let totalstar = (arr[2]+arr[3]+arr[4]+arr[5]+arr[6]);
     if (totalstar ===0 ) totalstar=totalstar+1;
-
-    if (totalstar > 0) {
-      oneStar=(arr[2]/totalstar)*100;
-      twoStar=(arr[3]/totalstar)*100;
-      threeStar=(arr[4]/totalstar)*100;
-      fourStar=(arr[5]/totalstar)*100;
-      fiveStar=(arr[6]/totalstar)*100;
-    }
   }
   let login: any = '';
   // sending rating information to backend
@@ -108,7 +92,8 @@ const Rating: React.FC = (props:any) => {
       },
       body: JSON.stringify(ratingData),
     }).then((res) => res.json())
-        .then((data) => setAvgRating(data['average'].toFixed(1)));
+        .then((data) =>
+          setAvgRating(data['average'].toFixed(1)));
   };
   const putData=(ratingData:any) =>{
     fetch(`${API_URL}/rating`, {
@@ -119,7 +104,8 @@ const Rating: React.FC = (props:any) => {
       },
       body: JSON.stringify(ratingData),
     }).then((res) => res.json())
-        .then((data) => setAvgRating(data['average'].toFixed(1)));
+        .then((data) =>
+          setAvgRating(data['average'].toFixed(1)));
   };
 
 
@@ -169,7 +155,7 @@ const Rating: React.FC = (props:any) => {
         newStar = event.target.value;
         const ratingData ={
           'user_id': Number(localStorage.getItem('usetrID')),
-          'task_id': Number(taskId),
+          'resource_id': Number(taskId),
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
@@ -179,10 +165,11 @@ const Rating: React.FC = (props:any) => {
         newStar=event.target.value;
         const ratingData ={
           'user_id': Number(localStorage.getItem('usetrID')),
-          'task_id': Number(taskId),
+          'resource_id': Number(taskId),
           'stars': Number(newStar),
           'prev_stars': Number(prevStar),
         };
+
         putData(ratingData);
       }
     }
@@ -234,44 +221,39 @@ const Rating: React.FC = (props:any) => {
     </form>;
   }
   return (
-    <Card style={{minHeight: '30em', maxWidth: '30em', minWidth: '27em'}}>
-      <div className="card-head">
-        <CardHead>
-          <div className="ok-icon">
-            <OkIcon color='green' size='sm' /></div>
-          <div className="rating-heading">Rating</div>
-        </CardHead>
-      </div>
-      <div className="rating-icon">
-        {login}
-      </div>
-      <div className="rating-icon">
-        <div className="donut-chart-legend-right" >
-          <ChartDonut
-            ariaDesc="Average number of pets"
-            ariaTitle="Task Rating"
-            constrainToVisibleArea={true}
-            data={[{x: '5 Star', y: fiveStar.toFixed(1)},
-              {x: '1 Star', y: oneStar.toFixed(1)},
-              {x: '3 Star', y: threeStar.toFixed(1)},
-              {x: '4 Star', y: fourStar.toFixed(1)},
-              {x: '2 Star', y: twoStar.toFixed(1)},
+    <Flex breakpointMods={[{modifier: 'column', breakpoint: 'lg'}]}>
+      <FlexItem style = {{marginLeft: '0.2em', marginTop: '0.2em'}}>
 
-            ]}
-            labels={({datum}) => `${datum.x}: ${datum.y}%`}
-            padding={{
-              bottom: 20,
-              left: 75,
-              right: 75,
-              top: 10,
-            }}
-            subTitle="Rating"
-            title={`${avgRating}`}
-            width={300}
-          />
-        </div>
+
+        <Flex breakpointMods={[{modifier: 'row', breakpoint: 'lg'}]}>
+          <FlexItem>
+            <OkIcon color="green"/>
+          </FlexItem>
+
+          <Tooltip
+            content={
+              <div>Average Rating</div>
+            }
+          >
+
+            <FlexItem>
+              <div>
+                {avgRating}
+              </div>
+            </FlexItem>
+
+          </Tooltip>
+
+        </Flex>
+
+
+      </FlexItem>
+      <div style = {{width: '20em'}}>
+        <FlexItem style = {{marginRight: '-2em', marginLeft: '-9em'}}>
+          {login}
+        </FlexItem>
       </div>
-    </Card>
+    </Flex>
   );
 };
 const mapStateToProps = (state: any) => {
