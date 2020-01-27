@@ -25,18 +25,15 @@ cd frontend/
 npm install
 ```
 
-* Create a .env file and use the backend service route and give it to the environment variable REACT_APP_BACKEND_API 
-
-* Build the application 
-
+* Create a .env file and use the backend route as an environment variable  with variable name REACT_APP_BACKEND_API
+* Run the application with following command
 ```
-npm run build
+npm start
 ```
 
-* Run the proxy server.The application is exposed on port 3000
 
-```
-node server.js
-```
+*Application will be expose on port 8080.
+
+
 
 
