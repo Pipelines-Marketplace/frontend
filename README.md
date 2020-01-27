@@ -32,7 +32,7 @@ npm start
 ```
 
 
-*Application will be expose on port 8080.
+* Application will be expose on port 8080.
 
 
 
